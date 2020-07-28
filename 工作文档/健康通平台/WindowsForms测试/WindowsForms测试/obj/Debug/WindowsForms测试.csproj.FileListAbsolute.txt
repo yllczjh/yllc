@@ -1,0 +1,9 @@
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\bin\Debug\WindowsForms测试.exe.config
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\bin\Debug\WindowsForms测试.exe
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\bin\Debug\WindowsForms测试.pdb
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.csprojResolveAssemblyReference.cache
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.Form1.resources
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.Properties.Resources.resources
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.csproj.GenerateResource.Cache
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.exe
+E:\文档\工作文档\健康通平台\WindowsForms测试\WindowsForms测试\obj\Debug\WindowsForms测试.pdb

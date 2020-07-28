@@ -1,0 +1,5 @@
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\Cloud.Xt.His.Hlht\bin\Debug\Cloud.Xt.His.Hlht.dll
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\Cloud.Xt.His.Hlht\bin\Debug\Cloud.Xt.His.Hlht.pdb
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\Cloud.Xt.His.Hlht\obj\Debug\Cloud.Xt.His.Hlht.csprojResolveAssemblyReference.cache
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\Cloud.Xt.His.Hlht\obj\Debug\Cloud.Xt.His.Hlht.dll
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\Cloud.Xt.His.Hlht\obj\Debug\Cloud.Xt.His.Hlht.pdb

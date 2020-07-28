@@ -1,0 +1,218 @@
+
+Creating function FU_互联互通_得到响应参数
+================================
+
+
+Function created
+
+
+Creating function FU_互联互通_节点值
+=============================
+
+
+Function created
+
+
+Creating procedure PR_互联互通_待缴费记录支付
+==================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_电子病历列表查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_电子病历信息查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_挂号记录查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_挂号支付
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_号源锁定
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_检查报告查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_检查检验列表查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_缴费订单查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_缴费记录查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_缴费明细查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_解锁号源锁定
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_科室查询
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_排班分时查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_排班信息查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_排队列表查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_普通检验报告查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_取号
+=============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_取消挂号
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_退款挂号
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_药敏检验报告查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_医生查询
+===============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_医生门诊数据查询
+===================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_医院信息查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_用户卡验证
+================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_用户信息查询
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_用户信息注册
+=================================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_预挂号
+==============================
+
+
+Procedure created
+
+
+Creating procedure PR_互联互通_总线调用
+===============================
+
+
+Procedure created
+
+Done

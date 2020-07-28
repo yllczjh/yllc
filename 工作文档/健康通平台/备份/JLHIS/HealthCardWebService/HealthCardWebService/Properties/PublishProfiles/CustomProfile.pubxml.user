@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+此文件由 Web 项目的发布/打包过程使用。可以通过编辑此 MSBuild 文件
+自定义此过程的行为。为了解与此相关的更多内容，请访问 https://go.microsoft.com/fwlink/?LinkID=208121。 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>E:\文档\工作文档\健康通平台\服务</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Cloud.Db.dll">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/Cloud.Db.pdb">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/HealthCardManager.dll">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/HealthCardManager.pdb">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/HealthCardModel.dll">
+      <publishTime>05/21/2020 16:14:27</publishTime>
+    </File>
+    <File Include="bin/HealthCardModel.pdb">
+      <publishTime>05/21/2020 16:14:27</publishTime>
+    </File>
+    <File Include="bin/HealthCardUtil.dll">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/HealthCardUtil.pdb">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/HealthCardWebService.dll">
+      <publishTime>05/23/2020 12:11:49</publishTime>
+    </File>
+    <File Include="bin/HealthCardWebService.pdb">
+      <publishTime>05/23/2020 12:11:49</publishTime>
+    </File>
+    <File Include="bin/HisCommon.dll">
+      <publishTime>02/05/2020 18:44:32</publishTime>
+    </File>
+    <File Include="bin/HisCommon.dll.config">
+      <publishTime>02/05/2020 18:44:32</publishTime>
+    </File>
+    <File Include="bin/HisCommon.pdb">
+      <publishTime>02/05/2020 18:44:32</publishTime>
+    </File>
+    <File Include="bin/HisDBLayer.dll">
+      <publishTime>05/22/2020 09:07:16</publishTime>
+    </File>
+    <File Include="bin/HisDBLayer.dll.config">
+      <publishTime>02/05/2020 18:45:18</publishTime>
+    </File>
+    <File Include="bin/HisDBLayer.pdb">
+      <publishTime>05/22/2020 09:07:16</publishTime>
+    </File>
+    <File Include="bin/HttpToken.dll">
+      <publishTime>02/05/2020 18:45:18</publishTime>
+    </File>
+    <File Include="bin/INICONFIG.dll">
+      <publishTime>02/05/2020 18:44:32</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>02/05/2020 18:45:06</publishTime>
+    </File>
+    <File Include="bin/LoggerManager.dll">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/LoggerManager.pdb">
+      <publishTime>05/23/2020 12:11:45</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll">
+      <publishTime>04/17/2020 20:40:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.EnterpriseLibrary.Data.dll">
+      <publishTime>04/17/2020 20:40:24</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Practices.ObjectBuilder.dll">
+      <publishTime>04/17/2020 20:40:24</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>02/05/2020 18:45:18</publishTime>
+    </File>
+    <File Include="bin/NLog.dll">
+      <publishTime>02/05/2020 18:45:29</publishTime>
+    </File>
+    <File Include="ClinicRegisterService.asmx">
+      <publishTime>02/05/2020 18:44:51</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>05/22/2020 16:51:09</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

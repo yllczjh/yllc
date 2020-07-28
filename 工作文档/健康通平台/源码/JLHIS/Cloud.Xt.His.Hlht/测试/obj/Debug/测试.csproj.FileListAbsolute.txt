@@ -1,0 +1,11 @@
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\bin\Debug\测试.exe.config
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\bin\Debug\测试.exe
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\bin\Debug\测试.pdb
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\bin\Debug\Cloud.Xt.His.Hlht.dll
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\bin\Debug\Cloud.Xt.His.Hlht.pdb
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.csprojResolveAssemblyReference.cache
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.Form1.resources
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.Properties.Resources.resources
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.csproj.GenerateResource.Cache
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.exe
+E:\文档\工作文档\健康通平台\源码\JLHIS\Cloud.Xt.His.Hlht\测试\obj\Debug\测试.pdb

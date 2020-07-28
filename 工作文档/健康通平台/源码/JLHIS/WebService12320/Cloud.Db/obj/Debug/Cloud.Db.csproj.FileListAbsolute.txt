@@ -1,0 +1,9 @@
+E:\code\newhis\Cloud.BaseLibrary\Self\Self.DLL\Cloud.Db.dll
+E:\code\newhis\Cloud.BaseLibrary\Self\Self.DLL\Cloud.Db.pdb
+E:\code\newhis\Cloud.BaseLibrary\Self\Cloud.Db\obj\Debug\Cloud.Db.dll
+E:\code\newhis\Cloud.BaseLibrary\Self\Cloud.Db\obj\Debug\Cloud.Db.pdb
+E:\code\newhis\Cloud.BaseLibrary\Self\Cloud.Db\obj\Debug\Cloud.Db.csprojResolveAssemblyReference.cache
+C:\Users\syyyh\Desktop\JLHIS\HealthCardWebService\Target\Bin\Cloud.Db.dll
+C:\Users\syyyh\Desktop\JLHIS\HealthCardWebService\Target\Bin\Cloud.Db.pdb
+C:\Users\syyyh\Desktop\JLHIS\HealthCardWebService\Cloud.Db\obj\Debug\Cloud.Db.dll
+C:\Users\syyyh\Desktop\JLHIS\HealthCardWebService\Cloud.Db\obj\Debug\Cloud.Db.pdb
