@@ -1995,6 +1995,12 @@
               "chnname": "参数值"
             },
             {
+              "name": "类名",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "类名"
+            },
+            {
               "name": "备注",
               "type": "longString",
               "remark": "",

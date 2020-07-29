@@ -1,0 +1,5 @@
+E:\work\yllc\测试\测试\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+E:\work\yllc\测试\测试\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+E:\work\yllc\测试\测试\ClassLibrary1\obj\Debug\ClassLibrary1.csprojResolveAssemblyReference.cache
+E:\work\yllc\测试\测试\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+E:\work\yllc\测试\测试\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
