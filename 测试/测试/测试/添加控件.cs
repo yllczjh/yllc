@@ -1,8 +1,11 @@
 ﻿using DevComponents.DotNetBar.Controls;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Columns;
 using System;
+using System.Data;
 using System.Drawing;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace 测试
@@ -19,8 +22,8 @@ namespace 测试
         {
             string[] s = new string[] { "现金", "微信", "支付宝", "银联", "其他", "网上支付", "网上支付" };
             int x = 2;
-            int y = 13-10;
-            int i_行间距 = 10-5;
+            int y = 13 - 10;
+            int i_行间距 = 10 - 5;
             int i_列间距 = 6;
             int i_行号 = 0;
             for (int i = 0; i < s.Length; i++)
@@ -40,7 +43,7 @@ namespace 测试
                 {
                     i_行号++;
                     x = 2;
-                    y = 13-10 + check.Size.Height * i_行号 + i_行号 * i_行间距;
+                    y = 13 - 10 + check.Size.Height * i_行号 + i_行号 * i_行间距;
                     check.Font = new Font("宋体", 9F, FontStyle.Bold);
                 }
                 else
@@ -87,9 +90,9 @@ namespace 测试
         string aaa = "测试.Class2";
         private void button2_Click(object sender, EventArgs e)
         {
-           // i_PayHelper = Type.GetType(aaa,true,true);
+            // i_PayHelper = Type.GetType(aaa,true,true);
 
-            Type t= Type.GetType(aaa);
+            Type t = Type.GetType(aaa);
             i_PayHelper = (I_PayHelper)t.Assembly.CreateInstance(aaa);
             i_PayHelper.Pay();
         }
@@ -133,10 +136,83 @@ namespace 测试
         {
             comResult = comObjectName.InvokeMember("aaa", BindingFlags.InvokeMethod, null, comObject, null);
             if (comResult != null)
-                MessageBox.Show(comResult.ToString(), "提示"); 
+                MessageBox.Show(comResult.ToString(), "提示");
             else
                 throw new Exception("清空医保参数异常！");
         }
         #endregion
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            bool b = Regex.IsMatch(textEdit1.Text, @"^((20|21|22|23|[0-1]?\d):[0-5]?\d)$");
+            MessageBox.Show(b.ToString(), "提示");
+            //String time = "12:34";
+            //Pattern p = Pattern.compile("^([01][0-9]|2[0-3]):([0-5][0-9])$");
+            //Matcher m = p.matcher(time);
+            //if (m.find())
+            //{
+            //    System.out.println("HH:" + m.group(1));
+            //    System.out.println("mm:" + m.group(2));
+            //    System.out.println("HH:mm:" + m.group());
+            //}
+        }
+
+        private void simpleButton2_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("AA");
+            dt.Columns.Add("BB");
+            DataRow row = dt.NewRow();
+            row["AA"] = "AA1";
+            row["BB"] = "BB1";
+            dt.Rows.Add(row);
+
+            row = dt.NewRow();
+            row["AA"] = "AA2";
+            row["BB"] = "BB2";
+            dt.Rows.Add(row);
+
+            gridControl1.DataSource = dt;
+            gridView1.FocusedRowHandle = 1;
+            gridView1.FocusedColumn = gridView1.Columns["AA"];
+            //GridColumn c = gridView1.Columns["AA"];
+            //gridView1.SelectCell(1, c);
+            gridView1.ShowEditor();
+        }
+
+        private void simpleButton3_Click(object sender, EventArgs e)
+        {
+            string str_上次小类编码 = textEdit2.Text;
+            string str_当前行小类编码 = textEdit3.Text;
+            if ((str_上次小类编码 != str_当前行小类编码 &&
+                                                        (str_上次小类编码 == "3" 
+                                                        || str_当前行小类编码 == "3" 
+                                                        || str_上次小类编码 == "4" 
+                                                        || str_当前行小类编码 == "4" 
+                                                        || str_上次小类编码 == "12" 
+                                                        || str_当前行小类编码 == "12"))
+                 || (str_上次小类编码 == "3" && str_当前行小类编码 == "3") 
+                 || (str_上次小类编码 == "12" && str_当前行小类编码 == "12")
+                               )
+            {
+                MessageBox.Show("1", "提示");
+            }
+            //西成、中分别产生处方号 
+            //1 西药
+            //2 成药
+            //3 草药
+            //4 卫材
+            //12 中药颗粒
+            if (!(
+                        (str_上次小类编码 == "1" && (str_当前行小类编码 == "1" || str_当前行小类编码 == "2"))
+                        || (str_上次小类编码 == "2" && (str_当前行小类编码 == "1" || str_当前行小类编码 == "2"))
+                        || (str_上次小类编码 == "4" && str_当前行小类编码 == "4"))
+                || (str_上次小类编码 == "3" && str_当前行小类编码 == "3")
+                || (str_上次小类编码 == "12" && str_当前行小类编码 == "12")
+                              )
+            {
+                MessageBox.Show("2", "提示");
+            }
+        }
     }
 }
