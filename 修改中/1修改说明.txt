@@ -1,22 +1,31 @@
 存储过程
-PR_互联互通_缴费单窗口缴费
-PR_互联互通_生成门诊待缴费清单
-PR_门诊管理_门诊退费_导入住院
+
+
 
 
 
 源码客
-hlht
-mzgl
-pay
-zygl
-dtsdts
-sjsb
+mzys
 
 
 源码服
-his
-hisinterface
 
 
 
+
+SQL
+alter table 基础项目_小类字典 add 药品类型 varchar2(50);
+alter table 基础项目_小类字典 add 处方类型 varchar2(50);
+
+添加 药品类型、处方类型 字典
+
+--更新小类字典
+update 基础项目_小类字典 set 药品类型='1' where 大类编码='2' and 小类编码='1';
+update 基础项目_小类字典 set 药品类型='2' where 大类编码='2' and 小类编码='2';
+update 基础项目_小类字典 set 药品类型='3' where 大类编码='2' and 小类编码 in ('3','12');
+
+update 基础项目_小类字典 set 处方类型='西成药处方' where 大类编码='2' and 小类编码='1';
+update 基础项目_小类字典 set 处方类型='西成药处方' where 大类编码='2' and 小类编码='2';
+update 基础项目_小类字典 set 处方类型='中药处方单' where 大类编码='2' and 小类编码 in ('3','12');
+update 基础项目_小类字典 set 处方类型='诊疗划价单' where 大类编码='2' and 小类编码 ='4';
+update 基础项目_小类字典 set 处方类型='诊疗划价单' where 大类编码='1';

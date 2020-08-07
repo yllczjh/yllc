@@ -58,3 +58,4 @@ E:\work\yllc\测试\测试\测试\obj\Debug\测试.Properties.Resources.resource
 E:\work\yllc\测试\测试\测试\obj\Debug\测试.添加控件.resources
 E:\work\yllc\测试\测试\测试\obj\Debug\测试.csproj.GenerateResource.Cache
 E:\work\yllc\测试\测试\测试\obj\Debug\测试.exe.licenses
+E:\work\yllc\测试\测试\测试\obj\Debug\测试.F_DataTable.resources

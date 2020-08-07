@@ -16,7 +16,7 @@ namespace 测试
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new 添加控件());
+            Application.Run(new F_DataTable());
         }
     }
 }
