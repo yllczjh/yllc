@@ -8,3 +8,15 @@ C:\Users\syyyh\Desktop\测试\测试\UnitTestProject1\bin\Debug\zh-Hans\Microsof
 C:\Users\syyyh\Desktop\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.csprojResolveAssemblyReference.cache
 C:\Users\syyyh\Desktop\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Users\syyyh\Desktop\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\测试.exe
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\DevComponents.DotNetBar2.dll
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\测试.pdb
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\DevComponents.DotNetBar2.xml
+E:\work\yllc\测试\测试\UnitTestProject1\bin\Debug\zh-Hans\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+E:\work\yllc\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.csprojResolveAssemblyReference.cache
+E:\work\yllc\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+E:\work\yllc\测试\测试\UnitTestProject1\obj\Debug\UnitTestProject1.pdb

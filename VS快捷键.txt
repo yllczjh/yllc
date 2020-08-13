@@ -7,6 +7,9 @@ Ctrl + K + U: 反注释
 Ctrl + Shift +}： 在匹配的括号、括号内选择文本
 Ctrl + Shift + Enter：在当前行下方插入空行
 Ctrl +J：智能感知
+Alt+右箭头：显示提示
+Alt+上下箭头：行上下移动
+
 
 
 

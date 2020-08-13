@@ -2183,6 +2183,39 @@
         "edges": []
       },
       "associations": []
+    },
+    {
+      "name": "临床路径",
+      "chnname": "临床路径",
+      "entities": [
+        {
+          "title": "临床路径_出径登记项目",
+          "fields": [
+            {
+              "name": "机构编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "机构编码",
+              "pk": true,
+              "notNull": true,
+              "relationNoShow": false
+            },
+            {
+              "name": "删除标志",
+              "type": "YesNo",
+              "remark": "",
+              "chnname": "删除标志"
+            },
+            {
+              "name": "更新时间",
+              "type": "Date",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ]
+        }
+      ],
+      "graphCanvas": {}
     }
   ],
   "dataTypeDomains": {

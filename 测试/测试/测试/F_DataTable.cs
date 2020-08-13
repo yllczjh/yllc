@@ -49,7 +49,7 @@ namespace 测试
            string id= ddt.Rows[0]["id", DataRowVersion.Original].ToString();
             MessageBox.Show("" ,"提示");
         }
-
+        
         private void simpleButton3_Click(object sender, EventArgs e)
         {
             DataRow[] row = dt.Select("id='1'");
