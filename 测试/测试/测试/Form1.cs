@@ -1,7 +1,4 @@
-﻿using DevComponents.DotNetBar;
-using DevComponents.DotNetBar.Controls;
-using DevComponents.DotNetBar.SuperGrid;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +6,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,40 +20,58 @@ namespace 测试
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            IEnumerable<int> aaa = YieldDemo();
+            List<int> bbb = aaa.ToList();
+           //// bbb.ForEach(s => Console.WriteLine(s));
+            foreach (var item in bbb)
+            {
+
+              //  MessageBox.Show(item.ToString(), "提示");
+
+            }
+
+        }
+
+        public IEnumerable<int> YieldDemo()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            int counter = 0;
+            int result = 1;
+            while (counter++ < 10)
+            {
+                result = result * 2;
+                yield return result;
+            }
+            while (sw.IsRunning)
+            {
+                Console.WriteLine(sw.ElapsedMilliseconds);
+                if (sw.ElapsedMilliseconds > 5000)
+                {
+                    sw.Stop();
+                }
+            }
             
-
+            Console.WriteLine(sw.ElapsedMilliseconds);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        public void aaa()
         {
-
-        }
-
-        private void buttonX1_Click(object sender, EventArgs e)
-        {
-          //  MessageBox.Show(tokenEditor1.Text, "提示");
-        }
-       
-        private void Form1_Load(object sender, EventArgs e)
-        {
-           // advTree1.ele
-
-MessageBox.Show(Convert .ToInt32("").ToString(), "提示");
-        }
-
-        private void qatCustomizePanel1_Load(object sender, EventArgs e)
-        {
-            //qatCustomizePanel1.te
-        }
-
-        private void tokenEditor1_SelectedTokensChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void advTree1_Click(object sender, EventArgs e)
-        {
-
+            DataTable dt = new DataTable();
+            dt.Columns.Add("id", typeof(string));
+            dt.Columns.Add("name", typeof(string));
+            for (int i = 0; i < 3; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["id"] = "id" + i;
+                row["name"] = "name" + i;
+                dt.Rows.Add(row);
+            }
+          
+          
+           
         }
     }
 }
