@@ -18,60 +18,30 @@ namespace 测试
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
+            panel1.AutoScroll = true;
+            Form2 f2 = new Form2();
+            f2.Name = "f2";
+            f2.TopLevel = false;
+            //f2.Dock =DockStyle.Top;
+            f2.btn_合并路径阶段选择.Click += aaa;
+            panel1.Controls.Add(f2);
+            f2.Show();
 
-            IEnumerable<int> aaa = YieldDemo();
-            List<int> bbb = aaa.ToList();
-           //// bbb.ForEach(s => Console.WriteLine(s));
-            foreach (var item in bbb)
-            {
-
-              //  MessageBox.Show(item.ToString(), "提示");
-
-            }
-
+            Form2 f22 = new Form2();
+            f22.Name = "f22";
+            f22.TopLevel = false;
+            //f22.Dock = DockStyle.Top;
+            f22.btn_合并路径阶段选择.Click += aaa;
+            panel1.Controls.Add(f22);
+            f22.Show();
+            f22.Location = new Point(0,f2.Location.Y + f2.Height+10);
         }
 
-        public IEnumerable<int> YieldDemo()
+        private void aaa(object sender, EventArgs e)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            int counter = 0;
-            int result = 1;
-            while (counter++ < 10)
-            {
-                result = result * 2;
-                yield return result;
-            }
-            while (sw.IsRunning)
-            {
-                Console.WriteLine(sw.ElapsedMilliseconds);
-                if (sw.ElapsedMilliseconds > 5000)
-                {
-                    sw.Stop();
-                }
-            }
-            
-            Console.WriteLine(sw.ElapsedMilliseconds);
-        }
-
-
-        public void aaa()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("id", typeof(string));
-            dt.Columns.Add("name", typeof(string));
-            for (int i = 0; i < 3; i++)
-            {
-                DataRow row = dt.NewRow();
-                row["id"] = "id" + i;
-                row["name"] = "name" + i;
-                dt.Rows.Add(row);
-            }
-          
-          
-           
+            MessageBox.Show(((Button)sender).Parent.Parent.Parent.Name);
         }
     }
 }
