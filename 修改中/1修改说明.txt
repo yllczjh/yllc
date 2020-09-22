@@ -66,19 +66,7 @@ update 基础项目_小类字典 set 处方单据类型='诊疗划价单' where 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+--临床路径
 update 临床路径_路径阶段 set 分支ID=0 where 分支ID is null;
 update 临床路径_路径项目 set 分支ID=0 where 分支ID is null;
 update 临床路径_路径评估 set 分支ID=0 where 分支ID is null;
@@ -87,5 +75,12 @@ update 临床路径_路径分类 set 分支ID=0 where 分支ID is null;
 alter table 临床路径_病人路径执行 add 主路径记录ID number(18);
 alter table 临床路径_病人路径执行 add 主路径阶段ID number(18);
 
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+cloud.utils
+sjsb
+soa.his
 
+科室类别 门诊的也配置
 
+配置流感检测代码

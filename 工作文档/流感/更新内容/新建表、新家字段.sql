@@ -1,12 +1,108 @@
+alter table 病案管理_项目信息 add 上级项目编码 varchar2(50);
+alter table 病案管理_项目信息 add 是否回传数据 varchar2(10);
+alter table 病案管理_项目信息 add 文件名格式 varchar2(50);
+
+alter table 病案管理_项目信息 add 是否自动导出 varchar2(50);
+alter table 病案管理_项目信息 add 导出时间 varchar2(10);
+alter table 病案管理_项目信息 add 导出路径 varchar2(1000);
+update 病案管理_项目信息 set 是否自动导出='否';
+
+
+alter table 病案管理_项目字段对照 add 是否取自病历 varchar2(50);
+alter table 病案管理_项目字段对照 add 元素或文档名 varchar2(50);
+update 病案管理_项目字段对照 set 是否取自病历='False';
+
+alter table 病案管理_项目字段对照 add 是否编码转名称 varchar2(50);
+alter table 病案管理_项目字段对照 add 转换表 varchar2(50);
+alter table 病案管理_项目字段对照 add 转换字典 varchar2(50);
+update 病案管理_项目字段对照 set 是否编码转名称='False';
+
+
+CREATE TABLE 病案管理_导出列表(
+    机构编码 VARCHAR2(50) NOT NULL,
+    病历号 VARCHAR2(50) NOT NULL,
+	项目编码 VARCHAR2(50) NOT NULL,
+    起始时间 DATE,
+    截止时间 DATE,
+    导出时间 DATE,
+    流水码 VARCHAR2(50),
+	就诊类别 VARCHAR2(50), 
+   CONSTRAINT PK_病案管理_导出列表  PRIMARY KEY (项目编码,病历号,就诊类别)
+);
+
+COMMENT ON COLUMN 病案管理_导出列表.机构编码 IS '机构编码';
+COMMENT ON COLUMN 病案管理_导出列表.病历号 IS '病历号';
+COMMENT ON COLUMN 病案管理_导出列表.起始时间 IS '导出时搜索条件的起始时间';
+COMMENT ON COLUMN 病案管理_导出列表.截止时间 IS '导出时搜索条件的截止时间';
+COMMENT ON COLUMN 病案管理_导出列表.导出时间 IS '导出时间';
+COMMENT ON COLUMN 病案管理_导出列表.流水码 IS '每批导出数据流水码相同';
+COMMENT ON COLUMN 病案管理_导出列表.就诊类别 IS '门诊；在院；出院';
+
+
+
+
+
+CREATE TABLE 病案管理_项目接口对照分类(
+    机构编码 VARCHAR2(50) NOT NULL,
+    项目编码 VARCHAR2(50) NOT NULL,
+    流水码 VARCHAR2(50) NOT NULL,
+    分类编码 VARCHAR2(50) NOT NULL,
+    分类名称 VARCHAR2(50) NOT NULL,
+    对照类型 VARCHAR2(50) NOT NULL,
+    过滤条件 VARCHAR2(50)
+);
+
+COMMENT ON TABLE 病案管理_项目接口对照分类 IS '病案管理_项目接口对照分类';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.机构编码 IS '机构编码';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.项目编码 IS '项目编码';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.流水码 IS '流水码';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.分类编码 IS '分类编码';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.分类名称 IS '分类名称';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.对照类型 IS '对照类型';
+COMMENT ON COLUMN 病案管理_项目接口对照分类.过滤条件 IS '过滤条件';
+
+
+
+
+CREATE TABLE 病案管理_项目接口对照明细(
+    流水码 VARCHAR2(50) NOT NULL,
+    外键ID VARCHAR2(50) NOT NULL,
+    接口对照信息编码 VARCHAR2(50) NOT NULL,
+    接口对照信息名称 VARCHAR2(100) NOT NULL
+);
+
+COMMENT ON TABLE 病案管理_项目接口对照明细 IS '病案管理_项目接口对照明细';
+COMMENT ON COLUMN 病案管理_项目接口对照明细.流水码 IS '流水码';
+COMMENT ON COLUMN 病案管理_项目接口对照明细.外键ID IS '病案管理_项目接口对照信息分类的流水码';
+COMMENT ON COLUMN 病案管理_项目接口对照明细.接口对照信息编码 IS '接口对照信息编码';
+COMMENT ON COLUMN 病案管理_项目接口对照明细.接口对照信息名称 IS '接口对照信息名称';
+
+
+
+
+CREATE TABLE 病案管理_项目系统对照明细(
+    外键ID VARCHAR2(50) NOT NULL,
+    系统对照信息编码 VARCHAR2(50) NOT NULL,
+    系统对照信息名称 VARCHAR2(50)
+);
+
+COMMENT ON TABLE 病案管理_项目系统对照明细 IS '病案管理_项目系统对照明细';
+COMMENT ON COLUMN 病案管理_项目系统对照明细.外键ID IS '病案管理_项目接口对照信息的流水码';
+COMMENT ON COLUMN 病案管理_项目系统对照明细.系统对照信息编码 IS '系统对照信息编码';
+COMMENT ON COLUMN 病案管理_项目系统对照明细.系统对照信息名称 IS '系统对照信息名称';
+
+
+
+
 -- Create table
 create global temporary table 临时表_数据上报_出院流感病例
 (
-  住院病历号      VARCHAR2(50),
+  病历号        VARCHAR2(50),
   p900       VARCHAR2(40),
   p6891      VARCHAR2(80),
   p686       VARCHAR2(50),
   p800       VARCHAR2(50),
-  p1         VARCHAR2(2),
+  p1         VARCHAR2(20),
   p2         NUMBER(4),
   p3         VARCHAR2(20),
   p4         VARCHAR2(40),
@@ -50,58 +146,58 @@ create global temporary table 临时表_数据上报_出院流感病例
   p31        DATE,
   p321       VARCHAR2(20),
   p322       VARCHAR2(100),
-  p805       VARCHAR2(2),
+  p805       VARCHAR2(10),
   p323       VARCHAR2(2),
   qtzdbm1    VARCHAR2(20),
   qtzdms1    VARCHAR2(100),
-  qtzdrybq1  VARCHAR2(2),
+  qtzdrybq1  VARCHAR2(10),
   qtzdcyqk1  VARCHAR2(2),
   qtzdbm2    VARCHAR2(20),
   qtzdms2    VARCHAR2(100),
-  qtzdrybq2  VARCHAR2(2),
+  qtzdrybq2  VARCHAR2(10),
   qtzdcyqk2  VARCHAR2(2),
   qtzdbm3    VARCHAR2(20),
   qtzdms3    VARCHAR2(100),
-  qtzdrybq3  VARCHAR2(2),
+  qtzdrybq3  VARCHAR2(10),
   qtzdcyqk3  VARCHAR2(2),
   qtzdbm4    VARCHAR2(20),
   qtzdms4    VARCHAR2(100),
-  qtzdrybq4  VARCHAR2(2),
+  qtzdrybq4  VARCHAR2(10),
   qtzdcyqk4  VARCHAR2(2),
   qtzdbm5    VARCHAR2(20),
   qtzdms5    VARCHAR2(100),
-  qtzdrybq5  VARCHAR2(2),
+  qtzdrybq5  VARCHAR2(10),
   qtzdcyqk5  VARCHAR2(2),
   qtzdbm6    VARCHAR2(20),
   qtzdms6    VARCHAR2(100),
-  qtzdrybq6  VARCHAR2(2),
+  qtzdrybq6  VARCHAR2(10),
   qtzdcyqk6  VARCHAR2(2),
   qtzdbm7    VARCHAR2(20),
   qtzdms7    VARCHAR2(100),
-  qtzdrybq7  VARCHAR2(2),
+  qtzdrybq7  VARCHAR2(10),
   qtzdcyqk7  VARCHAR2(2),
   qtzdbm8    VARCHAR2(20),
   qtzdms8    VARCHAR2(100),
-  qtzdrybq8  VARCHAR2(2),
+  qtzdrybq8  VARCHAR2(10),
   qtzdcyqk8  VARCHAR2(2),
   qtzdbm9    VARCHAR2(20),
   qtzdms9    VARCHAR2(100),
-  qtzdrybq9  VARCHAR2(2),
+  qtzdrybq9  VARCHAR2(10),
   qtzdcyqk9  VARCHAR2(2),
   qtzdbm10   VARCHAR2(20),
   qtzdms10   VARCHAR2(100),
-  qtzdrybq10 VARCHAR2(2),
+  qtzdrybq10 VARCHAR2(10),
   qtzdcyqk10 VARCHAR2(2),
   p689       NUMBER(5),
   blzdbm1    VARCHAR2(20),
   blzdmc1    VARCHAR2(100),
-  mlh1       VARCHAR2(50),
+  blh1       VARCHAR2(50),
   blzdbm2    VARCHAR2(20),
   blzdmc2    VARCHAR2(100),
-  mlh2       VARCHAR2(50),
+  blh2       VARCHAR2(50),
   blzdbm3    VARCHAR2(20),
   blzdmc3    VARCHAR2(100),
-  mlh3       VARCHAR2(50),
+  blh3       VARCHAR2(50),
   wbysbm1    VARCHAR2(20),
   wbysmc1    VARCHAR2(100),
   wbysbm2    VARCHAR2(20),
@@ -137,133 +233,133 @@ create global temporary table 临时表_数据上报_出院流感病例
   p47        DATE,
   ssbm1      VARCHAR2(20),
   ssrq1      DATE,
-  ssjb1      VARCHAR2(2),
+  ssjb1      VARCHAR2(10),
   ssmc1      VARCHAR2(100),
   ssbw1      VARCHAR2(100),
   sscxsj1    NUMBER(7,2),
   sz1        VARCHAR2(40),
   yz1        VARCHAR2(40),
   ez1        VARCHAR2(40),
-  mzfs1      VARCHAR2(6),
+  mzfs1      VARCHAR2(10),
   mzfj1      VARCHAR2(2),
-  qkyhdj1    VARCHAR2(2),
+  qkyhdj1    VARCHAR2(10),
   mzys1      VARCHAR2(40),
   ssbm2      VARCHAR2(20),
   ssrq2      DATE,
-  ssjb2      VARCHAR2(2),
+  ssjb2      VARCHAR2(10),
   ssmc2      VARCHAR2(100),
   ssbw2      VARCHAR2(100),
   sscxsj2    NUMBER(7,2),
   sz2        VARCHAR2(40),
   yz2        VARCHAR2(40),
   ez2        VARCHAR2(40),
-  mzfs2      VARCHAR2(6),
+  mzfs2      VARCHAR2(10),
   mzfj2      VARCHAR2(2),
-  qkyhdj2    VARCHAR2(2),
+  qkyhdj2    VARCHAR2(10),
   mzys2      VARCHAR2(40),
   ssbm3      VARCHAR2(20),
   ssrq3      DATE,
-  ssjb3      VARCHAR2(2),
+  ssjb3      VARCHAR2(10),
   ssmc3      VARCHAR2(100),
   ssbw3      VARCHAR2(100),
   sscxsj3    NUMBER(7,2),
   sz3        VARCHAR2(40),
   yz3        VARCHAR2(40),
   ez3        VARCHAR2(40),
-  mzfs3      VARCHAR2(6),
+  mzfs3      VARCHAR2(10),
   mzfj3      VARCHAR2(2),
-  qkyhdj3    VARCHAR2(2),
+  qkyhdj3    VARCHAR2(10),
   mzys3      VARCHAR2(40),
   ssbm4      VARCHAR2(20),
   ssrq4      DATE,
-  ssjb4      VARCHAR2(2),
+  ssjb4      VARCHAR2(10),
   ssmc4      VARCHAR2(100),
   ssbw4      VARCHAR2(100),
   sscxsj4    NUMBER(7,2),
   sz4        VARCHAR2(40),
   yz4        VARCHAR2(40),
   ez4        VARCHAR2(40),
-  mzfs4      VARCHAR2(6),
+  mzfs4      VARCHAR2(10),
   mzfj4      VARCHAR2(2),
-  qkyhdj4    VARCHAR2(2),
+  qkyhdj4    VARCHAR2(10),
   mzys4      VARCHAR2(40),
   ssbm5      VARCHAR2(20),
   ssrq5      DATE,
-  ssjb5      VARCHAR2(2),
+  ssjb5      VARCHAR2(10),
   ssmc5      VARCHAR2(100),
   ssbw5      VARCHAR2(100),
   sscxsj5    NUMBER(7,2),
   sz5        VARCHAR2(40),
   yz5        VARCHAR2(40),
   ez5        VARCHAR2(40),
-  mzfs5      VARCHAR2(6),
+  mzfs5      VARCHAR2(10),
   mzfj5      VARCHAR2(2),
-  qkyhdj5    VARCHAR2(2),
+  qkyhdj5    VARCHAR2(10),
   mzys5      VARCHAR2(40),
   ssbm6      VARCHAR2(20),
   ssrq6      DATE,
-  ssjb6      VARCHAR2(2),
+  ssjb6      VARCHAR2(10),
   ssmc6      VARCHAR2(100),
   ssbw6      VARCHAR2(100),
   sscxsj6    NUMBER(7,2),
   sz6        VARCHAR2(40),
   yz6        VARCHAR2(40),
   ez6        VARCHAR2(40),
-  mzfs6      VARCHAR2(6),
+  mzfs6      VARCHAR2(10),
   mzfj6      VARCHAR2(2),
-  qkyhdj6    VARCHAR2(2),
+  qkyhdj6    VARCHAR2(10),
   mzys6      VARCHAR2(40),
   ssbm7      VARCHAR2(20),
   ssrq7      DATE,
-  ssjb7      VARCHAR2(2),
+  ssjb7      VARCHAR2(10),
   ssmc7      VARCHAR2(100),
   ssbw7      VARCHAR2(100),
   sscxsj7    NUMBER(7,2),
   sz7        VARCHAR2(40),
   yz7        VARCHAR2(40),
   ez7        VARCHAR2(40),
-  mzfs7      VARCHAR2(6),
+  mzfs7      VARCHAR2(10),
   mzfj7      VARCHAR2(2),
-  qkyhdj7    VARCHAR2(2),
+  qkyhdj7    VARCHAR2(10),
   mzys7      VARCHAR2(40),
   ssbm8      VARCHAR2(20),
   ssrq8      DATE,
-  ssjb8      VARCHAR2(2),
+  ssjb8      VARCHAR2(10),
   ssmc8      VARCHAR2(100),
   ssbw8      VARCHAR2(100),
   sscxsj8    NUMBER(7,2),
   sz8        VARCHAR2(40),
   yz8        VARCHAR2(40),
   ez8        VARCHAR2(40),
-  mzfs8      VARCHAR2(6),
+  mzfs8      VARCHAR2(10),
   mzfj8      VARCHAR2(2),
-  qkyhdj8    VARCHAR2(2),
+  qkyhdj8    VARCHAR2(10),
   mzys8      VARCHAR2(40),
   ssbm9      VARCHAR2(20),
   ssrq9      DATE,
-  ssjb9      VARCHAR2(2),
+  ssjb9      VARCHAR2(10),
   ssmc9      VARCHAR2(100),
   ssbw9      VARCHAR2(100),
   sscxsj9    NUMBER(7,2),
   sz9        VARCHAR2(40),
   yz9        VARCHAR2(40),
   ez9        VARCHAR2(40),
-  mzfs9      VARCHAR2(6),
+  mzfs9      VARCHAR2(10),
   mzfj9      VARCHAR2(2),
-  qkyhdj9    VARCHAR2(2),
+  qkyhdj9    VARCHAR2(10),
   mzys9      VARCHAR2(40),
   ssbm10     VARCHAR2(20),
   ssrq10     DATE,
-  ssjb10     VARCHAR2(2),
+  ssjb10     VARCHAR2(10),
   ssmc10     VARCHAR2(100),
   ssbw10     VARCHAR2(100),
   sscxsj10   NUMBER(7,2),
   sz10       VARCHAR2(40),
   yz10       VARCHAR2(40),
   ez10       VARCHAR2(40),
-  mzfs10     VARCHAR2(6),
+  mzfs10     VARCHAR2(10),
   mzfj10     VARCHAR2(2),
-  qkyhdj10   VARCHAR2(2),
+  qkyhdj10   VARCHAR2(10),
   mzys10     VARCHAR2(40),
   p561       NUMBER(6),
   p562       NUMBER(6),
@@ -537,19 +633,19 @@ comment on column 临时表_数据上报_出院流感病例.blzdbm1
   is '病理诊断编码1 P351';
 comment on column 临时表_数据上报_出院流感病例.blzdmc1
   is '病理诊断名称1 P352';
-comment on column 临时表_数据上报_出院流感病例.mlh1
+comment on column 临时表_数据上报_出院流感病例.blh1
   is '病理号1 P816';
 comment on column 临时表_数据上报_出院流感病例.blzdbm2
   is '病理诊断编码2 P353';
 comment on column 临时表_数据上报_出院流感病例.blzdmc2
   is '病理诊断名称2 P354';
-comment on column 临时表_数据上报_出院流感病例.mlh2
+comment on column 临时表_数据上报_出院流感病例.blh2
   is '病理号2 P817';
 comment on column 临时表_数据上报_出院流感病例.blzdbm3
   is '病理诊断编码3 P355';
 comment on column 临时表_数据上报_出院流感病例.blzdmc3
   is '病理诊断名称3 P356';
-comment on column 临时表_数据上报_出院流感病例.mlh3
+comment on column 临时表_数据上报_出院流感病例.blh3
   is '病理号3 P818';
 comment on column 临时表_数据上报_出院流感病例.wbysbm1
   is '损伤、中毒的外部因素编码1 P361';
@@ -1043,3 +1139,226 @@ comment on column 临时表_数据上报_出院流感病例.p780
   is '手术用一次性医用材料费';
 comment on column 临时表_数据上报_出院流感病例.p781
   is '其他费';
+
+  
+  
+  
+  
+-- Create table
+create global temporary table 临时表_数据上报_在院流感病例
+(
+  病历号      VARCHAR2(50),
+  p900     VARCHAR2(40),
+  p6891    VARCHAR2(80),
+  p686     VARCHAR2(50),
+  p800     VARCHAR2(50),
+  p7501    VARCHAR2(60),
+  p7502    VARCHAR2(60),
+  p4       VARCHAR2(40),
+  p5       VARCHAR2(2),
+  p6       DATE,
+  p7       NUMBER(3),
+  p7503    VARCHAR2(60),
+  p13      VARCHAR2(80),
+  p7504    VARCHAR2(60),
+  p7505    VARCHAR2(60),
+  p7506    DATE,
+  p7507    VARCHAR2(600),
+  p321     VARCHAR2(30),
+  p322     VARCHAR2(100),
+  qtzdbm1  VARCHAR2(30),
+  qtzdms1  VARCHAR2(200),
+  qtzdbm2  VARCHAR2(30),
+  qtzdms2  VARCHAR2(200),
+  qtzdbm3  VARCHAR2(30),
+  qtzdms3  VARCHAR2(200),
+  qtzdbm4  VARCHAR2(30),
+  qtzdms4  VARCHAR2(200),
+  qtzdbm5  VARCHAR2(30),
+  qtzdms5  VARCHAR2(200),
+  qtzdbm6  VARCHAR2(30),
+  qtzdms6  VARCHAR2(200),
+  qtzdbm7  VARCHAR2(30),
+  qtzdms7  VARCHAR2(200),
+  qtzdbm8  VARCHAR2(30),
+  qtzdms8  VARCHAR2(200),
+  qtzdbm9  VARCHAR2(30),
+  qtzdms9  VARCHAR2(200),
+  qtzdbm10 VARCHAR2(30),
+  qtzdms10 VARCHAR2(200),
+  jhsmc1   VARCHAR2(4),
+  jrsj1    DATE,
+  tcsj1    DATE,
+  jhsmc2   VARCHAR2(4),
+  jrsj2    DATE,
+  tcsj2    DATE,
+  jhsmc3   VARCHAR2(4),
+  jrsj3    DATE,
+  tcsj3    DATE,
+  jhsmc4   VARCHAR2(4),
+  jrsj4    DATE,
+  tcsj4    DATE,
+  jhsmc5   VARCHAR2(4),
+  jrsj5    DATE,
+  tcsj5    DATE,
+  p1       VARCHAR2(3),
+  p7508    NUMBER(10,2),
+  p7509    NUMBER(10,2),
+  p7510    NUMBER(10,2),
+  p7511    NUMBER(10,2),
+  p7512    NUMBER(10,2),
+  p8508    VARCHAR2(2),
+  p8509    DATE
+)
+on commit delete rows;
+-- Add comments to the columns 
+comment on column 临时表_数据上报_在院流感病例.p900
+  is '医疗机构编码';
+comment on column 临时表_数据上报_在院流感病例.p6891
+  is '机构名称';
+comment on column 临时表_数据上报_在院流感病例.p686
+  is '医疗保险手册卡号 ';
+comment on column 临时表_数据上报_在院流感病例.p800
+  is '健康卡号';
+comment on column 临时表_数据上报_在院流感病例.p7501
+  is '就诊类型';
+comment on column 临时表_数据上报_在院流感病例.p7502
+  is '就诊卡号';
+comment on column 临时表_数据上报_在院流感病例.p4
+  is '姓名';
+comment on column 临时表_数据上报_在院流感病例.p5
+  is '性别';
+comment on column 临时表_数据上报_在院流感病例.p6
+  is '出生日期';
+comment on column 临时表_数据上报_在院流感病例.p7
+  is '年龄';
+comment on column 临时表_数据上报_在院流感病例.p7503
+  is '证件类型代码';
+comment on column 临时表_数据上报_在院流感病例.p13
+  is '证件号码';
+comment on column 临时表_数据上报_在院流感病例.p7504
+  is '就诊科室代码';
+comment on column 临时表_数据上报_在院流感病例.p7505
+  is '就诊次数';
+comment on column 临时表_数据上报_在院流感病例.p7506
+  is '就诊日期';
+comment on column 临时表_数据上报_在院流感病例.p7507
+  is '主诉';
+comment on column 临时表_数据上报_在院流感病例.p321
+  is '主要疾病诊断代码';
+comment on column 临时表_数据上报_在院流感病例.p322
+  is '主要疾病诊断描述';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm1
+  is '其他疾病诊断代码1 P324';
+comment on column 临时表_数据上报_在院流感病例.qtzdms1
+  is '其他疾病诊断描述1 P325';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm2
+  is '其他疾病诊断代码2 P327';
+comment on column 临时表_数据上报_在院流感病例.qtzdms2
+  is '其他疾病诊断描述2 P328';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm3
+  is '其他疾病诊断代码3 P3291';
+comment on column 临时表_数据上报_在院流感病例.qtzdms3
+  is '其他疾病诊断描述3 P3292';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm4
+  is '其他疾病诊断代码4 P3294';
+comment on column 临时表_数据上报_在院流感病例.qtzdms4
+  is '其他疾病诊断描述4 P3295';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm5
+  is '其他疾病诊断代码5 P3297';
+comment on column 临时表_数据上报_在院流感病例.qtzdms5
+  is '其他疾病诊断描述5 P3298';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm6
+  is '其他疾病诊断代码6 P3281';
+comment on column 临时表_数据上报_在院流感病例.qtzdms6
+  is '其他疾病诊断描述6 P3282';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm7
+  is '其他疾病诊断代码7 P3284';
+comment on column 临时表_数据上报_在院流感病例.qtzdms7
+  is '其他疾病诊断描述7 P3285';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm8
+  is '其他疾病诊断代码8 P3287';
+comment on column 临时表_数据上报_在院流感病例.qtzdms8
+  is '其他疾病诊断描述8 P3288';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm9
+  is '其他疾病诊断代码9 P3271';
+comment on column 临时表_数据上报_在院流感病例.qtzdms9
+  is '其他疾病诊断描述9  P3272';
+comment on column 临时表_数据上报_在院流感病例.qtzdbm10
+  is '其他疾病诊断代码10 P3274';
+comment on column 临时表_数据上报_在院流感病例.qtzdms10
+  is '其他疾病诊断代码10 P3275';
+comment on column 临时表_数据上报_在院流感病例.jhsmc1
+  is '重症监护室名称1 P6911';
+comment on column 临时表_数据上报_在院流感病例.jrsj1
+  is '进入时间1 P6912';
+comment on column 临时表_数据上报_在院流感病例.tcsj1
+  is '退出时间1 P6913';
+comment on column 临时表_数据上报_在院流感病例.jhsmc2
+  is '重症监护室名称2 P6914';
+comment on column 临时表_数据上报_在院流感病例.jrsj2
+  is '进入时间2 P6915';
+comment on column 临时表_数据上报_在院流感病例.tcsj2
+  is '退出时间2 P6916';
+comment on column 临时表_数据上报_在院流感病例.jhsmc3
+  is '重症监护室名称3 P6917';
+comment on column 临时表_数据上报_在院流感病例.jrsj3
+  is '进入时间3 P6918';
+comment on column 临时表_数据上报_在院流感病例.tcsj3
+  is '退出时间3 P6919';
+comment on column 临时表_数据上报_在院流感病例.jhsmc4
+  is '重症监护室名称4 P6920';
+comment on column 临时表_数据上报_在院流感病例.jrsj4
+  is '进入时间4 P6921';
+comment on column 临时表_数据上报_在院流感病例.tcsj4
+  is '退出时间4 P6922';
+comment on column 临时表_数据上报_在院流感病例.jhsmc5
+  is '重症监护室名称5 P6923';
+comment on column 临时表_数据上报_在院流感病例.jrsj5
+  is '进入时间5 P6924';
+comment on column 临时表_数据上报_在院流感病例.tcsj5
+  is '退出时间5 P6925';
+comment on column 临时表_数据上报_在院流感病例.p1
+  is '医疗费用支付方式代码';
+comment on column 临时表_数据上报_在院流感病例.p7508
+  is '总费用，仅门诊病例填写';
+comment on column 临时表_数据上报_在院流感病例.p7509
+  is '挂号费，仅门诊病例填写';
+comment on column 临时表_数据上报_在院流感病例.p7510
+  is '药品费，仅门诊病例填写';
+comment on column 临时表_数据上报_在院流感病例.p7511
+  is '检查费，仅门诊病例填写';
+comment on column 临时表_数据上报_在院流感病例.p7512
+  is '自付费用，仅门诊病例填写';
+comment on column 临时表_数据上报_在院流感病例.p8508
+  is '是否 死亡';
+comment on column 临时表_数据上报_在院流感病例.p8509
+  is '死亡时间';
+
+  
+  
+  
+  
+  -- Create table
+create global temporary table 临时表_数据上报_在院流感费用
+(
+  病历号  VARCHAR2(50),
+  费用总额 NUMBER(10,2),
+  费用名称 VARCHAR2(50),
+  单项总额 NUMBER(10,2),
+  自付总额 NUMBER(10,2)
+)
+on commit delete rows;
+
+
+
+
+
+
+-- Create sequence 
+create sequence 病案管理_项目对照流水码
+minvalue 1
+maxvalue 9999999999
+start with 61
+increment by 1
+cache 20;

@@ -52,7 +52,7 @@ select * from 基础项目_字典明细 t where t.分类编码='GB_500249'
 
 
 
-
+EMR_ZYWD_NR
 
 
 

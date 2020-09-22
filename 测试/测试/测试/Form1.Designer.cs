@@ -36,7 +36,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(945, 261);
+            this.panel1.Size = new System.Drawing.Size(1082, 261);
             this.panel1.TabIndex = 0;
             // 
             // Form1
@@ -44,7 +44,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(945, 261);
+            this.ClientSize = new System.Drawing.Size(1082, 261);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Form1";

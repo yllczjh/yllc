@@ -78,6 +78,42 @@
               "type": "shortString",
               "remark": "",
               "chnname": "更新人员"
+            },
+            {
+              "name": "上级项目编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "上级项目编码"
+            },
+            {
+              "name": "是否回传数据",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "是否回传数据"
+            },
+            {
+              "name": "文件名格式",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "文件名格式"
+            },
+            {
+              "name": "是否自动导出",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "是否自动导出"
+            },
+            {
+              "name": "导出时间",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "导出时间"
+            },
+            {
+              "name": "导出路径",
+              "type": "VARCHAR2(1000)",
+              "remark": "",
+              "chnname": "导出路径"
             }
           ],
           "indexs": [],
@@ -614,6 +650,36 @@
               "type": "longString",
               "remark": "",
               "chnname": "默认值"
+            },
+            {
+              "name": "是否取自病历",
+              "type": "shortString",
+              "remark": "设置该字段信息是否来自电子病历",
+              "chnname": "是否取自病历"
+            },
+            {
+              "name": "元素或文档名",
+              "type": "shortString",
+              "remark": "对应电子病历中元素名或文档段名",
+              "chnname": "元素或文档名"
+            },
+            {
+              "name": "是否编码转名称",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "是否编码转名称"
+            },
+            {
+              "name": "转换表",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "转换表"
+            },
+            {
+              "name": "转换字典",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "转换字典"
             }
           ],
           "indexs": [],
@@ -752,6 +818,369 @@
             }
           ],
           "chnname": "病案管理_项目导出记录"
+        },
+        {
+          "title": "病案管理_导出列表",
+          "fields": [
+            {
+              "name": "机构编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "机构编码",
+              "pk": false,
+              "notNull": true,
+              "relationNoShow": false
+            },
+            {
+              "name": "病历号",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "病历号",
+              "notNull": true,
+              "pk": true
+            },
+            {
+              "name": "起始时间",
+              "type": "Date",
+              "remark": "导出时搜索条件的起始时间",
+              "chnname": "起始时间"
+            },
+            {
+              "name": "截止时间",
+              "type": "Date",
+              "remark": "导出时搜索条件的截止时间",
+              "chnname": "截止时间"
+            },
+            {
+              "name": "导出时间",
+              "type": "Date",
+              "remark": "",
+              "chnname": "导出时间"
+            },
+            {
+              "name": "流水码",
+              "type": "shortString",
+              "remark": "每批导出数据流水码相同",
+              "chnname": "流水码"
+            },
+            {
+              "name": "就诊类别",
+              "type": "shortString",
+              "remark": "门诊；在院；住院",
+              "chnname": "就诊类别"
+            },
+            {
+              "name": "项目编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "项目编码",
+              "pk": true,
+              "notNull": true
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "病案管理_导出列表"
+        },
+        {
+          "title": "病案管理_项目接口对照明细",
+          "fields": [
+            {
+              "name": "流水码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "流水码"
+            },
+            {
+              "name": "外键ID",
+              "type": "shortString",
+              "remark": "病案管理_项目接口对照信息分类的流水码",
+              "chnname": "外键ID"
+            },
+            {
+              "name": "接口对照信息编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "接口对照信息编码",
+              "notNull": true
+            },
+            {
+              "name": "接口对照信息名称",
+              "type": "longString",
+              "remark": "",
+              "chnname": "接口对照信息名称"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "病案管理_项目接口对照明细"
+        },
+        {
+          "title": "病案管理_项目系统对照明细",
+          "fields": [
+            {
+              "name": "外键ID",
+              "type": "shortString",
+              "remark": "病案管理_项目接口对照信息的流水码",
+              "chnname": "外键ID",
+              "notNull": true
+            },
+            {
+              "name": "系统对照信息编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "系统对照信息编码",
+              "notNull": true
+            },
+            {
+              "name": "系统对照信息名称",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "系统对照信息名称"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "病案管理_项目系统对照明细"
+        },
+        {
+          "title": "病案管理_项目接口对照分类",
+          "fields": [
+            {
+              "name": "机构编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "机构编码",
+              "pk": false,
+              "notNull": true,
+              "relationNoShow": false
+            },
+            {
+              "name": "项目编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "项目编码",
+              "notNull": true
+            },
+            {
+              "name": "流水码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "流水码",
+              "pk": false,
+              "notNull": true
+            },
+            {
+              "name": "分类编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "分类编码",
+              "notNull": true
+            },
+            {
+              "name": "分类名称",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "分类名称",
+              "notNull": true
+            },
+            {
+              "name": "对照类型",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "对照类型",
+              "notNull": true
+            },
+            {
+              "name": "过滤条件",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "过滤条件"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "病案管理_项目接口对照分类"
         }
       ],
       "graphCanvas": {
@@ -2215,7 +2644,9 @@
           ]
         }
       ],
-      "graphCanvas": {}
+      "graphCanvas": {
+        "edges": []
+      }
     }
   ],
   "dataTypeDomains": {
