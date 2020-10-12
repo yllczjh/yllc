@@ -17,3 +17,7 @@ Alt+上下箭头：行上下移动
 
 windows命令
 services.msc：打开服务
+
+
+
+win+shift+s 截图

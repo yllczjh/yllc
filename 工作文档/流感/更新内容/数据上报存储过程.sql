@@ -7,7 +7,7 @@ prompt
 prompt Creating procedure PR_数据上报_发热门诊病例信息
 prompt ===================================
 prompt
-CREATE OR REPLACE PROCEDURE CLOUDHIS.PR_数据上报_发热门诊病例信息(STR_参数          IN VARCHAR2,
+CREATE OR REPLACE PROCEDURE PR_数据上报_发热门诊病例信息(STR_参数          IN VARCHAR2,
                                              CUR_导出_列表信息 OUT SYS_REFCURSOR) IS
 
   STR_机构编码 VARCHAR2(50) := FU_通用_截取字符串值(STR_参数, '|', 1);
@@ -76,11 +76,11 @@ BEGIN
              NVL(XX.性别, '0') AS P5,
              XX.出生日期 AS P6,
              TO_NUMBER(REGEXP_REPLACE(XX.年龄, '[^-0-9.]', '')) P7,
-             Q.国籍编码 AS P12, --国籍,
+             null AS P12, --国籍,
              XX.民族ID AS P11,
              DECODE(XX.婚姻状况, '4', '9', XX.婚姻状况) AS P8,
              XX.职业 AS P9, --B.职业
-             Q.证件类别编码 AS P7503, -- 注册证件类型代码,
+             '01' AS P7503, -- 注册证件类型代码,
              XX.身份证号 AS P13,
              NVL(XX.现住_地址, XX.家庭地址) AS P801, --B.现住_地址
              XX.手机号码 AS P802,
@@ -166,12 +166,9 @@ BEGIN
                      X1.联系人_电话
                 FROM 基础项目_病人信息 X
                 LEFT JOIN 基础项目_病人病案信息 X1
-                  ON X.病人ID = X1.病人ID) XX,
-             基础项目_病人信息_其他 Q
+                  ON X.病人ID = X1.病人ID) XX
        WHERE G.机构编码 = XX.机构编码
-         AND XX.机构编码 = Q.机构编码
          AND G.病人ID = XX.病人ID
-         AND XX.病人ID = Q.病人ID
          AND G.机构编码 = STR_机构编码
          AND EXISTS (SELECT 1
                 FROM 病案管理_导出列表 A
@@ -184,6 +181,7 @@ BEGIN
   END;
 
 END PR_数据上报_发热门诊病例信息;
+
 /
 
 prompt
