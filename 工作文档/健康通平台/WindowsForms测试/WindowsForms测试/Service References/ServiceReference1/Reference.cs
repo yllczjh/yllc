@@ -12,21 +12,21 @@ namespace WindowsForms测试.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.APIServiceSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="Cloud.Xt.Soa.Hlht", ConfigurationName="ServiceReference1.APIServiceSoap")]
     public interface APIServiceSoap {
         
-        // CODEGEN: 命名空间 http://tempuri.org/ 的元素名称 HelloWorldResult 以后生成的消息协定未标记为 nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/HelloWorld", ReplyAction="*")]
+        // CODEGEN: 命名空间 Cloud.Xt.Soa.Hlht 的元素名称 HelloWorldResult 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="Cloud.Xt.Soa.Hlht/HelloWorld", ReplyAction="*")]
         WindowsForms测试.ServiceReference1.HelloWorldResponse HelloWorld(WindowsForms测试.ServiceReference1.HelloWorldRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/HelloWorld", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="Cloud.Xt.Soa.Hlht/HelloWorld", ReplyAction="*")]
         System.Threading.Tasks.Task<WindowsForms测试.ServiceReference1.HelloWorldResponse> HelloWorldAsync(WindowsForms测试.ServiceReference1.HelloWorldRequest request);
         
-        // CODEGEN: 命名空间 http://tempuri.org/ 的元素名称 xml 以后生成的消息协定未标记为 nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PubService", ReplyAction="*")]
+        // CODEGEN: 命名空间 Cloud.Xt.Soa.Hlht 的元素名称 xml 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="Cloud.Xt.Soa.Hlht/PubService", ReplyAction="*")]
         WindowsForms测试.ServiceReference1.PubServiceResponse PubService(WindowsForms测试.ServiceReference1.PubServiceRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PubService", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="Cloud.Xt.Soa.Hlht/PubService", ReplyAction="*")]
         System.Threading.Tasks.Task<WindowsForms测试.ServiceReference1.PubServiceResponse> PubServiceAsync(WindowsForms测试.ServiceReference1.PubServiceRequest request);
     }
     
@@ -36,7 +36,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class HelloWorldRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorld", Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorld", Namespace="Cloud.Xt.Soa.Hlht", Order=0)]
         public WindowsForms测试.ServiceReference1.HelloWorldRequestBody Body;
         
         public HelloWorldRequest() {
@@ -63,7 +63,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class HelloWorldResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorldResponse", Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="HelloWorldResponse", Namespace="Cloud.Xt.Soa.Hlht", Order=0)]
         public WindowsForms测试.ServiceReference1.HelloWorldResponseBody Body;
         
         public HelloWorldResponse() {
@@ -77,7 +77,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="Cloud.Xt.Soa.Hlht")]
     public partial class HelloWorldResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -97,7 +97,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class PubServiceRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PubService", Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PubService", Namespace="Cloud.Xt.Soa.Hlht", Order=0)]
         public WindowsForms测试.ServiceReference1.PubServiceRequestBody Body;
         
         public PubServiceRequest() {
@@ -111,7 +111,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="Cloud.Xt.Soa.Hlht")]
     public partial class PubServiceRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -131,7 +131,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class PubServiceResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PubServiceResponse", Namespace="http://tempuri.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PubServiceResponse", Namespace="Cloud.Xt.Soa.Hlht", Order=0)]
         public WindowsForms测试.ServiceReference1.PubServiceResponseBody Body;
         
         public PubServiceResponse() {
@@ -145,7 +145,7 @@ namespace WindowsForms测试.ServiceReference1 {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="Cloud.Xt.Soa.Hlht")]
     public partial class PubServiceResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
