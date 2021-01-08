@@ -29,7 +29,7 @@ namespace 测试
 
         private void button1_Click(object sender, EventArgs e)
         {
-           MessageBox.Show("a\r\nd");
+           MessageBox.Show(DateTime.Now.ToString("HH"));
         } 
 
         private void Form3_Load(object sender, EventArgs e)
@@ -38,5 +38,18 @@ namespace 测试
 
             tb.Text = "SUCCESS";
         }
+    }
+    public enum M_单据类型
+    {
+        入库单 = 20,
+        调配单 = 22,
+        归还单 = 24,
+        退库单 = 21,
+        调配确认单 = 23,
+        归还确认单 = 25,
+        调配申请单 = 26,
+        调配审核单 = 27,
+        归还申请单 = 28,
+        归还审核单 = 29
     }
 }

@@ -2891,18 +2891,6 @@
               "chnname": "购入日期"
             },
             {
-              "name": "发票号",
-              "type": "shortString",
-              "remark": "",
-              "chnname": "发票号"
-            },
-            {
-              "name": "发票日期",
-              "type": "Date",
-              "remark": "",
-              "chnname": "发票日期"
-            },
-            {
               "name": "使用部门",
               "type": "shortString",
               "remark": "",
@@ -2979,6 +2967,12 @@
               "type": "Date",
               "remark": "",
               "chnname": "审核日期"
+            },
+            {
+              "name": "审核驳回原因",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "审核驳回原因"
             },
             {
               "name": "退货状态",
@@ -4790,16 +4784,28 @@
               "chnname": "白带异常"
             },
             {
-              "name": "月经持续时间",
+              "name": "月经持续时间1",
               "type": "VARCHAR2(10)",
               "remark": "",
-              "chnname": "月经持续时间"
+              "chnname": "月经持续时间1"
             },
             {
-              "name": "月经周期",
+              "name": "月经持续时间2",
               "type": "VARCHAR2(10)",
               "remark": "",
-              "chnname": "月经周期"
+              "chnname": "月经持续时间2"
+            },
+            {
+              "name": "月经周期1",
+              "type": "VARCHAR2(10)",
+              "remark": "",
+              "chnname": "月经周期1"
+            },
+            {
+              "name": "月经周期2",
+              "type": "VARCHAR2(10)",
+              "remark": "",
+              "chnname": "月经周期2"
             },
             {
               "name": "末次月经",
@@ -5006,6 +5012,18 @@
               "chnname": "子宫备注"
             },
             {
+              "name": "子宫大小",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "子宫大小"
+            },
+            {
+              "name": "子宫肿物",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "子宫肿物"
+            },
+            {
               "name": "附件盆腔",
               "type": "shortString",
               "remark": "",
@@ -5018,6 +5036,18 @@
               "chnname": "附件盆腔备注"
             },
             {
+              "name": "附件盆腔压痛",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "附件盆腔压痛"
+            },
+            {
+              "name": "附件盆腔肿物",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "附件盆腔肿物"
+            },
+            {
               "name": "分泌物检查",
               "type": "shortString",
               "remark": "",
@@ -5028,6 +5058,12 @@
               "type": "shortString",
               "remark": "",
               "chnname": "分泌物检查备注"
+            },
+            {
+              "name": "分泌物清洁度",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "分泌物清洁度"
             },
             {
               "name": "妇科检查临床诊断",
@@ -5078,10 +5114,16 @@
               "chnname": "HPV分型"
             },
             {
-              "name": "HPV分型备注",
+              "name": "HPV型号",
               "type": "shortString",
               "remark": "",
-              "chnname": "HPV分型备注"
+              "chnname": "HPV型号"
+            },
+            {
+              "name": "HPV型号备注",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "HPV型号备注"
             },
             {
               "name": "须进一步检查",
@@ -8729,7 +8771,7 @@
             },
             {
               "name": "分类",
-              "type": "shortString",
+              "type": "longString",
               "remark": "",
               "chnname": "分类",
               "pk": true,
