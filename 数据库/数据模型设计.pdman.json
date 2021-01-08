@@ -2979,6 +2979,12 @@
               "type": "shortString",
               "remark": "已退货",
               "chnname": "退货状态"
+            },
+            {
+              "name": "关联单据号",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "关联单据号"
             }
           ],
           "indexs": [],
@@ -3757,6 +3763,174 @@
             }
           ],
           "chnname": "设备管理_设备折旧变更"
+        },
+        {
+          "title": "设备管理_设备折旧",
+          "fields": [
+            {
+              "name": "机构编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "机构编码",
+              "pk": true,
+              "notNull": true,
+              "relationNoShow": false
+            },
+            {
+              "name": "折旧单号",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "折旧单号",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "资产编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "资产编码",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "名称",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "名称"
+            },
+            {
+              "name": "折旧年月",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "折旧年月"
+            },
+            {
+              "name": "执行日期",
+              "type": "Date",
+              "remark": "",
+              "chnname": "执行日期"
+            },
+            {
+              "name": "开始日期",
+              "type": "Date",
+              "remark": "",
+              "chnname": "开始日期"
+            },
+            {
+              "name": "结束日期",
+              "type": "Date",
+              "remark": "",
+              "chnname": "结束日期"
+            },
+            {
+              "name": "折旧月数",
+              "type": "number18-3",
+              "remark": "",
+              "chnname": "折旧月数"
+            },
+            {
+              "name": "月折旧额",
+              "type": "number18-3",
+              "remark": "",
+              "chnname": "月折旧额"
+            },
+            {
+              "name": "累计折旧",
+              "type": "number18-3",
+              "remark": "",
+              "chnname": "累计折旧"
+            },
+            {
+              "name": "购买单价",
+              "type": "number18-3",
+              "remark": "",
+              "chnname": "购买单价"
+            },
+            {
+              "name": "净现值",
+              "type": "number18-3",
+              "remark": "",
+              "chnname": "净现值"
+            },
+            {
+              "name": "折旧类别",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "折旧类别"
+            },
+            {
+              "name": "折旧类别名称",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "折旧类别名称"
+            },
+            {
+              "name": "设备分类",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "设备分类"
+            },
+            {
+              "name": "存放科室",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "存放科室"
+            },
+            {
+              "name": "备注",
+              "type": "longString",
+              "remark": "",
+              "chnname": "备注"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "设备管理_设备折旧"
         }
       ],
       "graphCanvas": {
@@ -4594,16 +4768,46 @@
               "chnname": "其他特殊检查疾病诊断"
             },
             {
-              "name": "医学意见",
+              "name": "医学意见女",
               "type": "shortString",
               "remark": "",
-              "chnname": "医学意见"
+              "chnname": "医学意见女"
+            },
+            {
+              "name": "医学意见男",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "医学意见男"
+            },
+            {
+              "name": "医学意见男备注",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "医学意见男备注"
             },
             {
               "name": "婚前卫生咨询内容",
               "type": "longString",
               "remark": "",
               "chnname": "婚前卫生咨询内容"
+            },
+            {
+              "name": "出具证明日期",
+              "type": "Date",
+              "remark": "",
+              "chnname": "出具证明日期"
+            },
+            {
+              "name": "检查医师",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "检查医师"
+            },
+            {
+              "name": "主检医师",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "主检医师"
             }
           ],
           "indexs": [],
