@@ -12,12 +12,11 @@ namespace 实例
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main(string[] arguments)
+        static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(arguments));
-
+            Application.Run(new Form1());
         }
     }
 }
