@@ -9313,6 +9313,135 @@
         "edges": []
       },
       "associations": []
+    },
+    {
+      "name": "门诊管理",
+      "chnname": "门诊管理",
+      "entities": [
+        {
+          "title": "门诊管理_停诊记录",
+          "fields": [
+            {
+              "name": "机构编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "机构编码",
+              "pk": true,
+              "notNull": true,
+              "relationNoShow": false
+            },
+            {
+              "name": "流水码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "流水码",
+              "pk": true,
+              "notNull": true
+            },
+            {
+              "name": "人员编码",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "人员编码"
+            },
+            {
+              "name": "开始时间",
+              "type": "Date",
+              "remark": "停诊开始时间",
+              "chnname": "开始时间"
+            },
+            {
+              "name": "结束时间",
+              "type": "Date",
+              "remark": "停诊结束时间",
+              "chnname": "结束时间"
+            },
+            {
+              "name": "状态",
+              "type": "shortString",
+              "remark": "有效、无效(即提前恢复接诊)、删除、过期(该状态只在页面显示)",
+              "chnname": "状态"
+            },
+            {
+              "name": "创建人",
+              "type": "shortString",
+              "remark": "",
+              "chnname": "创建人"
+            },
+            {
+              "name": "创建时间",
+              "type": "Date",
+              "remark": "",
+              "chnname": "创建时间"
+            },
+            {
+              "name": "更新人",
+              "type": "shortString",
+              "remark": "修改状态及删除标志的人",
+              "chnname": "更新人"
+            },
+            {
+              "name": "更新时间",
+              "type": "Date",
+              "remark": "",
+              "chnname": "更新时间"
+            }
+          ],
+          "indexs": [],
+          "headers": [
+            {
+              "fieldName": "chnname",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "name",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "type",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "dataType",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "remark",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "pk",
+              "relationNoShow": false
+            },
+            {
+              "fieldName": "notNull",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "autoIncrement",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "defaultValue",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "relationNoShow",
+              "relationNoShow": true
+            },
+            {
+              "fieldName": "uiHint",
+              "relationNoShow": true
+            }
+          ],
+          "chnname": "门诊管理_停诊记录"
+        }
+      ],
+      "graphCanvas": {
+        "nodes": [],
+        "edges": []
+      },
+      "associations": []
     }
   ],
   "dataTypeDomains": {
