@@ -71,8 +71,10 @@ administrator pQ5HLwDVG@
 
 administrator/123456
 --------------------------------------
-
-
+外网服务器
+47.104.4.221:4389
+administrator
+abcd1243..
 
 
 
