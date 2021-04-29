@@ -56,6 +56,11 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "msgid值无效");
                     goto 退出;
                 }
+                if (Config.dic.ContainsKey(msg.msgid))
+                {
+                    Code.Result(ref msg, 编码.其他错误, "重复请求");
+                    goto 退出;
+                }
                 #endregion
 
                 #region clienttype 客户端标识
@@ -308,11 +313,18 @@ namespace WebAPI.filters
                 req.param = JsonConvert.SerializeObject(p);
 
                 Log.Error(actionName, JsonConvert.SerializeObject(req));
-
             }
             else
             {
                 actionContext.Request.Properties["msg"] = msg;
+                Config.dic.Add(msg.msgid, DateTime.Now);
+                foreach (KeyValuePair<string, DateTime> kv in Config.dic)
+                {
+                    if ((DateTime.Now - kv.Value).TotalHours > 1)
+                    {
+                        Config.dic.Remove(kv.Key);
+                    }
+                }
             }
         }
         private string GetValue(string name, HttpRequestHeaders headers)
@@ -326,6 +338,8 @@ namespace WebAPI.filters
                 return "NOT_FOUND";
             }
         }
+
+        
     }
 
 }

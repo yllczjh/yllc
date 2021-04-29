@@ -1,4 +1,7 @@
-﻿namespace WebAPI.Tool
+﻿using System.Collections.Generic;
+using System;
+
+namespace WebAPI.Tool
 {
     public class Config
     {
@@ -43,5 +46,7 @@
         {
             get { return GetAppSetting("login"); }
         }
+
+        public static Dictionary<string, DateTime> dic = new Dictionary<string, DateTime>();
     }
 }
