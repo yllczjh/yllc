@@ -180,7 +180,15 @@ namespace WebAPI.Tool
                             Dictionary<string, object> out_dic_set = new Dictionary<string, object>();
                             Dictionary<string, object> in_dic_dataset = in_arr_dataset[i] as Dictionary<string, object>;
                             out_dic_set.Add("dataparam", GetParameter(str_主插入语言, in_dic_dataset, out str_error));
+                            if (!string.IsNullOrEmpty(str_error))
+                            {
+                                return null;
+                            }
                             out_dic_set.Add("updateparam", GetParameter(str_主更新语言, in_dic_dataset, out str_error));
+                            if (!string.IsNullOrEmpty(str_error))
+                            {
+                                return null;
+                            }
 
                             if (in_dic_dataset.ContainsKey("datadetail"))
                             {
@@ -200,6 +208,10 @@ namespace WebAPI.Tool
                                     {
                                         Dictionary<string, object> in_dic_datadetail = in_arr_datadetail[j] as Dictionary<string, object>;
                                         out_listdetail.Add(GetParameter(str_明细插入语言, in_dic_datadetail, out str_error, in_dic_dataset));
+                                        if (!string.IsNullOrEmpty(str_error))
+                                        {
+                                            return null;
+                                        }
                                     }
                                     out_dic_set.Add("rowparam", out_listdetail);
                                 }
@@ -212,6 +224,13 @@ namespace WebAPI.Tool
                             out_listset.Add(out_dic_set);
                         }
                         out_dic.Add("dataparam", out_listset);
+
+                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, out str_error);
+                        if (!string.IsNullOrEmpty(str_error))
+                        {
+                            return null;
+                        }
+                        out_dic.Add("finishparam", parameters_主);
                     }
                     else
                     {
@@ -259,7 +278,7 @@ namespace WebAPI.Tool
             m_values.Add("datadetail", dt);
             return m_values;
         }
-        public static Dictionary<string, object> JsonToDictionary(string jsonData,ref MessageModel msg)
+        public static Dictionary<string, object> JsonToDictionary(string jsonData, ref MessageModel msg)
         {
             //实例化JavaScriptSerializer类的新实例
             JavaScriptSerializer jss = new JavaScriptSerializer();

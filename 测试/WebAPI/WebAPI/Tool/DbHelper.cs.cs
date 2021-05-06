@@ -1128,6 +1128,15 @@ namespace WebAPI
                     }
                 }
 
+                if (dic.ContainsKey("finishparam") && !string.IsNullOrEmpty(str_完成语言))
+                {
+                    DbParameter[] p_完成参数 = dic["finishparam"] as DbParameter[];
+                    Cmd.CommandText = str_完成语言;
+                    Cmd.Parameters.Clear();
+                    Cmd.Parameters.AddRange(p_完成参数);
+                    Cmd.ExecuteNonQuery();
+                }
+
                 //执行完成后提交事务
                 CommitTransaction();
                 return string.Empty;
