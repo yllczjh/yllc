@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using Tool;
+using Tool.DB;
+using Tool.Help;
+using Tool.Model;
 using WebAPI.Models;
 
 namespace WebAPI.Tool
@@ -185,7 +189,7 @@ namespace WebAPI.Tool
             }
         }
 
-        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out DateTime accessPastTime)
+        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out DateTime accessPastTime,out string secret)
         {
             try
             {
@@ -196,6 +200,7 @@ namespace WebAPI.Tool
                     Code.Result(ref msg, 编码.消息头错误, "无效的customid");
                     accessToken = string.Empty;
                     accessPastTime = DateTime.Now;
+                    secret = string.Empty;
                     return false;
                 }
                 if (null != dt && dt.Rows.Count > 1)
@@ -203,10 +208,12 @@ namespace WebAPI.Tool
                     Code.Result(ref msg, 编码.消息头错误, "customid匹配到多个用户");
                     accessToken = string.Empty;
                     accessPastTime = DateTime.Now;
+                    secret = string.Empty;
                     return false;
                 }
                 accessToken = dt.Rows[0]["accessToken"].ToString();
                 accessPastTime = DateTime.Parse(dt.Rows[0]["accessPastTime"].ToString());
+                secret = dt.Rows[0]["secret"].ToString();
             }
             catch (Exception e)
             {
@@ -214,6 +221,7 @@ namespace WebAPI.Tool
                 Log.Error("M_验证客户ID", e.Message);
                 accessToken = "";
                 accessPastTime = DateTime.Now.AddDays(-1);
+                secret = string.Empty;
                 return false;
             }
             return true;

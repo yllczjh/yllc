@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Collections;
 
-namespace WebAPI
+namespace Tool.DB
 {
     /// <summary>
     /// 数据库名称枚举

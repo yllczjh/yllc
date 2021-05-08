@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
+using Tool.Help;
+using Tool.Helper;
+using Tool.Model;
 using WebAPI.filters;
 using WebAPI.Models;
 using WebAPI.Tool;

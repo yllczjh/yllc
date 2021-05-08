@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebAPI.Models
+namespace Tool.Model
 {
     /// <summary>
     /// 消息参数类
@@ -137,7 +137,8 @@ namespace WebAPI.Models
 
         public RequestModel()
         {
-
+            msgid = Guid.NewGuid().ToString("N");
+            reqtime = DateTime.Now.ToString("yyyyMMddHHmmss");
         }
     }
 }

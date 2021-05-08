@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebAPI.Tool
+namespace Tool.Help
 {
     public class Log
     {
@@ -14,10 +14,10 @@ namespace WebAPI.Tool
          */
         public static void Debug(string className, string content)
         {
-            if (Config.LogLevel >= 3)
-            {
+            //if (Config.LogLevel >= 3)
+            //{
                 WriteLog("DEBUG", className, content);
-            }
+            //}
         }
 
         /**
@@ -27,10 +27,10 @@ namespace WebAPI.Tool
         */
         public static void Info(string className, string content)
         {
-            if (Config.LogLevel >= 2)
-            {
+            //if (Config.LogLevel >= 2)
+            //{
                 WriteLog("INFO", className, content);
-            }
+            //}
         }
 
         /**
@@ -40,10 +40,10 @@ namespace WebAPI.Tool
         */
         public static void Error(string className, string content)
         {
-            if (Config.LogLevel >= 1)
-            {
+            //if (Config.LogLevel >= 1)
+            //{
                 WriteLog("ERROR", className, content);
-            }
+            //}
         }
 
         /**

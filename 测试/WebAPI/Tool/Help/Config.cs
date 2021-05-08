@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace WebAPI.Tool
+namespace Tool.Helper
 {
     public class Config
     {

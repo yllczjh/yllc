@@ -1,6 +1,7 @@
-﻿using WebAPI.Models;
+﻿using Tool;
+using Tool.Model;
 
-namespace WebAPI.Tool
+namespace Tool.Help
 {
     public class Code
     {
@@ -9,7 +10,6 @@ namespace WebAPI.Tool
             msg.success = (int)c;
             msg.msgtext = c.ToString() + "(" + str + ")";
         }
-
     }
 
     public enum 编码

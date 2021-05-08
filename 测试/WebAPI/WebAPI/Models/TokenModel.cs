@@ -1,4 +1,5 @@
 ﻿using System;
+using Tool.Helper;
 using WebAPI.Tool;
 
 namespace WebAPI.Models

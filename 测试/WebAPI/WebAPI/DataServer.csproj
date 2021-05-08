@@ -102,6 +102,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Tool">
+      <HintPath>..\Tool\bin\Debug\Tool.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -134,20 +137,15 @@
     <Compile Include="Controllers\v1\BaseController.cs" />
     <Compile Include="Controllers\VersionConstrollerSelector.cs" />
     <Compile Include="filters\AuthFilter.cs" />
-    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Tool\Code.cs" />
-    <Compile Include="Tool\Config.cs" />
     <Compile Include="Tool\DataHelper.cs" />
-    <Compile Include="Tool\DbHelper.cs.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\v1\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tool\Log.cs" />
     <Compile Include="Tool\ToolFunction.cs" />
     <Compile Include="WebService.ashx.cs">
       <DependentUpon>WebService.ashx</DependentUpon>
@@ -168,7 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\v2\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

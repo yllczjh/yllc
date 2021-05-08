@@ -11,6 +11,9 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Tool.Help;
+using Tool.Helper;
+using Tool.Model;
 using WebAPI.Models;
 using WebAPI.Tool;
 
@@ -78,7 +81,7 @@ namespace WebAPI.filters
                 }
                 #endregion
 
-                #region customid 客户ID/APPID/用户ID
+                #region customid 
                 IEnumerable<string> customid;
                 if (!headers.TryGetValues("customid", out customid))
                 {
@@ -94,12 +97,10 @@ namespace WebAPI.filters
 
                 string accessToken = string.Empty;
                 DateTime accessPastTime = DateTime.Now.AddMinutes(-1);
-                //第三方验证数据库中customid
-                if (msg.clienttype == "third")
-                {
-                    DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime);
-                    if (msg.success != 1) goto 退出;
-                }
+                string secret = string.Empty;
+                //验证数据库中customid
+                DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime,out secret);
+                if (msg.success != 1) goto 退出;
                 #endregion
 
                 #region token、customid
@@ -139,11 +140,6 @@ namespace WebAPI.filters
                             UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                             if (null != userModel)
                             {
-                                //if (userModel.onlyid != msg.customid)
-                                //{
-                                //    Code.Result(ref msg, 编码.用户身份错误, "customid与系统不一致，请重新登录");
-                                //    return false;
-                                //}
                                 if (null == userModel.token)
                                 {
                                     Code.Result(ref msg, 编码.用户身份错误, "未找到Token信息，请重新登录获取");
@@ -278,7 +274,7 @@ namespace WebAPI.filters
                 }
                 if (Config.CeShi == "0")
                 {
-                    string Sign = ToolFunction.GetRequsetSign(msg, p);
+                    string Sign = EnHelper.GetRequsetSign(msg, p, secret);
                     if (msg.sign != Sign)
                     {
                         Code.Result(ref msg, 编码.消息头错误, "签名错误");
@@ -339,7 +335,7 @@ namespace WebAPI.filters
             }
         }
 
-        
+
     }
 
 }
