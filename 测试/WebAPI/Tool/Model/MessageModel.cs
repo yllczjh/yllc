@@ -16,9 +16,9 @@ namespace Tool.Model
         /// </summary>
         public string remsgid { get; set; }
         /// <summary>
-        /// 处理结果。1成功，0失败
+        /// 处理结果。0成功
         /// </summary>
-        public int success { get; set; }
+        public int state { get; set; }
         /// <summary>
         /// 处理消息
         /// </summary>
@@ -59,7 +59,7 @@ namespace Tool.Model
         {
             msgid = string.Empty;
             remsgid = Guid.NewGuid().ToString("N");
-            success = 1;
+            state = 0;
             msgtext = "成功!";
             dateset = string.Empty;
             customid = string.Empty;
@@ -80,9 +80,9 @@ namespace Tool.Model
         /// </summary>
         public string remsgid { get; set; }
         /// <summary>
-        /// 处理结果。1成功，0失败
+        /// 处理结果。0成功
         /// </summary>
-        public int success { get; set; }
+        public int state { get; set; }
         /// <summary>
         /// 处理消息
         /// </summary>
@@ -95,7 +95,7 @@ namespace Tool.Model
         {
             this.msgid = msg.msgid;
             this.remsgid = msg.remsgid;
-            this.success = msg.success;
+            this.state = msg.state;
             this.msgtext = msg.msgtext;
             this.dateset = msg.dateset;
         }

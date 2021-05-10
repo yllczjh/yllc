@@ -89,14 +89,14 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.code = code.First();
-                if (string.IsNullOrEmpty(msg.code) && actionName == "process")
+                if (string.IsNullOrEmpty(msg.code))
                 {
                     Code.Result(ref msg, 编码.消息头错误, "code值无效");
                     goto 退出;
                 }
                 int i_基础业务 = 0;
                 DataHelper.M_验证Code(msg.code, ref msg, out i_基础业务);
-                if (msg.success != 1) goto 退出;
+                if (msg.state != 0) goto 退出;
                 #endregion
 
                 #region customid 
@@ -118,7 +118,7 @@ namespace WebAPI.filters
                 string secret = string.Empty;
                 //验证数据库中customid
                 DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime, out secret);
-                if (msg.success != 1) goto 退出;
+                if (msg.state != 0) goto 退出;
                 #endregion
 
                 #region token、customid
@@ -168,6 +168,10 @@ namespace WebAPI.filters
                             Code.Result(ref msg, 编码.Token错误, "请重新获取");
                             goto 退出;
                         }
+                    }else
+                    {
+                        Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                        goto 退出;
                     }
                 }
                 #endregion
@@ -237,7 +241,7 @@ namespace WebAPI.filters
                 goto 退出;
             }
 
-            退出: if (msg.success != 1)
+            退出: if (msg.state != 0)
             {
                 ResponseModel res = new ResponseModel(msg);
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, res);

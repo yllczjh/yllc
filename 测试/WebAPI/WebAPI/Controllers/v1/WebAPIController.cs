@@ -38,7 +38,7 @@ namespace WebAPI.Controllers.v1
             {
                 Code.Result(ref msg, 编码.程序错误, ex.Message);
             }
-            if (msg.success == 1)
+            if (msg.state == 0)
             {
                 TokenModel token = new TokenModel();
                 webgrant.token = token;

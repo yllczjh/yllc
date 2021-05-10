@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Tool;
 using Tool.DB;
 using Tool.Help;
 using Tool.Model;
@@ -25,10 +24,9 @@ namespace WebAPI.Tool
             try
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
-
                 string str_json = JsonConvert.SerializeObject(p);
                 Dictionary<string, object> param = ToolFunction.JsonToDictionary(str_json, ref msg);
-                if (msg.success != 1)
+                if (msg.state != 0)
                 {
                     return null;
                 }
@@ -178,6 +176,24 @@ namespace WebAPI.Tool
             }
             catch (Exception e)
             {
+                try
+                {
+                    if (e.GetType().Name == "SqlException")
+                    {
+                        if (((SqlException)e).State == 255)
+                        {
+                            int errcode = int.Parse(e.Message.Split(')')[0].Split('(')[1]);
+                            string errmsg = e.Message.Split(')')[1];
+                            Code.Result(ref msg, errcode, errmsg);
+                            return null;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 Log.Error("M_业务数据处理", e.Message);
                 return null;
@@ -235,7 +251,7 @@ namespace WebAPI.Tool
                     return false;
                 }
                 accessToken = dt.Rows[0]["accessToken"].ToString();
-                accessPastTime = long.Parse(dt.Rows[0]["accessPastTime"].ToString());
+                long.TryParse(dt.Rows[0]["accessPastTime"].ToString(), out accessPastTime);
                 secret = dt.Rows[0]["secret"].ToString();
             }
             catch (Exception e)
@@ -254,7 +270,7 @@ namespace WebAPI.Tool
             string sql = $"update webapi_customer set accessToken='{token.accessToken}',accessPastTime=convert(datetime,'{token.accessPastTime}') where customid='{customid}'";
             return DbHelper.Db.ExecuteSql(sql);
         }
-        public static bool M_验证用户信息(Dictionary<string, object> param,ref MessageModel msg)
+        public static bool M_验证用户信息(Dictionary<string, object> param, ref MessageModel msg)
         {
             string username = string.Empty;
             if (param.ContainsKey("username"))
@@ -274,7 +290,7 @@ namespace WebAPI.Tool
             {
                 Code.Result(ref msg, 编码.参数错误, "参数psw不存在!");
             }
-            string sql = $"select 1 from  jc_user where username='{username}' and password={password}'";
+            string sql = $"select 1 from  jc_user where username='{username}' and password='{password}'";
             DataTable dt = DbHelper.Db.GetDataTable(sql);
             if (null == dt || dt.Rows.Count <= 0)
             {

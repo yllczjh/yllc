@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Reflection;
 using System.Diagnostics;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace Tool.DB
 {
@@ -737,8 +738,9 @@ namespace Tool.DB
                                 return dt;
                             }
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            
                             Con.Close();
 
                             throw;

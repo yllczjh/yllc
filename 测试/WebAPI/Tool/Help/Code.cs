@@ -7,8 +7,13 @@ namespace Tool.Help
     {
         public static void Result(ref MessageModel msg, 编码 c, string str)
         {
-            msg.success = (int)c;
+            msg.state = (int)c;
             msg.msgtext = c.ToString() + "(" + str + ")";
+        }
+        public static void Result(ref MessageModel msg, int c, string str)
+        {
+            msg.state = c;
+            msg.msgtext = str;
         }
     }
 

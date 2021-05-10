@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -89,7 +87,6 @@ namespace WebAPI.Controllers.v1
         //}
 
 
-        //[HttpPost]
         private IHttpActionResult process(dynamic p)
         {
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
@@ -112,7 +109,7 @@ namespace WebAPI.Controllers.v1
                     }
                 }
 
-                if (msg.success == 1)
+                if (msg.state == 0)
                 {
                     dic = DataHelper.M_业务数据处理(ref msg, p);
                 }

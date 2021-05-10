@@ -41,9 +41,9 @@ namespace WebAPI.Controllers.v1
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("msgid", msg.msgid);
             dic.Add("remsgid", msg.remsgid);
-            dic.Add("success", msg.success);
+            dic.Add("state", msg.state);
             dic.Add("msgtext", msg.msgtext);
-            if (msg.success == 1 && null != dic_返回数据)
+            if (msg.state == 0 && null != dic_返回数据)
             {
                 foreach (KeyValuePair<string, object> pair in dic_返回数据)
                 {
