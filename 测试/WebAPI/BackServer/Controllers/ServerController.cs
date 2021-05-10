@@ -40,11 +40,11 @@ namespace BackServer.Controllers
 
 
 
-            if (!RedisHelper.GetDatabase().KeyExists("aaa"))
+            if (!Redis.GetDatabase().KeyExists("aaa"))
             {
-                RedisHelper.GetDatabase().StringSet("aaa", json);
+                Redis.GetDatabase().StringSet("aaa", json);
             }
-            string aa = RedisHelper.GetDatabase().StringGet("aaa");
+            string aa = Redis.GetDatabase().StringGet("aaa");
             return json;
 
             

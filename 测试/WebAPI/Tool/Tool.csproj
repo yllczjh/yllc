@@ -42,6 +42,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,8 +55,9 @@
     <Compile Include="DB\DbHelper.cs.cs" />
     <Compile Include="Help\Config.cs" />
     <Compile Include="Help\EnHelper.cs" />
+    <Compile Include="Help\Helper.cs" />
     <Compile Include="Help\Log.cs" />
-    <Compile Include="Help\RedisHelper.cs" />
+    <Compile Include="Help\Redis.cs" />
     <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

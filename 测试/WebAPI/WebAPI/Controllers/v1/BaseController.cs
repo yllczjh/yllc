@@ -60,7 +60,7 @@ namespace WebAPI.Controllers.v1
             string appid = GetRequestString("customid");
             string base_url = Config.BaseURL;
             string url = $"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
-                $@"{appid}&redirect_uri={base_url}Login/wxwebgrant&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+                $@"{appid}&redirect_uri={base_url}WebAPI/wxwebgrant&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
             //snsapi_userinfo       snsapi_base
             return Redirect(url);
         }

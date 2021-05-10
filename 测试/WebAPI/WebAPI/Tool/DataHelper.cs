@@ -188,7 +188,34 @@ namespace WebAPI.Tool
                 return null;
             }
         }
-
+        public static bool M_验证Code(string code, ref MessageModel msg,out int i_基础业务)
+        {
+            try
+            {
+                string sql = $@"SELECT * from webapi_list where 业务编号='{code}' and 有效状态='True'";
+                DataTable dt = DbHelper.Db.GetDataTable(sql);
+                if (null == dt || dt.Rows.Count <= 0)
+                {
+                    Code.Result(ref msg, 编码.消息头错误, "无效的code");
+                    i_基础业务 = 0;
+                    return false;
+                }
+                if (null != dt && dt.Rows.Count > 1)
+                {
+                    Code.Result(ref msg, 编码.消息头错误, "匹配到多个code");
+                    i_基础业务 = 0;
+                    return false;
+                }
+                i_基础业务 = (int)dt.Rows[0]["基础业务"];
+            }
+            catch (Exception)
+            {
+                i_基础业务 = 0;
+                return false;
+            }
+            
+            return true;
+        }
         public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out DateTime accessPastTime,out string secret)
         {
             try
@@ -226,7 +253,7 @@ namespace WebAPI.Tool
             }
             return true;
         }
-        public static int M_更新第三方Token(TokenModel token, string customid)
+        public static int M_更新Token(TokenModel token, string customid)
         {
             string sql = $"update webapi_customer set accessToken='{token.accessToken}',accessPastTime=convert(datetime,'{token.accessPastTime}') where customid='{customid}'";
             return DbHelper.Db.ExecuteSql(sql);

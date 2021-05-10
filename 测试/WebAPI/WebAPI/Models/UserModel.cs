@@ -13,6 +13,7 @@ namespace WebAPI.Models
     {
         public string onlyid { get; set; }//用户唯一标识 微信：openid  web：
         public TokenModel token { get; set; }
+        public object userinfo { get; set; }
         public UserModel()
         {
 

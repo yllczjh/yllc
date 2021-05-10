@@ -133,6 +133,7 @@
     <None Include="WebService.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\v1\WebAPIController.cs" />
     <Compile Include="filters\ActionFilter.cs" />
     <Compile Include="Controllers\v1\BaseController.cs" />
     <Compile Include="Controllers\VersionConstrollerSelector.cs" />

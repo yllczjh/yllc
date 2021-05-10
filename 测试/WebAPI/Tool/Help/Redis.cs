@@ -5,7 +5,7 @@ using System.Configuration;
 namespace Tool.Helper
 {
     //同步Nuget工具安装StackExchange.Redis.StrongName类库
-    public static class RedisHelper
+    public static class Redis
     {
         // 127.0.0.1:6379
         private static readonly string conn = ConfigurationManager.ConnectionStrings["RedisExchangeHosts"].ConnectionString;

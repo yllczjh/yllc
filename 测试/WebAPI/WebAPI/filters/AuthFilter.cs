@@ -37,7 +37,7 @@ namespace WebAPI.filters
             JObject p = null;
             MessageModel msg = new MessageModel();
             string controllerName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName.ToLower();
-            string actionName = actionContext.ActionDescriptor.ActionName.ToLower();//process、login、token
+            string actionName = actionContext.ActionDescriptor.ActionName.ToLower();//process、webapi
             try
             {
                 #region 验证
@@ -81,6 +81,24 @@ namespace WebAPI.filters
                 }
                 #endregion
 
+                #region code 业务编码
+                IEnumerable<string> code;
+                if (!headers.TryGetValues("code", out code))
+                {
+                    Code.Result(ref msg, 编码.消息头错误, "缺少code");
+                    goto 退出;
+                }
+                msg.code = code.First();
+                if (string.IsNullOrEmpty(msg.code) && actionName == "process")
+                {
+                    Code.Result(ref msg, 编码.消息头错误, "code值无效");
+                    goto 退出;
+                }
+                int i_基础业务 = 0;
+                DataHelper.M_验证Code(msg.code, ref msg, out i_基础业务);
+                if (msg.success != 1) goto 退出;
+                #endregion
+
                 #region customid 
                 IEnumerable<string> customid;
                 if (!headers.TryGetValues("customid", out customid))
@@ -99,7 +117,7 @@ namespace WebAPI.filters
                 DateTime accessPastTime = DateTime.Now.AddMinutes(-1);
                 string secret = string.Empty;
                 //验证数据库中customid
-                DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime,out secret);
+                DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime, out secret);
                 if (msg.success != 1) goto 退出;
                 #endregion
 
@@ -111,123 +129,31 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.token = token.First();
-                //第三方验证数据库中customid
-                if (msg.clienttype == "third")
+                if (!((msg.code == "login" || msg.code == "token") && actionName == "webapi"))
                 {
-                    if (actionName == "process")
+                    UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                    if (null == userModel && i_基础业务 == 0)
                     {
-                        if (accessToken != msg.token)
-                        {
-                            Code.Result(ref msg, 编码.Token错误, "请重新获取");
-                            goto 退出;
-                        }
-                        else
-                        {
-                            if (DateTime.Now > accessPastTime)
-                            {
-                                Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
-                                goto 退出;
-                            }
-                        }
+                        Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
+                        goto 退出;
                     }
-                }
-                else
-                {
-                    if (Config.Login == "1")
+
+                    if (accessToken != msg.token)
                     {
-                        if (actionName == "process" || actionName == "token")
+                        Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                        goto 退出;
+                    }
+                    else
+                    {
+                        if (DateTime.Now > accessPastTime)
                         {
-                            UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                            if (null != userModel)
-                            {
-                                if (null == userModel.token)
-                                {
-                                    Code.Result(ref msg, 编码.用户身份错误, "未找到Token信息，请重新登录获取");
-                                    goto 退出;
-                                }
-                            }
-                            else
-                            {
-                                Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
-                                goto 退出;
-                            }
-                            if (actionName == "process")
-                            {
-                                if (userModel.token.accessToken != msg.token)
-                                {
-                                    Code.Result(ref msg, 编码.Token错误, "请重新获取");
-                                    goto 退出;
-                                }
-                                else
-                                {
-                                    DateTime dt1;
-                                    DateTime dt2;
-                                    if (!DateTime.TryParse(userModel.token.accessPastTime, out dt1))
-                                    {
-                                        Code.Result(ref msg, 编码.Token错误, "Token信息错误，请重新获取");
-                                        goto 退出;
-                                    }
-                                    if (!DateTime.TryParse(userModel.token.refreshPastTime, out dt2))
-                                    {
-                                        Code.Result(ref msg, 编码.Token错误, "Token信息错误，请重新获取");
-                                        goto 退出;
-                                    }
-                                    if (DateTime.Now > dt1)
-                                    {
-                                        if (DateTime.Now < dt2)
-                                        {
-                                            Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
-                                            goto 退出;
-                                        }
-                                        else
-                                        {
-                                            Code.Result(ref msg, 编码.用户身份错误, "Token已过期，请重新登录获取");
-                                            goto 退出;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (userModel.token.refreshToken != msg.token)
-                                {
-                                    Code.Result(ref msg, 编码.用户身份错误, "refreshToken错误,请重新登录获取");
-                                    goto 退出;
-                                }
-                                else
-                                {
-                                    DateTime dt2;
-                                    if (!DateTime.TryParse(userModel.token.refreshPastTime, out dt2))
-                                    {
-                                        Code.Result(ref msg, 编码.Token错误, "Token信息错误，请重新获取");
-                                        goto 退出;
-                                    }
-                                    if (DateTime.Now > dt2)
-                                    {
-                                        Code.Result(ref msg, 编码.用户身份错误, "refreshToken已过期,请重新登录获取");
-                                        goto 退出;
-                                    }
-                                }
-                            }
+                            Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
+                            goto 退出;
                         }
                     }
                 }
                 #endregion
 
-                #region code 业务编码
-                IEnumerable<string> code;
-                if (!headers.TryGetValues("code", out code))
-                {
-                    Code.Result(ref msg, 编码.消息头错误, "缺少code");
-                    goto 退出;
-                }
-                msg.code = code.First();
-                if (string.IsNullOrEmpty(msg.code) && actionName == "process")
-                {
-                    Code.Result(ref msg, 编码.消息头错误, "code值无效");
-                    goto 退出;
-                }
-                #endregion
 
                 #region reqtime 请求时间
                 IEnumerable<string> reqtime;
@@ -334,8 +260,5 @@ namespace WebAPI.filters
                 return "NOT_FOUND";
             }
         }
-
-
     }
-
 }
