@@ -114,7 +114,7 @@ namespace WebAPI.filters
                 }
 
                 string accessToken = string.Empty;
-                DateTime accessPastTime = DateTime.Now.AddMinutes(-1);
+                long accessPastTime = long.MinValue;
                 string secret = string.Empty;
                 //验证数据库中customid
                 DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime, out secret);
@@ -129,25 +129,43 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.token = token.First();
-                if (!((msg.code == "login" || msg.code == "token") && actionName == "webapi"))
+                if (!(msg.code == "login" || msg.code == "token"))
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                    if (null == userModel && i_基础业务 == 0)
+                    if (null != userModel)
                     {
-                        Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
-                        goto 退出;
-                    }
-
-                    if (accessToken != msg.token)
-                    {
-                        Code.Result(ref msg, 编码.Token错误, "请重新获取");
-                        goto 退出;
-                    }
-                    else
-                    {
-                        if (DateTime.Now > accessPastTime)
+                        if (null == userModel.userinfo && i_基础业务 == 0)
                         {
-                            Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
+                            Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
+                            goto 退出;
+                        }
+                        if (null != userModel.token)
+                        {
+                            if (msg.clienttype != "third")
+                            {
+                                accessToken = userModel.token.accessToken;
+                            }
+                            if (accessToken != msg.token)
+                            {
+                                Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                                goto 退出;
+                            }
+                            else
+                            {
+                                if (msg.clienttype != "third")
+                                {
+                                    accessPastTime = userModel.token.accessPastTime;
+                                }
+                                if (DateTimeOffset.Now.ToUnixTimeMilliseconds() > accessPastTime)
+                                {
+                                    Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
+                                    goto 退出;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Code.Result(ref msg, 编码.Token错误, "请重新获取");
                             goto 退出;
                         }
                     }

@@ -89,8 +89,8 @@ namespace WebAPI.Controllers.v1
         //}
 
 
-        [HttpPost]
-        public IHttpActionResult process(dynamic p)
+        //[HttpPost]
+        private IHttpActionResult process(dynamic p)
         {
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
             Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -129,6 +129,7 @@ namespace WebAPI.Controllers.v1
         public IHttpActionResult webapi(dynamic p)
         {
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
+            TokenModel token;
             switch (msg.code)
             {
                 case "login":
@@ -136,35 +137,67 @@ namespace WebAPI.Controllers.v1
                     if (msg.clienttype == "web")
                     {
                         Dictionary<string, object> param = Helper.DynamicToDictionary(p);
-                        ArrayList list = new ArrayList() { new Dictionary<string, object>() { { "dataname", "userinfo" } }, new Dictionary<string, object>() { { "dataname", "navMenu" } } };
-                        param.Add("query", list);
-                        JObject ob = Helper.DictionaryToJObject(param);
-                        Dictionary<string, object> resultNew = ((JsonResult<Dictionary<string, object>>)process(ob)).Content;
-                        if((resultNew["userinfo"] as DataTable).Rows.Count <= 0)
+                        if (!DataHelper.M_验证用户信息(param, ref msg))
                         {
-                            resultNew["success"] = 1001;
-                            resultNew["msgtext"] = "用户名或密码错误!";
-                        }else
-                        {
-                            UserModel webModel = new UserModel();
-                            webModel.userinfo = resultNew["userinfo"];
-                            HttpContext.Current.Session["UserModel"] = webModel;
+                            return GetResponseString(msg);
                         }
+
+                        Dictionary<string, object> resultNew;
+                        if (!param.ContainsKey("query"))
+                        {
+                            ArrayList list = new ArrayList() { new Dictionary<string, object>() { { "dataname", "userinfo" } }, new Dictionary<string, object>() { { "dataname", "menu" } } };
+                            param.Add("query", list);
+                            JObject ob = Helper.DictionaryToJObject(param);
+                            resultNew = ((JsonResult<Dictionary<string, object>>)process(ob)).Content;
+                        }
+                        else
+                        {
+                            resultNew = ((JsonResult<Dictionary<string, object>>)process(p)).Content;
+                        }
+
+                        UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                        if (null == userModel)
+                        {
+                            userModel = new UserModel();
+                        }
+                        token = new TokenModel();
+                        userModel.token = token;
+                        userModel.userinfo = resultNew["userinfo"];
+                        HttpContext.Current.Session["UserModel"] = userModel;
+                        resultNew.Add("token", token);
+
                         return Json(resultNew);
                     }
                     break;
 
                 case "token":
-                    TokenModel token = new TokenModel();
-                    if (DataHelper.M_更新Token(token, GetRequestString("customid")) == 1)
+                    token = new TokenModel();
+                    if (msg.clienttype == "third")
                     {
-                        msg.dateset = token;
+                        if (DataHelper.M_更新Token(token, GetRequestString("customid")) == 1)
+                        {
+                            msg.dateset = token;
+                        }
+                        else
+                        {
+                            Code.Result(ref msg, 编码.程序错误, "获取token失败");
+                        }
                     }
                     else
                     {
-                        Code.Result(ref msg, 编码.程序错误, "获取token失败");
+                        UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                        if (null == userModel)
+                        {
+                            userModel = new UserModel();
+                        }
+                        userModel.token = token;
+                        msg.dateset = token;
+                        HttpContext.Current.Session["UserModel"] = userModel;
                     }
+
                     return GetResponseString(msg);
+                default:
+                    return process(p);
             }
             return null;
         }

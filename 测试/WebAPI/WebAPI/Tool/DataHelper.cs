@@ -34,11 +34,6 @@ namespace WebAPI.Tool
                 }
                 string sql = $@"SELECT * from webapi_list where 业务编号='{msg.code}' and 有效状态='True'";
                 DataTable dt = DbHelper.Db.GetDataTable(sql);
-                if (null != dt && dt.Rows.Count > 1)
-                {
-                    Code.Result(ref msg, 编码.消息头错误, "匹配到多个业务记录");
-                    return null;
-                }
                 if (null != dt && dt.Rows.Count == 1)
                 {
                     string str_error = string.Empty;
@@ -176,7 +171,7 @@ namespace WebAPI.Tool
                 }
                 else
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "业务编号" + msg.code + "错误");
+                    Code.Result(ref msg, 编码.消息头错误, "业务编号" + msg.code + "未配置数据库信息");
                     return null;
                 }
                 return dic_返回;
@@ -188,7 +183,7 @@ namespace WebAPI.Tool
                 return null;
             }
         }
-        public static bool M_验证Code(string code, ref MessageModel msg,out int i_基础业务)
+        public static bool M_验证Code(string code, ref MessageModel msg, out int i_基础业务)
         {
             try
             {
@@ -196,9 +191,10 @@ namespace WebAPI.Tool
                 DataTable dt = DbHelper.Db.GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "无效的code");
-                    i_基础业务 = 0;
-                    return false;
+                    //Code.Result(ref msg, 编码.消息头错误, "无效的code");
+                    //此处不验证数据库中是偶存在code
+                    i_基础业务 = 1;
+                    return true;
                 }
                 if (null != dt && dt.Rows.Count > 1)
                 {
@@ -213,10 +209,10 @@ namespace WebAPI.Tool
                 i_基础业务 = 0;
                 return false;
             }
-            
+
             return true;
         }
-        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out DateTime accessPastTime,out string secret)
+        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out long accessPastTime, out string secret)
         {
             try
             {
@@ -226,7 +222,7 @@ namespace WebAPI.Tool
                 {
                     Code.Result(ref msg, 编码.消息头错误, "无效的customid");
                     accessToken = string.Empty;
-                    accessPastTime = DateTime.Now;
+                    accessPastTime = long.MinValue;
                     secret = string.Empty;
                     return false;
                 }
@@ -234,12 +230,12 @@ namespace WebAPI.Tool
                 {
                     Code.Result(ref msg, 编码.消息头错误, "customid匹配到多个用户");
                     accessToken = string.Empty;
-                    accessPastTime = DateTime.Now;
+                    accessPastTime = long.MinValue;
                     secret = string.Empty;
                     return false;
                 }
                 accessToken = dt.Rows[0]["accessToken"].ToString();
-                accessPastTime = DateTime.Parse(dt.Rows[0]["accessPastTime"].ToString());
+                accessPastTime = long.Parse(dt.Rows[0]["accessPastTime"].ToString());
                 secret = dt.Rows[0]["secret"].ToString();
             }
             catch (Exception e)
@@ -247,7 +243,7 @@ namespace WebAPI.Tool
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 Log.Error("M_验证客户ID", e.Message);
                 accessToken = "";
-                accessPastTime = DateTime.Now.AddDays(-1);
+                accessPastTime = long.MinValue;
                 secret = string.Empty;
                 return false;
             }
@@ -257,6 +253,35 @@ namespace WebAPI.Tool
         {
             string sql = $"update webapi_customer set accessToken='{token.accessToken}',accessPastTime=convert(datetime,'{token.accessPastTime}') where customid='{customid}'";
             return DbHelper.Db.ExecuteSql(sql);
+        }
+        public static bool M_验证用户信息(Dictionary<string, object> param,ref MessageModel msg)
+        {
+            string username = string.Empty;
+            if (param.ContainsKey("username"))
+            {
+                username = param["username"].ToString();
+            }
+            else
+            {
+                Code.Result(ref msg, 编码.参数错误, "参数username不存在!");
+            }
+            string password = string.Empty;
+            if (param.ContainsKey("psw"))
+            {
+                password = param["psw"].ToString();
+            }
+            else
+            {
+                Code.Result(ref msg, 编码.参数错误, "参数psw不存在!");
+            }
+            string sql = $"select 1 from  jc_user where username='{username}' and password={password}'";
+            DataTable dt = DbHelper.Db.GetDataTable(sql);
+            if (null == dt || dt.Rows.Count <= 0)
+            {
+                Code.Result(ref msg, 编码.用户身份错误, "用户名或密码错误!");
+                return false;
+            }
+            return true;
         }
     }
 }
