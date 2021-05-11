@@ -1,0 +1,15 @@
+2021-05-08 11:40:54.909 ERROR webapi: 未将对象引用设置到对象的实例。
+2021-05-08 11:41:00.305 ERROR webapi: {"msgid":"123461223","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"1002","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"null"}
+2021-05-08 11:41:13.508 ERROR webapi: 未将对象引用设置到对象的实例。
+2021-05-08 12:44:22.731 ERROR webapi: 未将对象引用设置到对象的实例。
+2021-05-08 13:24:54.720 ERROR M_业务数据处理: Self referencing loop detected for property 'ApplicationInstance' with type 'ASP.global_asax'. Path 'Request.Properties.MS_HttpContext.ApplicationInstance.Context'.
+2021-05-08 13:37:06.892 ERROR webapi: 未将对象引用设置到对象的实例。
+2021-05-08 13:37:59.050 ERROR M_业务数据处理: Self referencing loop detected for property 'ApplicationInstance' with type 'ASP.global_asax'. Path 'Request.Properties.MS_HttpContext.ApplicationInstance.Context'.
+2021-05-08 13:38:20.945 ERROR webapi: {"msgid":"1234612231","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"login","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"{\"username\":\"b\",\"psw\":\"111\"}"}
+2021-05-08 13:48:37.176 ERROR M_业务数据处理: 未将对象引用设置到对象的实例。
+2021-05-08 13:48:48.156 ERROR webapi: {"msgid":"123461223","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"login","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"{\"username\":\"b\",\"psw\":\"111\"}"}
+2021-05-08 13:49:57.860 ERROR M_业务数据处理: 未将对象引用设置到对象的实例。
+2021-05-08 13:50:01.661 ERROR webapi: {"msgid":"12346122","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"login","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"{\"username\":\"b\",\"psw\":\"111\"}"}
+2021-05-08 14:06:28.625 ERROR webapi: 未将对象引用设置到对象的实例。
+2021-05-08 14:06:33.038 ERROR webapi: {"msgid":"1234612","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"login","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"{\"username\":\"b\",\"psw\":\"111\"}"}
+2021-05-08 14:12:24.557 ERROR webapi: {"msgid":"123461","customid":"wx15f7a5e149460ffb","token":"d2869c877bf443ecb32d0cb8139d58f7","code":"login","clienttype":"web","reqtime":"20210428111212","sign":"05583e395ca144c4a8061192c83c3f14","param":"{\"username\":\"b1\",\"psw\":\"111\"}"}
