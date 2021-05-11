@@ -8,18 +8,18 @@ namespace Tool.Help
         public static void Result(ref MessageModel msg, 编码 c, string str)
         {
             msg.state = (int)c;
-            msg.msgtext = c.ToString() + "(" + str + ")";
+            msg.msgtext = "(" + msg.state + ")" + c.ToString() + "," + str;
         }
         public static void Result(ref MessageModel msg, int c, string str)
         {
             msg.state = c;
-            msg.msgtext = str;
+            msg.msgtext = "(" + msg.state + ")" + str;
         }
     }
 
     public enum 编码
     {
-        成功 = 1,
+        成功 = 0,
         用户身份错误 = 1001,
         Token错误 = 1002,
         消息头错误 = 1003,

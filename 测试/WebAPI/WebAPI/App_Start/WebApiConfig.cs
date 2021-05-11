@@ -23,11 +23,6 @@ namespace WebAPI
               routeTemplate: "api/v1/{controller}/{action}/{id}",
               defaults: new { id = RouteParameter.Optional }
             );
-            config.Routes.MapHttpRoute(
-              name: "DefaultApiV11",
-              routeTemplate: "api1/v1/{controller}/{id}",
-              defaults: new { id = RouteParameter.Optional }
-            );
 
             config.Routes.MapHttpRoute(
              name: "DefaultApiV2",

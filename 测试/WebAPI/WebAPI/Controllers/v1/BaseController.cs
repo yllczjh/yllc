@@ -42,7 +42,7 @@ namespace WebAPI.Controllers.v1
             dic.Add("msgid", msg.msgid);
             dic.Add("remsgid", msg.remsgid);
             dic.Add("state", msg.state);
-            dic.Add("msgtext", msg.msgtext);
+            dic.Add("msgtext", "("+ msg.state + ")"+msg.msgtext);
             if (msg.state == 0 && null != dic_返回数据)
             {
                 foreach (KeyValuePair<string, object> pair in dic_返回数据)

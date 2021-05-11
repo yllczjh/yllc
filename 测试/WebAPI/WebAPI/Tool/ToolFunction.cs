@@ -273,7 +273,6 @@ namespace WebAPI.Tool
                 string columnName = d.Columns[k].ColumnName.ToString();
                 m_values.Add(columnName, row[columnName].ToString());
             }
-            m_values.Add("rowcount", dt.Rows.Count);
             m_values.Add("datadetail", dt);
             return m_values;
         }

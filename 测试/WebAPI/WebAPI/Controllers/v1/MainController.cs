@@ -19,151 +19,39 @@ namespace WebAPI.Controllers.v1
     public class MainController : BaseController
     {
         //[AllowAnonymous]//屏蔽AuthFilter过滤器
-        //[HttpGet]
-        //public IHttpActionResult wxwebgrant()
-        //{
-        //    MessageModel msg = new MessageModel();
-        //    string code = HttpContext.Current.Request.QueryString["code"];
-        //    if (code != null)
-        //    {
-        //        HttpContext.Current.Session["code"] = code;
-        //    }
-        //    else
-        //    {
-        //        Code.Result(ref msg, 编码.其他错误, "获取code失败");
-        //        return GetResponseString(msg);
-        //    }
-        //    UserModel webgrant = new UserModel();
-        //    try
-        //    {
-        //        webgrant.getWxWebGrantByCode(code, ref msg);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Code.Result(ref msg, 编码.程序错误, ex.Message);
-        //    }
-        //    if (msg.success == 1)
-        //    {
-        //        TokenModel token = new TokenModel();
-        //        webgrant.token = token;
-        //        HttpContext.Current.Session["UserModel"] = webgrant;
-        //        msg.dateset = token;
-        //    }
-        //    return GetResponseString(msg);
-        //}
-
-        //[HttpPost]
-        //public IHttpActionResult login()
-        //{
-        //    MessageModel msg = this.Request.Properties["msg"] as MessageModel;
-        //    try
-        //    {
-        //        if (msg.clienttype == "wx")
-        //        {
-        //            return RedirectWX();
-        //        }
-        //        else if (msg.clienttype == "web")
-        //        {
-        //            UserModel webModel = new UserModel();
-        //            webModel.onlyid = GetRequestString("customid");
-        //            TokenModel token = new TokenModel();
-        //            webModel.token = token;
-        //            HttpContext.Current.Session["UserModel"] = webModel;
-        //            msg.dateset = token;
-        //            return GetResponseString(msg);
-        //        }
-        //        else
-        //        {
-        //            Code.Result(ref msg, 编码.消息头错误, "无效的clienttype");
-        //            return GetResponseString(msg);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Code.Result(ref msg, 编码.程序错误, e.Message);
-        //        return GetResponseString(msg);
-        //    }
-        //}
-
-
-        private IHttpActionResult process(dynamic p)
-        {
-            MessageModel msg = this.Request.Properties["msg"] as MessageModel;
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            try
-            {
-                if (msg.clienttype == "wx" || msg.clienttype == "web")
-                {
-                    UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                    if ((null == userModel || string.IsNullOrEmpty(userModel.onlyid)) && Config.CeShi == "0")
-                    {
-                        if (msg.clienttype == "wx")
-                        {
-                            return RedirectWX();
-                        }
-                        else
-                        {
-                            Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
-                        }
-                    }
-                }
-
-                if (msg.state == 0)
-                {
-                    dic = DataHelper.M_业务数据处理(ref msg, p);
-                }
-            }
-            catch (Exception ex)
-            {
-                Code.Result(ref msg, 编码.程序错误, ex.Message);
-            }
-            return GetResponseString(msg, dic);
-        }
-
-
         [HttpPost]
         public IHttpActionResult webapi(dynamic p)
         {
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
+            if (msg.state != 0)
+            {
+                GetResponseString(msg);
+            }
             TokenModel token;
+            Dictionary<string, object> result;
             switch (msg.code)
             {
                 case "login":
                     if (msg.clienttype == "wx") return RedirectWX();
                     if (msg.clienttype == "web")
                     {
-                        Dictionary<string, object> param = Helper.DynamicToDictionary(p);
-                        if (!DataHelper.M_验证用户信息(param, ref msg))
+                        result = DataHelper.Process(p, ref msg);
+                        //Dictionary<string, object> resultNew = ((JsonResult<Dictionary<string, object>>)process(p, ref msg)).Content;
+                        if (msg.state == 0)
                         {
-                            return GetResponseString(msg);
+                            UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                            if (null == userModel)
+                            {
+                                userModel = new UserModel();
+                            }
+                            token = new TokenModel();
+                            userModel.token = token;
+                            userModel.userinfo = result["dataset"];
+                            HttpContext.Current.Session["UserModel"] = userModel;
+                            result.Add("token", token);
                         }
 
-                        Dictionary<string, object> resultNew;
-                        if (!param.ContainsKey("query"))
-                        {
-                            ArrayList list = new ArrayList() { new Dictionary<string, object>() { { "dataname", "userinfo" } }, new Dictionary<string, object>() { { "dataname", "menu" } } };
-                            param.Add("query", list);
-                            JObject ob = Helper.DictionaryToJObject(param);
-                            resultNew = ((JsonResult<Dictionary<string, object>>)process(ob)).Content;
-                        }
-                        else
-                        {
-                            resultNew = ((JsonResult<Dictionary<string, object>>)process(p)).Content;
-                        }
-
-                        UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                        if (null == userModel)
-                        {
-                            userModel = new UserModel();
-                        }
-                        token = new TokenModel();
-                        userModel.token = token;
-                        userModel.userinfo = resultNew["userinfo"];
-                        HttpContext.Current.Session["UserModel"] = userModel;
-                        resultNew.Add("token", token);
-
-                        return Json(resultNew);
+                        return GetResponseString(msg, result);
                     }
                     break;
 
@@ -194,7 +82,8 @@ namespace WebAPI.Controllers.v1
 
                     return GetResponseString(msg);
                 default:
-                    return process(p);
+                    result = DataHelper.Process(p, ref msg);
+                    return GetResponseString(msg, result);
             }
             return null;
         }

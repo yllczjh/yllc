@@ -19,7 +19,7 @@ namespace WebAPI.Tool
         /// <param name="msg">消息</param>
         /// <param name="Code">业务编码</param>
         /// <param name="p">参数</param>
-        public static Dictionary<string, object> M_业务数据处理(ref MessageModel msg, dynamic p)
+        public static Dictionary<string, object> Process(dynamic p,ref MessageModel msg)
         {
             try
             {
@@ -140,7 +140,6 @@ namespace WebAPI.Tool
                                     Code.Result(ref msg, 编码.参数错误, "query节点下缺少dataname节点");
                                     return null;
                                 }
-                                dic_返回.Add(dic_query["dataname"] + "count", dt_主记录.Rows.Count);
 
                                 if (list_返回.Count == 0)
                                 {
@@ -153,7 +152,6 @@ namespace WebAPI.Tool
                             }
                             else
                             {
-                                dic_返回.Add("datacount", dt_主记录.Rows.Count);
                                 if (list_返回.Count == 0)
                                 {
                                     dic_返回.Add("dataset", dt_主记录);
@@ -207,8 +205,7 @@ namespace WebAPI.Tool
                 DataTable dt = DbHelper.Db.GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {
-                    //Code.Result(ref msg, 编码.消息头错误, "无效的code");
-                    //此处不验证数据库中是偶存在code
+                    //此处不验证数据库中是否存在code
                     i_基础业务 = 1;
                     return true;
                 }
