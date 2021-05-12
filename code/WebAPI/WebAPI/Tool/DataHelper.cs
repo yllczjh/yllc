@@ -267,34 +267,5 @@ namespace WebAPI.Tool
             string sql = $"update webapi_customer set accessToken='{token.accessToken}',accessPastTime=convert(datetime,'{token.accessPastTime}') where customid='{customid}'";
             return DbHelper.Db.ExecuteSql(sql);
         }
-        public static bool M_验证用户信息(Dictionary<string, object> param, ref MessageModel msg)
-        {
-            string username = string.Empty;
-            if (param.ContainsKey("username"))
-            {
-                username = param["username"].ToString();
-            }
-            else
-            {
-                Code.Result(ref msg, 编码.参数错误, "参数username不存在!");
-            }
-            string password = string.Empty;
-            if (param.ContainsKey("psw"))
-            {
-                password = param["psw"].ToString();
-            }
-            else
-            {
-                Code.Result(ref msg, 编码.参数错误, "参数psw不存在!");
-            }
-            string sql = $"select 1 from  jc_user where username='{username}' and password='{password}'";
-            DataTable dt = DbHelper.Db.GetDataTable(sql);
-            if (null == dt || dt.Rows.Count <= 0)
-            {
-                Code.Result(ref msg, 编码.用户身份错误, "用户名或密码错误!");
-                return false;
-            }
-            return true;
-        }
     }
 }

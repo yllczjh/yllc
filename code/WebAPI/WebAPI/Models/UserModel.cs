@@ -1,11 +1,9 @@
 ﻿using LitJson;
 using System;
 using System.Net.Http;
-using Tool;
 using Tool.Help;
 using Tool.Helper;
 using Tool.Model;
-using WebAPI.Tool;
 
 namespace WebAPI.Models
 {

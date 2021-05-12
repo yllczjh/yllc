@@ -6,11 +6,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
-using Tool;
 using Tool.Help;
 using Tool.Model;
-using WebAPI.Models;
-using WebAPI.Tool;
 
 namespace WebAPI.Controllers
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using Tool.Helper;
-using WebAPI.Tool;
 
 namespace WebAPI.Models
 {
@@ -20,7 +19,7 @@ namespace WebAPI.Models
         {
             accessToken = Guid.NewGuid().ToString("N");
             //accessPastTime = DateTime.Now.AddMinutes(Config.AccessTokenTime).;
-            accessPastTime=DateTimeOffset.Now.AddMinutes(60).ToUnixTimeMilliseconds();
+            accessPastTime=DateTimeOffset.Now.AddMinutes(Config.AccessTokenTime).ToUnixTimeMilliseconds();
         }
     }
 }

@@ -129,12 +129,12 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.token = token.First();
-                if (!(msg.code == "login" || msg.code == "token"))
+                if (msg.code != "token")
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)
                     {
-                        if (null == userModel.userinfo && i_基础业务 == 0)
+                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && msg.code != "login")
                         {
                             Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
                             goto 退出;
@@ -165,17 +165,17 @@ namespace WebAPI.filters
                         }
                         else
                         {
-                            Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                            Code.Result(ref msg, 编码.Token错误, "无效的Token，请重新获取");
                             goto 退出;
                         }
-                    }else
+                    }
+                    else
                     {
-                        Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                        Code.Result(ref msg, 编码.Token错误, "无效的Token，请重新获取");
                         goto 退出;
                     }
                 }
                 #endregion
-
 
                 #region reqtime 请求时间
                 IEnumerable<string> reqtime;
@@ -262,9 +262,9 @@ namespace WebAPI.filters
             {
                 actionContext.Request.Properties["msg"] = msg;
                 Config.dic.Add(msg.msgid, DateTime.Now);
-                foreach (KeyValuePair<string, DateTime> kv in Config.dic)
+                foreach (var kv in Config.dic.ToList())
                 {
-                    if ((DateTime.Now - kv.Value).TotalHours > 1)
+                    if ((DateTime.Now - kv.Value).TotalMinutes > 10)
                     {
                         Config.dic.Remove(kv.Key);
                     }

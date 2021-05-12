@@ -53,8 +53,6 @@ namespace Tool.Model
         /// </summary>
         public string sign { get; set; }
 
-
-
         public MessageModel()
         {
             msgid = string.Empty;
@@ -91,6 +89,7 @@ namespace Tool.Model
         /// 返回结果数据
         /// </summary>
         public object dateset { get; set; }
+
         public ResponseModel(MessageModel msg)
         {
             this.msgid = msg.msgid;

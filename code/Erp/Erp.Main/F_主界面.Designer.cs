@@ -132,7 +132,7 @@
             this.popupControlContainer1.Location = new System.Drawing.Point(0, 20);
             this.popupControlContainer1.Name = "popupControlContainer1";
             this.popupControlContainer1.Ribbon = this.ribbonControl1;
-            this.popupControlContainer1.Size = new System.Drawing.Size(124, 130);
+            this.popupControlContainer1.Size = new System.Drawing.Size(114, 130);
             this.popupControlContainer1.TabIndex = 0;
             this.popupControlContainer1.Visible = false;
             // 
@@ -142,7 +142,7 @@
             this.simpleButton3.Image = global::Erp.Main.Properties.Resources.close_32;
             this.simpleButton3.Location = new System.Drawing.Point(3, 88);
             this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(115, 33);
+            this.simpleButton3.Size = new System.Drawing.Size(104, 33);
             this.simpleButton3.TabIndex = 2;
             this.simpleButton3.Text = "退出";
             // 
@@ -152,7 +152,7 @@
             this.simpleButton2.Image = global::Erp.Main.Properties.Resources.close_32;
             this.simpleButton2.Location = new System.Drawing.Point(4, 49);
             this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(114, 33);
+            this.simpleButton2.Size = new System.Drawing.Size(103, 33);
             this.simpleButton2.TabIndex = 1;
             this.simpleButton2.Text = "退出";
             // 
@@ -162,7 +162,7 @@
             this.simpleButton1.Image = global::Erp.Main.Properties.Resources.close_32;
             this.simpleButton1.Location = new System.Drawing.Point(3, 9);
             this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(115, 33);
+            this.simpleButton1.Size = new System.Drawing.Size(104, 33);
             this.simpleButton1.TabIndex = 0;
             this.simpleButton1.Text = "退出";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);

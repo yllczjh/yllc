@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using Tool.Help;
-using Tool.Helper;
 using Tool.Model;
 using WebAPI.filters;
 using WebAPI.Models;
@@ -38,7 +34,6 @@ namespace WebAPI.Controllers.v1
                     if (msg.clienttype == "web")
                     {
                         result = DataHelper.Process(p, ref msg);
-                        //Dictionary<string, object> resultNew = ((JsonResult<Dictionary<string, object>>)process(p, ref msg)).Content;
                         if (msg.state == 0)
                         {
                             userModel = (UserModel)HttpContext.Current.Session["UserModel"];
@@ -46,12 +41,9 @@ namespace WebAPI.Controllers.v1
                             {
                                 userModel = new UserModel();
                             }
-                            token = new TokenModel();
                             userModel.onlyid = p["username"];
-                            userModel.token = token;
                             userModel.userinfo = result;
                             HttpContext.Current.Session["UserModel"] = userModel;
-                            result.Add("token", token);
                         }
 
                         return GetResponseString(msg, result);
@@ -86,7 +78,7 @@ namespace WebAPI.Controllers.v1
                     return GetResponseString(msg);
                 case "init":
                     userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                    string json = "{\"username\": \"" + userModel.onlyid + "\",\"query\":[{ \"dataname\":\"navMenu\"},{ \"dataname\":\"userinfo\"}]}";
+                    string json = "{\"username\": \"" + userModel.onlyid + "\"}";
                     JObject jo = (JObject)JsonConvert.DeserializeObject(json.ToString());
                     result = DataHelper.Process(jo, ref msg);
                     return GetResponseString(msg, result);
