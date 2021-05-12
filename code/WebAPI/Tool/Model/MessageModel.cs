@@ -60,7 +60,7 @@ namespace Tool.Model
             msgid = string.Empty;
             remsgid = Guid.NewGuid().ToString("N");
             state = 0;
-            msgtext = "(0)成功!";
+            msgtext = "成功!";
             dateset = string.Empty;
             customid = string.Empty;
             token = string.Empty;

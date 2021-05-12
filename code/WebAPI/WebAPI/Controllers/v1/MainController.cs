@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace WebAPI.Controllers.v1
             }
             TokenModel token;
             Dictionary<string, object> result;
+            UserModel userModel;
             switch (msg.code)
             {
                 case "login":
@@ -39,14 +41,15 @@ namespace WebAPI.Controllers.v1
                         //Dictionary<string, object> resultNew = ((JsonResult<Dictionary<string, object>>)process(p, ref msg)).Content;
                         if (msg.state == 0)
                         {
-                            UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                            userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                             if (null == userModel)
                             {
                                 userModel = new UserModel();
                             }
                             token = new TokenModel();
+                            userModel.onlyid = p["username"];
                             userModel.token = token;
-                            userModel.userinfo = result["dataset"];
+                            userModel.userinfo = result;
                             HttpContext.Current.Session["UserModel"] = userModel;
                             result.Add("token", token);
                         }
@@ -70,7 +73,7 @@ namespace WebAPI.Controllers.v1
                     }
                     else
                     {
-                        UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                         if (null == userModel)
                         {
                             userModel = new UserModel();
@@ -81,6 +84,12 @@ namespace WebAPI.Controllers.v1
                     }
 
                     return GetResponseString(msg);
+                case "init":
+                    userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                    string json = "{\"username\": \"" + userModel.onlyid + "\",\"query\":[{ \"dataname\":\"navMenu\"},{ \"dataname\":\"userinfo\"}]}";
+                    JObject jo = (JObject)JsonConvert.DeserializeObject(json.ToString());
+                    result = DataHelper.Process(jo, ref msg);
+                    return GetResponseString(msg, result);
                 default:
                     result = DataHelper.Process(p, ref msg);
                     return GetResponseString(msg, result);

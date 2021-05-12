@@ -5,7 +5,6 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Tool.Helper;
 using Tool.Model;
-using WebAPI.Tool;
 
 namespace WebAPI.Controllers.v1
 {
@@ -43,6 +42,7 @@ namespace WebAPI.Controllers.v1
             dic.Add("remsgid", msg.remsgid);
             dic.Add("state", msg.state);
             dic.Add("msgtext", "("+ msg.state + ")"+msg.msgtext);
+            //dic.Add("result", dic_返回数据);
             if (msg.state == 0 && null != dic_返回数据)
             {
                 foreach (KeyValuePair<string, object> pair in dic_返回数据)

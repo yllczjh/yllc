@@ -79,6 +79,7 @@ abcd.1243
 
 
 http://test7.ql-soft.com/HtmlPage2.html
+http://test7.ql-soft.com/api/v1/main/webapi
 
 msconfig
  

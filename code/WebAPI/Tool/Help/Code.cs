@@ -13,7 +13,7 @@ namespace Tool.Help
         public static void Result(ref MessageModel msg, int c, string str)
         {
             msg.state = c;
-            msg.msgtext = "(" + msg.state + ")" + str;
+            msg.msgtext = str;
         }
     }
 
