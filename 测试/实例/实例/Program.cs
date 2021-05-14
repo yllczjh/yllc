@@ -17,7 +17,7 @@ namespace 实例
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("zh-CN");
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
 
-            Application.Run(new HTTP());
+            Application.Run(new FTP());
         }
     }
 }
