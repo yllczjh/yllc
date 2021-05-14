@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{480666B3-FCC6-47C8-9E92-8B866FCB83EE}</ProjectGuid>
+    <ProjectGuid>{80351D2C-BC3E-4304-86D5-4FFF99A7C4E6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>实例</RootNamespace>
-    <AssemblyName>实例</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>Erp.Main</RootNamespace>
+    <AssemblyName>Erp.Main</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,17 +33,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevComponents.DotNetBar2, Version=14.1.0.36, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="DevComponents.DotNetBar2, Version=14.1.0.36, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\code\oldhis\his\QiLian.BaseLibrary\Third\Other.DLL\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\DotNetBar for Windows Forms\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.Data.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.Data.v14.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.Utils.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.Utils.v14.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.XtraBars.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.XtraBars.v14.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.XtraEditors.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.XtraEditors.v14.1.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,64 +66,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Await.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Await.Designer.cs">
-      <DependentUpon>Await.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="F_自定义控件.cs">
+    <Compile Include="F_主界面.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="F_自定义控件.Designer.cs">
-      <DependentUpon>F_自定义控件.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GridControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GridControl.Designer.cs">
-      <DependentUpon>GridControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HTTP.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HTTP.Designer.cs">
-      <DependentUpon>HTTP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="json转换.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="json转换.Designer.cs">
-      <DependentUpon>json转换.cs</DependentUpon>
+    <Compile Include="F_主界面.designer.cs">
+      <DependentUpon>F_主界面.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="U_GridControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="U_GridControl.Designer.cs">
-      <DependentUpon>U_GridControl.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Await.resx">
-      <DependentUpon>Await.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="F_自定义控件.resx">
-      <DependentUpon>F_自定义控件.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GridControl.resx">
-      <DependentUpon>GridControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HTTP.resx">
-      <DependentUpon>HTTP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="json转换.resx">
-      <DependentUpon>json转换.cs</DependentUpon>
+    <EmbeddedResource Include="F_主界面.resx">
+      <DependentUpon>F_主界面.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -129,9 +94,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="U_GridControl.resx">
-      <DependentUpon>U_GridControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +106,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\account_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_continuPrint1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_edit_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_insert_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_open_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_save_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plan_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\receive_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yd_refresh1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

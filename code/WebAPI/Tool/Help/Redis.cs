@@ -1,6 +1,10 @@
-﻿using StackExchange.Redis;
+﻿using Newtonsoft.Json.Linq;
+using StackExchange.Redis;
 using System;
 using System.Configuration;
+using System.Net.Http;
+using Tool.Help;
+using Tool.Model;
 
 namespace Tool.Helper
 {
@@ -44,7 +48,7 @@ namespace Tool.Helper
         }
 
         #region 注释
-        //public string HttpPost(string url, dynamic body)
+        //public static string HttpPost(string url, dynamic body)
         //{
         //    HttpResponseMessage result;
         //    string json;

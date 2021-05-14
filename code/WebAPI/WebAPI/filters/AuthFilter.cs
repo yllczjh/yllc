@@ -129,7 +129,7 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.token = token.First();
-                if (msg.code != "token")
+                if (msg.code != "token"&& Config.Login == "1")
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)

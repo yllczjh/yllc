@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Main", "Erp.Main.csproj", "{24BB54D2-CCC5-4AC0-8401-6D40C7F2463A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Erp.Tools", "Erp.Tools", "{C30ED31B-678E-4F22-9A29-039E010949F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Erp.Pro", "Erp.Pro", "{32CF414D-24D2-4EE0-8355-1D7D8B40D7AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Pro.Test", "..\Erp.Pro\Erp.Pro.Test\Erp.Pro.Test.csproj", "{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Tools.DB", "..\Erp.Tools\Erp.Tools.DB\Erp.Tools.DB.csproj", "{B41B137D-07A1-4685-A709-248D86468F98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24BB54D2-CCC5-4AC0-8401-6D40C7F2463A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24BB54D2-CCC5-4AC0-8401-6D40C7F2463A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24BB54D2-CCC5-4AC0-8401-6D40C7F2463A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24BB54D2-CCC5-4AC0-8401-6D40C7F2463A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B41B137D-07A1-4685-A709-248D86468F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B41B137D-07A1-4685-A709-248D86468F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B41B137D-07A1-4685-A709-248D86468F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B41B137D-07A1-4685-A709-248D86468F98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54} = {32CF414D-24D2-4EE0-8355-1D7D8B40D7AE}
+		{B41B137D-07A1-4685-A709-248D86468F98} = {C30ED31B-678E-4F22-9A29-039E010949F8}
+	EndGlobalSection
+EndGlobal
