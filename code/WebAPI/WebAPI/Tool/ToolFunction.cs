@@ -305,7 +305,7 @@ namespace WebAPI.Tool
             {
                 sql += $@" and 数据集名称='{str_数据集名称}'";
             }
-            DataTable dt_对照表 = DbHelper.Db.GetDataTable(sql);
+            DataTable dt_对照表 = DbHelper.Db().GetDataTable(sql);
             if (null != dt_对照表 && dt_对照表.Rows.Count > 0)
             {
                 if (type == 0)

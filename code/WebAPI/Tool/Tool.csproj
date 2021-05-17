@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Help\Code.cs" />
-    <Compile Include="DB\DbHelper.cs.cs" />
+    <Compile Include="DB\DbHelper.cs" />
     <Compile Include="Help\Config.cs" />
     <Compile Include="Help\EnHelper.cs" />
     <Compile Include="Help\Helper.cs" />

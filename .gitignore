@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /测试/WebAPI/WebAPI/Log
+/code/WebAPI/WebAPI/Log

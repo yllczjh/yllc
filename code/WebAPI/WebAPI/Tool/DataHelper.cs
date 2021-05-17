@@ -19,7 +19,7 @@ namespace WebAPI.Tool
         /// <param name="msg">消息</param>
         /// <param name="Code">业务编码</param>
         /// <param name="p">参数</param>
-        public static Dictionary<string, object> Process(dynamic p,ref MessageModel msg)
+        public static Dictionary<string, object> Process(dynamic p, ref MessageModel msg)
         {
             try
             {
@@ -30,11 +30,14 @@ namespace WebAPI.Tool
                 {
                     return null;
                 }
-                string sql = $@"SELECT * from webapi_list where 业务编号='{msg.code}' and 有效状态='True'";
-                DataTable dt = DbHelper.Db.GetDataTable(sql);
+                //string sql = $@"SELECT * from webapi_list where 业务编号='{msg.code}' and 有效状态='True'";
+                string sql = $@"SELECT * from webapi_list t left join webapi_link t1 on t.连接标识=t1.连接标识 where t.业务编号='{msg.code}' and t.有效状态='True'";
+                DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null != dt && dt.Rows.Count == 1)
                 {
                     string str_error = string.Empty;
+                    string str_数据库连接串 = dt.Rows[0]["数据库连接串"].ToString();
+                    string str_数据库类型 = dt.Rows[0]["数据库类型"].ToString();
 
                     #region 插入更新
                     if (!string.IsNullOrEmpty(dt.Rows[0]["主插入语言"].ToString()))
@@ -47,7 +50,7 @@ namespace WebAPI.Tool
                         }
                         if (dic_插入信息.Count > 0)
                         {
-                            str_error = DbHelper.Db.ExecuteBatch(dic_插入信息);
+                            str_error = DbHelper.Db(str_数据库类型, str_数据库连接串).ExecuteBatch(dic_插入信息);
                             if (!string.IsNullOrEmpty(str_error))
                             {
                                 Code.Result(ref msg, 编码.参数错误, str_error);
@@ -100,7 +103,7 @@ namespace WebAPI.Tool
                                 Code.Result(ref msg, 编码.参数错误, str_error);
                                 return null;
                             }
-                            dt_主记录 = DbHelper.Db.GetDataTable(str_sql.Replace("?", "@"), parameters_主);
+                            dt_主记录 = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable(str_sql.Replace("?", "@"), parameters_主);
 
                             #region 明细查询语言
                             string str_sql1 = dt.Rows[0]["明细查询语言"].ToString();
@@ -120,7 +123,7 @@ namespace WebAPI.Tool
                                             Code.Result(ref msg, 编码.参数错误, str_error);
                                             return null;
                                         }
-                                        dt_明细记录 = DbHelper.Db.GetDataTable(str_sql1.Replace("?", "@"), parameters_明细);
+                                        dt_明细记录 = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable(str_sql1.Replace("?", "@"), parameters_明细);
                                         row = ToolFunction.M_替换表头及顺序(row.Table, dt.Rows[0]["序号"].ToString(), 0, str_数据集名称).Rows[j];
                                         dt_明细记录 = ToolFunction.M_替换表头及顺序(dt_明细记录, dt.Rows[0]["序号"].ToString(), 1, str_数据集名称);
                                         dic_明细返回 = ToolFunction.ToJson(row, dt_明细记录);
@@ -202,7 +205,7 @@ namespace WebAPI.Tool
             try
             {
                 string sql = $@"SELECT * from webapi_list where 业务编号='{code}' and 有效状态='True'";
-                DataTable dt = DbHelper.Db.GetDataTable(sql);
+                DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {
                     //此处不验证数据库中是否存在code
@@ -230,7 +233,7 @@ namespace WebAPI.Tool
             try
             {
                 string sql = $@"select * from webapi_customer where customid='{customid}'";
-                DataTable dt = DbHelper.Db.GetDataTable(sql);
+                DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {
                     Code.Result(ref msg, 编码.消息头错误, "无效的customid");
@@ -265,7 +268,7 @@ namespace WebAPI.Tool
         public static int M_更新Token(TokenModel token, string customid)
         {
             string sql = $"update webapi_customer set accessToken='{token.accessToken}',accessPastTime=convert(datetime,'{token.accessPastTime}') where customid='{customid}'";
-            return DbHelper.Db.ExecuteSql(sql);
+            return DbHelper.Db().ExecuteSql(sql);
         }
     }
 }
