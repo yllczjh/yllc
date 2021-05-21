@@ -66,6 +66,29 @@ EMR_ZYWD_NR
 单据作废时 把占用标志还原
 
 
+----------------------------------------------------------
+select 挂号科室编码,(a1+nvl(a2,0)) 总挂号数,nvl(a2,0) 预约挂号数 from (select *
+  from (SELECT s.挂号科室编码,
+               (CASE
+                 WHEN S.挂号来源 = '预约' THEN
+                  '预约'
+                 ELSE
+                  '其他'
+               END) STATUS,
+               count(1) 数量
+          FROM 门诊管理_挂号登记 S
+         GROUP BY s.挂号科室编码,
+                  CASE
+                    WHEN S.挂号来源 = '预约' THEN
+                     '预约'
+                    ELSE
+                     '其他'
+                  END)
+pivot(max(数量)
+   for status in('其他' as a1, '预约' AS a2)));
+
+
+
 
 
 

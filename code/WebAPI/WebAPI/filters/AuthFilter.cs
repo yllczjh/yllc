@@ -66,21 +66,6 @@ namespace WebAPI.filters
                 }
                 #endregion
 
-                #region clienttype 客户端标识
-                IEnumerable<string> clienttype;
-                if (!headers.TryGetValues("clienttype", out clienttype))
-                {
-                    Code.Result(ref msg, 编码.消息头错误, "缺少clienttype");
-                    goto 退出;
-                }
-                msg.clienttype = clienttype.First();
-                if (msg.clienttype != "wx" && msg.clienttype != "web" && msg.clienttype != "third")
-                {
-                    Code.Result(ref msg, 编码.消息头错误, "clienttype值无效:" + msg.clienttype);
-                    goto 退出;
-                }
-                #endregion
-
                 #region code 业务编码
                 IEnumerable<string> code;
                 if (!headers.TryGetValues("code", out code))
@@ -113,12 +98,12 @@ namespace WebAPI.filters
                     goto 退出;
                 }
 
-                string accessToken = string.Empty;
-                long accessPastTime = long.MinValue;
+                string clienttype = string.Empty;
                 string secret = string.Empty;
                 //验证数据库中customid
-                DataHelper.M_验证客户ID(msg.customid, ref msg, out accessToken, out accessPastTime, out secret);
+                DataHelper.M_验证客户ID(msg.customid, ref msg, out clienttype, out secret);
                 if (msg.state != 0) goto 退出;
+                msg.clienttype = clienttype;
                 #endregion
 
                 #region token、customid
@@ -129,7 +114,7 @@ namespace WebAPI.filters
                     goto 退出;
                 }
                 msg.token = token.First();
-                if (msg.code != "token"&& Config.Login == "1")
+                if (msg.code != "token" && Config.YanZheng == "1")
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)
@@ -141,37 +126,30 @@ namespace WebAPI.filters
                         }
                         if (null != userModel.token)
                         {
-                            if (msg.clienttype != "third")
-                            {
-                                accessToken = userModel.token.accessToken;
-                            }
-                            if (accessToken != msg.token)
+
+                            if (userModel.token.accessToken != msg.token)
                             {
                                 Code.Result(ref msg, 编码.Token错误, "请重新获取");
                                 goto 退出;
                             }
                             else
                             {
-                                if (msg.clienttype != "third")
+                                if (DateTimeOffset.Now.ToUnixTimeMilliseconds() > userModel.token.accessPastTime)
                                 {
-                                    accessPastTime = userModel.token.accessPastTime;
-                                }
-                                if (DateTimeOffset.Now.ToUnixTimeMilliseconds() > accessPastTime)
-                                {
-                                    Code.Result(ref msg, 编码.Token错误, "Token已过期，请重新获取");
+                                    Code.Result(ref msg, 编码.Token错误, "Token已过期");
                                     goto 退出;
                                 }
                             }
                         }
                         else
                         {
-                            Code.Result(ref msg, 编码.Token错误, "无效的Token，请重新获取");
+                            Code.Result(ref msg, 编码.Token错误, "无效的Token");
                             goto 退出;
                         }
                     }
                     else
                     {
-                        Code.Result(ref msg, 编码.Token错误, "无效的Token，请重新获取");
+                        Code.Result(ref msg, 编码.Token错误, "无效的Token");
                         goto 退出;
                     }
                 }
@@ -196,7 +174,7 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "reqtime格式错误");
                     goto 退出;
                 }
-                if (Config.CeShi == "0")
+                if (Config.YanZheng == "1")
                 {
                     if ((DateTime.Now - dt_请求时间).TotalMinutes > 5)
                     {
@@ -204,6 +182,7 @@ namespace WebAPI.filters
                         goto 退出;
                     }
                 }
+
 
                 #endregion
 
@@ -220,7 +199,7 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "sign值无效");
                     goto 退出;
                 }
-                if (Config.CeShi == "0")
+                if (Config.YanZheng == "1")
                 {
                     string Sign = EnHelper.GetRequsetSign(msg, p, secret);
                     if (msg.sign != Sign)

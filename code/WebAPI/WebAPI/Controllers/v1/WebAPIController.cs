@@ -26,7 +26,7 @@ namespace WebAPI.Controllers.v1
             else
             {
                 Code.Result(ref msg, 编码.其他错误, "获取code失败");
-                return GetResponseString(msg);
+                return GetResponseString(msg, null);
             }
             UserModel webgrant = new UserModel();
             try
@@ -40,12 +40,12 @@ namespace WebAPI.Controllers.v1
             }
             if (msg.state == 0)
             {
-                TokenModel token = new TokenModel();
+                TokenModel token = new TokenModel(msg);
                 webgrant.token = token;
                 HttpContext.Current.Session["UserModel"] = webgrant;
                 msg.dateset = token;
             }
-            return GetResponseString(msg);
+            return GetResponseString(msg, null);
         }
     }
 }

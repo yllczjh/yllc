@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
@@ -25,24 +26,13 @@ namespace WebAPI.Controllers.v1
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public JsonResult<ResponseModel> GetResponseString(MessageModel msg)
-        {
-            ResponseModel res = new ResponseModel(msg);
-            return Json(res);
-        }
-        /// <summary>
-        /// 获取返回json对象
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
         public JsonResult<Dictionary<string, object>> GetResponseString(MessageModel msg, Dictionary<string, object> dic_返回数据)
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("msgid", msg.msgid);
             dic.Add("remsgid", msg.remsgid);
             dic.Add("state", msg.state);
-            dic.Add("msgtext", "("+ msg.state + ")"+msg.msgtext);
-            //dic.Add("result", dic_返回数据);
+            dic.Add("msgtext", "(" + msg.state + ")" + msg.msgtext);
             if (msg.state == 0 && null != dic_返回数据)
             {
                 foreach (KeyValuePair<string, object> pair in dic_返回数据)
@@ -52,6 +42,10 @@ namespace WebAPI.Controllers.v1
                         dic.Add(pair.Key, pair.Value);
                     }
                 }
+            }
+            else
+            {
+                dic.Add("dateset", new ArrayList());
             }
             return Json(dic);
         }

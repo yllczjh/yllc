@@ -2,7 +2,9 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Web.Script.Serialization;
+using Tool.Model;
 
 namespace Tool.Help
 {
@@ -44,6 +46,40 @@ namespace Tool.Help
             }
             catch (Exception)
             {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 主记录+明细 转为JSON
+        /// </summary>
+        /// <param name="row">主记录row</param>
+        /// <param name="dt">明细记录</param>
+        /// <returns></returns>
+        public static Dictionary<string, object> ToJson(DataRow row, DataTable dt)
+        {
+            Dictionary<string, object> m_values = new Dictionary<string, object>();
+            DataTable d = row.Table;
+            for (int k = 0; k < d.Columns.Count; k++)
+            {
+                string columnName = d.Columns[k].ColumnName.ToString();
+                m_values.Add(columnName, row[columnName].ToString());
+            }
+            m_values.Add("datadetail", dt);
+            return m_values;
+        }
+        public static Dictionary<string, object> JsonToDictionary(string jsonData, ref MessageModel msg)
+        {
+            //实例化JavaScriptSerializer类的新实例
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            try
+            {
+                //将指定的 JSON 字符串转换为 Dictionary<string, object> 类型的对象
+                return jss.Deserialize<Dictionary<string, object>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Code.Result(ref msg, 编码.参数错误, ex.Message);
                 return null;
             }
         }

@@ -38,13 +38,10 @@ namespace Tool.Helper
         {
             get { return int.Parse(GetAppSetting("logLevel")); }
         }
-        public static string CeShi
+      
+        public static string YanZheng
         {
-            get { return GetAppSetting("ceshi"); }
-        }
-        public static string Login
-        {
-            get { return GetAppSetting("login"); }
+            get { return GetAppSetting("yanzheng"); }
         }
 
         public static Dictionary<string, DateTime> dic = new Dictionary<string, DateTime>();

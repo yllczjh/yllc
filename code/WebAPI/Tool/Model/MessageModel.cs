@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Tool.Model
 {
@@ -59,7 +60,7 @@ namespace Tool.Model
             remsgid = Guid.NewGuid().ToString("N");
             state = 0;
             msgtext = "成功!";
-            dateset = string.Empty;
+            dateset = new ArrayList();
             customid = string.Empty;
             token = string.Empty;
             code = string.Empty;
@@ -95,7 +96,7 @@ namespace Tool.Model
             this.msgid = msg.msgid;
             this.remsgid = msg.remsgid;
             this.state = msg.state;
-            this.msgtext = msg.msgtext;
+            this.msgtext = "(" + msg.state + ")" + msg.msgtext;
             this.dateset = msg.dateset;
         }
     }

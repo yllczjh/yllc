@@ -1,5 +1,7 @@
 ﻿using System;
+using Tool.Help;
 using Tool.Helper;
+using Tool.Model;
 
 namespace WebAPI.Models
 {
@@ -15,11 +17,10 @@ namespace WebAPI.Models
         public long accessPastTime { get; set; }
        
 
-        public TokenModel()
+        public TokenModel(MessageModel msg)
         {
-            accessToken = Guid.NewGuid().ToString("N");
-            //accessPastTime = DateTime.Now.AddMinutes(Config.AccessTokenTime).;
-            accessPastTime=DateTimeOffset.Now.AddMinutes(Config.AccessTokenTime).ToUnixTimeMilliseconds();
+            accessToken = EnHelper.EncryptForMD5(msg.msgid+ msg.customid+ msg.token+ msg.reqtime);
+            accessPastTime =DateTimeOffset.Now.AddMinutes(Config.AccessTokenTime).ToUnixTimeMilliseconds();
         }
     }
 }

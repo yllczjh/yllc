@@ -25,7 +25,7 @@ namespace WebAPI.Tool
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
                 string str_json = JsonConvert.SerializeObject(p);
-                Dictionary<string, object> param = ToolFunction.JsonToDictionary(str_json, ref msg);
+                Dictionary<string, object> param = Helper.JsonToDictionary(str_json, ref msg);
                 if (msg.state != 0)
                 {
                     return null;
@@ -35,27 +35,21 @@ namespace WebAPI.Tool
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null != dt && dt.Rows.Count == 1)
                 {
-                    string str_error = string.Empty;
                     string str_数据库连接串 = dt.Rows[0]["数据库连接串"].ToString();
                     string str_数据库类型 = dt.Rows[0]["数据库类型"].ToString();
 
                     #region 插入更新
                     if (!string.IsNullOrEmpty(dt.Rows[0]["主插入语言"].ToString()))
                     {
-                        Dictionary<string, object> dic_插入信息 = ToolFunction.getInsert(param, dt.Rows[0], out str_error);
-                        if (!string.IsNullOrEmpty(str_error))
+                        Dictionary<string, object> dic_插入信息 = ToolFunction.getInsert(param, dt.Rows[0], ref msg);
+                        if (msg.state != 0)
                         {
-                            Code.Result(ref msg, 编码.参数错误, str_error);
                             return null;
                         }
+                       
                         if (dic_插入信息.Count > 0)
                         {
-                            str_error = DbHelper.Db(str_数据库类型, str_数据库连接串).ExecuteBatch(dic_插入信息);
-                            if (!string.IsNullOrEmpty(str_error))
-                            {
-                                Code.Result(ref msg, 编码.参数错误, str_error);
-                                return null;
-                            }
+                            DbHelper.Db(str_数据库类型, str_数据库连接串).ExecuteBatch(dic_插入信息);
                         }
                     }
                     #endregion
@@ -81,7 +75,11 @@ namespace WebAPI.Tool
                             {
                                 //包含query节点则有点读取query节点下的参数
                                 dic_query = arr_query[i] as Dictionary<string, object>;
-                                parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, out str_error, param);
+                                parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, ref msg, param);
+                                if (msg.state != 0)
+                                {
+                                    return null;
+                                }
                                 if (dic_query.ContainsKey("dataname"))
                                 {
                                     str_数据集名称 = dic_query["dataname"].ToString();
@@ -95,14 +93,14 @@ namespace WebAPI.Tool
                             else
                             {
                                 //不包含query节点则读取主节点的参数
-                                parameters_主 = ToolFunction.GetParameter(str_sql, param, out str_error);
+                                parameters_主 = ToolFunction.GetParameter(str_sql, param, ref msg);
+                                if (msg.state != 0)
+                                {
+                                    return null;
+                                }
                             }
 
-                            if (!string.IsNullOrEmpty(str_error))
-                            {
-                                Code.Result(ref msg, 编码.参数错误, str_error);
-                                return null;
-                            }
+                           
                             dt_主记录 = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable(str_sql.Replace("?", "@"), parameters_主);
 
                             #region 明细查询语言
@@ -117,16 +115,15 @@ namespace WebAPI.Tool
                                     for (int j = 0; j < dt_主记录.Rows.Count; j++)
                                     {
                                         DataRow row = dt_主记录.Rows[j];
-                                        SqlParameter[] parameters_明细 = ToolFunction.GetParameter(str_sql1, param, row, str_数据集名称, out str_error);
-                                        if (!string.IsNullOrEmpty(str_error))
+                                        SqlParameter[] parameters_明细 = ToolFunction.GetParameter(str_sql1, param, row, str_数据集名称, ref msg);
+                                        if (msg.state != 0)
                                         {
-                                            Code.Result(ref msg, 编码.参数错误, str_error);
                                             return null;
                                         }
                                         dt_明细记录 = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable(str_sql1.Replace("?", "@"), parameters_明细);
                                         row = ToolFunction.M_替换表头及顺序(row.Table, dt.Rows[0]["序号"].ToString(), 0, str_数据集名称).Rows[j];
                                         dt_明细记录 = ToolFunction.M_替换表头及顺序(dt_明细记录, dt.Rows[0]["序号"].ToString(), 1, str_数据集名称);
-                                        dic_明细返回 = ToolFunction.ToJson(row, dt_明细记录);
+                                        dic_明细返回 = Helper.ToJson(row, dt_明细记录);
                                         list_返回.Add(dic_明细返回);
                                     }
                                 }
@@ -170,7 +167,7 @@ namespace WebAPI.Tool
                 }
                 else
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "业务编号" + msg.code + "未配置数据库信息");
+                    Code.Result(ref msg, 编码.消息头错误, "业务编号[" + msg.code + "]未配置数据库信息");
                     return null;
                 }
                 return dic_返回;
@@ -228,38 +225,34 @@ namespace WebAPI.Tool
 
             return true;
         }
-        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string accessToken, out long accessPastTime, out string secret)
+        public static bool M_验证客户ID(string customid, ref MessageModel msg, out string clienttype, out string secret)
         {
             try
             {
-                string sql = $@"select * from webapi_customer where customid='{customid}'";
+                string sql = $@"select * from webapi_customer where 客户ID='{customid}' and 有效状态='True'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {
                     Code.Result(ref msg, 编码.消息头错误, "无效的customid");
-                    accessToken = string.Empty;
-                    accessPastTime = long.MinValue;
+                    clienttype = string.Empty;
                     secret = string.Empty;
                     return false;
                 }
                 if (null != dt && dt.Rows.Count > 1)
                 {
                     Code.Result(ref msg, 编码.消息头错误, "customid匹配到多个用户");
-                    accessToken = string.Empty;
-                    accessPastTime = long.MinValue;
+                    clienttype = string.Empty;
                     secret = string.Empty;
                     return false;
                 }
-                accessToken = dt.Rows[0]["accessToken"].ToString();
-                long.TryParse(dt.Rows[0]["accessPastTime"].ToString(), out accessPastTime);
-                secret = dt.Rows[0]["secret"].ToString();
+                clienttype = dt.Rows[0]["客户端类别"].ToString();
+                secret = dt.Rows[0]["密钥"].ToString();
             }
             catch (Exception e)
             {
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 Log.Error("M_验证客户ID", e.Message);
-                accessToken = "";
-                accessPastTime = long.MinValue;
+                clienttype = string.Empty;
                 secret = string.Empty;
                 return false;
             }

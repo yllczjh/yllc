@@ -297,7 +297,6 @@ namespace Tool.DB
                         {
                             Con.Close();
                             throw ex;
-                            // return -1;
                         }
                     }
                 }
@@ -372,9 +371,7 @@ namespace Tool.DB
                         }
                         catch (Exception)
                         {
-
                             Con.Close();
-
                             throw;
                         }
                     }
@@ -408,11 +405,11 @@ namespace Tool.DB
             }
         }
 
-        public string ExecuteBatch(Dictionary<string, object> dic)
+        public void  ExecuteBatch(Dictionary<string, object> dic)
         {
-            return ExecuteBatch(dic, CommandType.Text);
+             ExecuteBatch(dic, CommandType.Text);
         }
-        public string ExecuteBatch(Dictionary<string, object> dic, CommandType CommandType)
+        public void ExecuteBatch(Dictionary<string, object> dic, CommandType CommandType)
         {
             BeginTransaction();
             try
@@ -465,18 +462,17 @@ namespace Tool.DB
 
                 //执行完成后提交事务
                 CommitTransaction();
-                return string.Empty;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 try
                 {
                     RollbackTransaction();
-                    return e.Message;
+                    throw;
                 }
-                catch (Exception e1)
+                catch (Exception)
                 {
-                    return e1.Message;
+                    throw;
                 }
             }
         }

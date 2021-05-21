@@ -22,7 +22,7 @@ namespace WebAPI.Controllers.v1
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
             if (msg.state != 0)
             {
-                return GetResponseString(msg);
+                return GetResponseString(msg, null);
             }
             TokenModel token;
             Dictionary<string, object> result;
@@ -53,37 +53,23 @@ namespace WebAPI.Controllers.v1
                         break;
 
                     case "token":
-                        token = new TokenModel();
-                        if (msg.clienttype == "third")
+                        token = new TokenModel(msg);
+                        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                        if (null == userModel)
                         {
-                            if (DataHelper.M_更新Token(token, GetRequestString("customid")) == 1)
-                            {
-                                msg.dateset = token;
-                            }
-                            else
-                            {
-                                Code.Result(ref msg, 编码.程序错误, "获取token失败");
-                            }
+                            userModel = new UserModel();
                         }
-                        else
-                        {
-                            userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                            if (null == userModel)
-                            {
-                                userModel = new UserModel();
-                            }
-                            userModel.token = token;
-                            msg.dateset = token;
-                            HttpContext.Current.Session["UserModel"] = userModel;
-                        }
+                        userModel.token = token;
+                        msg.dateset = token;
+                        HttpContext.Current.Session["UserModel"] = userModel;
 
-                        return GetResponseString(msg);
+                        return GetResponseString(msg, null);
                     case "init":
                         userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                         if (null == userModel)
                         {
                             Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                            return GetResponseString(msg);
+                            return GetResponseString(msg, null);
                         }
                         string json = "{\"username\": \"" + userModel.onlyid + "\"}";
                         JObject jo = (JObject)JsonConvert.DeserializeObject(json.ToString());
@@ -97,9 +83,9 @@ namespace WebAPI.Controllers.v1
             catch (System.Exception e)
             {
                 Code.Result(ref msg, 编码.程序错误, e.Message);
-                return GetResponseString(msg);
+                return GetResponseString(msg, null);
             }
-            return GetResponseString(msg);
+            return GetResponseString(msg,null);
         }
     }
 }
