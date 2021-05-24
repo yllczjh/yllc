@@ -113,8 +113,10 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "缺少token");
                     goto 退出;
                 }
+
+
                 msg.token = token.First();
-                if (msg.code != "token" && Config.YanZheng == "1")
+                if (Config.YanZheng == "1")
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)

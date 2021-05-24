@@ -155,6 +155,16 @@
   <ItemGroup>
     <None Include="Resources\yd_refresh1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.DB\Erp.Tools.DB.csproj">
+      <Project>{B41B137D-07A1-4685-A709-248D86468F98}</Project>
+      <Name>Erp.Tools.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.Tygn\Erp.Tools.Tygn.csproj">
+      <Project>{46F47726-ACF3-42F9-A320-431E790DBD47}</Project>
+      <Name>Erp.Tools.Tygn</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

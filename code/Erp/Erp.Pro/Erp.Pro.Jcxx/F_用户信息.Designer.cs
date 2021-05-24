@@ -1,6 +1,6 @@
-﻿namespace Erp.Pro.Test
+﻿namespace Erp.Pro.Jcxx
 {
-    partial class F_Test
+    partial class F_用户信息
     {
         /// <summary>
         /// Required designer variable.
@@ -28,32 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.u_列表控件1 = new Erp.Tools.Control.U_列表控件();
             this.SuspendLayout();
             // 
-            // u_列表控件1
+            // F_用户信息
             // 
-            this.u_列表控件1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.u_列表控件1.Location = new System.Drawing.Point(0, 0);
-            this.u_列表控件1.Name = "u_列表控件1";
-            this.u_列表控件1.Size = new System.Drawing.Size(872, 304);
-            this.u_列表控件1.TabIndex = 0;
-            // 
-            // F_Test
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(872, 304);
-            this.Controls.Add(this.u_列表控件1);
-            this.Name = "F_Test";
-            this.Text = "F_Test";
-            this.Load += new System.EventHandler(this.F_Test_Load);
+            this.ClientSize = new System.Drawing.Size(567, 261);
+            this.Name = "F_用户信息";
+            this.Text = "F_用户信息";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private Tools.Control.U_列表控件 u_列表控件1;
     }
 }

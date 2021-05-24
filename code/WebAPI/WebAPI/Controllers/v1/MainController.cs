@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
@@ -24,7 +25,7 @@ namespace WebAPI.Controllers.v1
             {
                 return GetResponseString(msg, null);
             }
-            TokenModel token;
+
             Dictionary<string, object> result;
             UserModel userModel;
             try
@@ -45,25 +46,31 @@ namespace WebAPI.Controllers.v1
                                 }
                                 userModel.onlyid = p["username"];
                                 userModel.userinfo = result;
+                                TokenModel token = new TokenModel(msg);
+                                userModel.token = token;
+                                try
+                                {
+                                    ((result["dataset"] as ArrayList)[0] as Dictionary<string, object>).Add("accessToken", token.accessToken);
+                                    ((result["dataset"] as ArrayList)[0] as Dictionary<string, object>).Add("accessPastTime", token.accessPastTime);
+                                }
+                                catch (System.Exception)
+                                {
+                                    result.Add("token", token);
+                                }
                                 HttpContext.Current.Session["UserModel"] = userModel;
                             }
 
                             return GetResponseString(msg, result);
                         }
                         break;
-
-                    case "token":
-                        token = new TokenModel(msg);
+                    case "logout":
                         userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                        if (null == userModel)
+                        if (null != userModel)
                         {
-                            userModel = new UserModel();
+                            HttpContext.Current.Session["UserModel"] = null;
                         }
-                        userModel.token = token;
-                        msg.dateset = token;
-                        HttpContext.Current.Session["UserModel"] = userModel;
-
                         return GetResponseString(msg, null);
+
                     case "init":
                         userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                         if (null == userModel)
@@ -85,7 +92,7 @@ namespace WebAPI.Controllers.v1
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 return GetResponseString(msg, null);
             }
-            return GetResponseString(msg,null);
+            return GetResponseString(msg, null);
         }
     }
 }

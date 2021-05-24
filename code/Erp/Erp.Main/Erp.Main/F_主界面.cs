@@ -2,7 +2,10 @@
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
+using Erp.Tools.DB;
+using Erp.Tools.Tygn;
 using System;
+using System.Data;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -22,11 +25,11 @@ namespace Erp.Main
             {
                 int index = xtraTabControl1.SelectedTabPageIndex;
                 xtraTabControl1.TabPages.RemoveAt(index);
-                xtraTabControl1.SelectedTabPageIndex = index-1;
+                xtraTabControl1.SelectedTabPageIndex = index - 1;
             }
         }
 
-        public  Form GetForm(string LibName, string NameSpace, string formName)
+        public Form GetForm(string LibName, string NameSpace, string formName)
         {
             try
             {
@@ -64,12 +67,36 @@ namespace Erp.Main
 
         private void F_主界面_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            HttpHelper.HTTP.HttpPost("http://test7.ql-soft.com/api/v1/main/webapi", "");
+        }
+
+        private void barButtonItem9_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("a", typeof(string));
+            dt.Columns.Add("b", typeof(string));
+            dt.Columns.Add("c", typeof(string));
+            for (int i = 0; i < 5; i++)
+            {
+                DataRow row = dt.NewRow();
+                row["a"] = "a" + i;
+                row["b"] = "b" + i;
+                row["c"] = "c" + i;
+                dt.Rows.Add(row);
+            }
+
+            F_通用编辑页面 f_编辑 = new F_通用编辑页面(dt, new C_控件参数[] { new C_控件参数("a","aaaaa", E_控件类型.文本框, true), new C_控件参数("b","bbbbbb", E_控件类型.文本框, true), new C_控件参数("c","c", E_控件类型.文本框, true) }, 1, 3);
+            f_编辑.ShowDialog();
         }
     }
 }
