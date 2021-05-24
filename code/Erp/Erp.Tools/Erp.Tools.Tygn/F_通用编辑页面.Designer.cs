@@ -30,8 +30,8 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btn_保存 = new System.Windows.Forms.ToolStripButton();
+            this.btn_关闭 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,30 +45,31 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
+            this.btn_保存,
+            this.btn_关闭});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(512, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // btn_保存
             // 
-            this.toolStripButton1.Image = global::Erp.Tools.Tygn.Properties.Resources.doc_save_32;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton1.Text = "保存";
+            this.btn_保存.Image = global::Erp.Tools.Tygn.Properties.Resources.doc_save_32;
+            this.btn_保存.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_保存.Name = "btn_保存";
+            this.btn_保存.Size = new System.Drawing.Size(52, 22);
+            this.btn_保存.Text = "保存";
+            this.btn_保存.Click += new System.EventHandler(this.btn_保存_Click);
             // 
-            // toolStripButton2
+            // btn_关闭
             // 
-            this.toolStripButton2.Image = global::Erp.Tools.Tygn.Properties.Resources.close_32;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton2.Text = "关闭";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.btn_关闭.Image = global::Erp.Tools.Tygn.Properties.Resources.close_32;
+            this.btn_关闭.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_关闭.Name = "btn_关闭";
+            this.btn_关闭.Size = new System.Drawing.Size(52, 22);
+            this.btn_关闭.Text = "关闭";
+            this.btn_关闭.Click += new System.EventHandler(this.btn_关闭_Click);
             // 
             // F_通用编辑页面
             // 
@@ -90,7 +91,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btn_保存;
+        private System.Windows.Forms.ToolStripButton btn_关闭;
     }
 }

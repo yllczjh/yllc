@@ -13,6 +13,8 @@ namespace Erp.Tools.Tygn
 {
     public partial class F_通用编辑页面 : XtraForm
     {
+        CurrencyManager cm_绑定管理;
+
         DataTable dt_数据源;
         int i_数据源行号 = 0;
         int i_每行显示列数 = 2;
@@ -44,7 +46,7 @@ namespace Erp.Tools.Tygn
         {
             int x = 0;
             int y = 0;
-            CurrencyManager cm_绑定管理 = (CurrencyManager)this.BindingContext[dt_数据源];
+            cm_绑定管理 = (CurrencyManager)this.BindingContext[dt_数据源];
             cm_绑定管理.Position = i_数据源行号;
             int label_width = M_获取Label_Width(控件参数);
             this.Width = 200 * i_每行显示列数;
@@ -67,14 +69,33 @@ namespace Erp.Tools.Tygn
                 }
                 switch (entity.控件类型)
                 {
-                    case E_控件类型.文本框:
-                        TextBox t = new TextBox();
-                        t.Name = entity.数据名称;
-                        this.Controls.Add(t);
-                        t.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
-                        t.Width = 120;
-                        t.DataBindings.Add(new Binding("Text", dt_数据源, entity.数据名称));
-                        t.Show();
+                    case E_控件类型.Win_Text:
+                        TextBox textBox = new TextBox();
+                        textBox.Name = entity.数据名称;
+                        this.Controls.Add(textBox);
+                        textBox.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
+                        textBox.Width = 120;
+                        textBox.DataBindings.Add("Text", dt_数据源, entity.数据名称);
+                        textBox.Show();
+                        break;
+                    case E_控件类型.Dev_Text:
+                        TextEdit textEdit = new TextEdit();
+                        textEdit.Name = entity.数据名称;
+                        this.Controls.Add(textEdit);
+                        textEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
+                        textEdit.Width = 120;
+                        textEdit.DataBindings.Add("Text", dt_数据源, entity.数据名称);
+                        textEdit.Show();
+                        break;
+                    case E_控件类型.Dev_LookUpEdit:
+                        LookUpEdit lookUpEdit = new LookUpEdit();
+                        lookUpEdit.Name = entity.数据名称;
+                        this.Controls.Add(lookUpEdit);
+                        lookUpEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
+                        lookUpEdit.Width = 120;
+                        C_通用方法.M_绑定控件(lookUpEdit, entity.数据源);
+                        lookUpEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
+                        lookUpEdit.Show();
                         break;
                 }
             }
@@ -108,7 +129,17 @@ namespace Erp.Tools.Tygn
             return width;
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+
+        private void btn_保存_Click(object sender, EventArgs e)
+        {
+            cm_绑定管理.EndCurrentEdit();
+
+            //cm_绑定管理.EndCurrentEdit();
+            //cm_绑定管理.ResumeBinding();
+            //cm_绑定管理.AddNew();
+        }
+
+        private void btn_关闭_Click(object sender, EventArgs e)
         {
             this.Close();
         }

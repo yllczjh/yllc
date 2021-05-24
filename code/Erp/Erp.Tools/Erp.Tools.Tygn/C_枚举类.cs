@@ -12,8 +12,9 @@ namespace Erp.Tools.Tygn
     }
     public enum E_控件类型
     {
-        文本框 = 1,
-        下拉框 = 2
+        Win_Text,
+        Dev_Text,
+        Dev_LookUpEdit
     }
 
 }
