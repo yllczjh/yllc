@@ -56,11 +56,11 @@ namespace Tool.Helper
         //    {
         //        MessageModel msg = new MessageModel();
         //        client.DefaultRequestHeaders.Add("msgid", Guid.NewGuid().ToString("N"));
-        //        client.DefaultRequestHeaders.Add("customid", "1");
+        //        client.DefaultRequestHeaders.Add("appid", "1");
         //        client.DefaultRequestHeaders.Add("clienttype", "web");
         //        client.DefaultRequestHeaders.Add("token", "1");
         //        client.DefaultRequestHeaders.Add("reqtime", DateTime.Now.ToString("yyyyMMddHHmmss"));
-        //        client.DefaultRequestHeaders.Add("code", "1001");
+        //        client.DefaultRequestHeaders.Add("method", "1001");
         //        client.DefaultRequestHeaders.Add("sign", EnHelper.GetRequsetSign(msg, body, Tool.Helper.Config.AppSecret));
         //        result = client.PostAsJsonAsync<JObject>(url, (JObject)body).Result;
 

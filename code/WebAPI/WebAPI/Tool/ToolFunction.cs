@@ -173,12 +173,12 @@ namespace WebAPI.Tool
                             Dictionary<string, object> out_dic_set = new Dictionary<string, object>();
                             Dictionary<string, object> in_dic_dataset = in_arr_dataset[i] as Dictionary<string, object>;
                             out_dic_set.Add("dataparam", GetParameter(str_主插入语言, in_dic_dataset, ref msg));
-                            if (msg.state!=0)
+                            if (msg.errcode != 0)
                             {
                                 return null;
                             }
                             out_dic_set.Add("updateparam", GetParameter(str_主更新语言, in_dic_dataset, ref msg));
-                            if (msg.state != 0)
+                            if (msg.errcode != 0)
                             {
                                 return null;
                             }
@@ -202,7 +202,7 @@ namespace WebAPI.Tool
                                     {
                                         Dictionary<string, object> in_dic_datadetail = in_arr_datadetail[j] as Dictionary<string, object>;
                                         out_listdetail.Add(GetParameter(str_明细插入语言, in_dic_datadetail, ref msg, in_dic_dataset));
-                                        if (msg.state != 0)
+                                        if (msg.errcode != 0)
                                         {
                                             return null;
                                         }
@@ -220,7 +220,7 @@ namespace WebAPI.Tool
                         out_dic.Add("dataparam", out_listset);
 
                         SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, ref msg);
-                        if (msg.state != 0)
+                        if (msg.errcode != 0)
                         {
                             return null;
                         }

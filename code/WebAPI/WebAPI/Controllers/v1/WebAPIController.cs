@@ -38,12 +38,12 @@ namespace WebAPI.Controllers.v1
             {
                 Code.Result(ref msg, 编码.程序错误, ex.Message);
             }
-            if (msg.state == 0)
+            if (msg.errcode == 0)
             {
                 TokenModel token = new TokenModel(msg);
                 webgrant.token = token;
                 HttpContext.Current.Session["UserModel"] = webgrant;
-                msg.dateset = token;
+                msg.dataset = token;
             }
             return GetResponseString(msg, null);
         }

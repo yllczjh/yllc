@@ -31,9 +31,9 @@ namespace WebAPI.Controllers.v1
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("msgid", msg.msgid);
             dic.Add("remsgid", msg.remsgid);
-            dic.Add("state", msg.state);
-            dic.Add("msgtext", "(" + msg.state + ")" + msg.msgtext);
-            if (msg.state == 0 && null != dic_返回数据)
+            dic.Add("errcode", msg.errcode);
+            dic.Add("msgtext", "(" + msg.errcode + ")" + msg.msgtext);
+            if (msg.errcode == 0 && null != dic_返回数据)
             {
                 foreach (KeyValuePair<string, object> pair in dic_返回数据)
                 {
@@ -45,13 +45,13 @@ namespace WebAPI.Controllers.v1
             }
             else
             {
-                dic.Add("dateset", new ArrayList());
+                dic.Add("dataset", new ArrayList() { msg.dataset });
             }
             return Json(dic);
         }
         public IHttpActionResult RedirectWX()
         {
-            string appid = GetRequestString("customid");
+            string appid = GetRequestString("appid");
             string base_url = Config.BaseURL;
             string url = $"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
                 $@"{appid}&redirect_uri={base_url}WebAPI/wxwebgrant&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";

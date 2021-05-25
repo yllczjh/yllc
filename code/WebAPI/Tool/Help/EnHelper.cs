@@ -17,7 +17,7 @@ namespace Tool.Help
         /// <param name="MsgID"></param>
         /// <param name="UserID"></param>
         /// <param name="Token"></param>
-        /// <param name="Code"></param>
+        /// <param name="method"></param>
         /// <param name="parame"></param>
         /// <returns></returns>
         public static string GetRequsetSign(MessageModel msg, dynamic param, string secret)
@@ -29,9 +29,9 @@ namespace Tool.Help
             }
             SortedDictionary<string, object> dic = new SortedDictionary<string, object>();
             dic.Add("msgid", msg.msgid);
-            dic.Add("customid", msg.customid);
+            dic.Add("appid", msg.appid);
             dic.Add("token", msg.token);
-            dic.Add("code", msg.code);
+            dic.Add("method", msg.method);
             dic.Add("clienttype", msg.clienttype);
             dic.Add("reqtime", msg.reqtime);
             dic.Add("param", str_json);

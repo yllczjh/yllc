@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 using Tool.Help;
+using Tool.Helper;
 using Tool.Model;
 using WebAPI.filters;
 using WebAPI.Models;
@@ -21,7 +22,7 @@ namespace WebAPI.Controllers.v1
         public IHttpActionResult webapi(dynamic p)
         {
             MessageModel msg = this.Request.Properties["msg"] as MessageModel;
-            if (msg.state != 0)
+            if (msg.errcode != 0)
             {
                 return GetResponseString(msg, null);
             }
@@ -30,14 +31,14 @@ namespace WebAPI.Controllers.v1
             UserModel userModel;
             try
             {
-                switch (msg.code)
+                switch (msg.method)
                 {
                     case "login":
                         if (msg.clienttype == "wx") return RedirectWX();
                         if (msg.clienttype == "web")
                         {
                             result = DataHelper.Process(p, ref msg);
-                            if (msg.state == 0)
+                            if (msg.errcode == 0)
                             {
                                 userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                                 if (null == userModel)
@@ -58,9 +59,27 @@ namespace WebAPI.Controllers.v1
                                     result.Add("token", token);
                                 }
                                 HttpContext.Current.Session["UserModel"] = userModel;
+                                HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
                             }
 
                             return GetResponseString(msg, result);
+                        }
+                        if(msg.clienttype == "third")
+                        {
+                            userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                            if (null == userModel)
+                            {
+                                userModel = new UserModel();
+                            }
+                            userModel.onlyid = p["username"];
+                            //userModel.userinfo = result;
+                            TokenModel token = new TokenModel(msg);
+                            userModel.token = token;
+                            msg.dataset = token;
+
+                            HttpContext.Current.Session["UserModel"] = userModel;
+                            HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
+                            return GetResponseString(msg, null);
                         }
                         break;
                     case "logout":

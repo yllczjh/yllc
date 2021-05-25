@@ -66,47 +66,47 @@ namespace WebAPI.filters
                 }
                 #endregion
 
-                #region code 业务编码
-                IEnumerable<string> code;
-                if (!headers.TryGetValues("code", out code))
+                #region method 业务编码
+                IEnumerable<string> method;
+                if (!headers.TryGetValues("method", out method))
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "缺少code");
+                    Code.Result(ref msg, 编码.消息头错误, "缺少method");
                     goto 退出;
                 }
-                msg.code = code.First();
-                if (string.IsNullOrEmpty(msg.code))
+                msg.method = method.First();
+                if (string.IsNullOrEmpty(msg.method))
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "code值无效");
+                    Code.Result(ref msg, 编码.消息头错误, "method值无效");
                     goto 退出;
                 }
                 int i_基础业务 = 0;
-                DataHelper.M_验证Code(msg.code, ref msg, out i_基础业务);
-                if (msg.state != 0) goto 退出;
+                DataHelper.M_验证Code(msg.method, ref msg, out i_基础业务);
+                if (msg.errcode != 0) goto 退出;
                 #endregion
 
-                #region customid 
-                IEnumerable<string> customid;
-                if (!headers.TryGetValues("customid", out customid))
+                #region appid 
+                IEnumerable<string> appid;
+                if (!headers.TryGetValues("appid", out appid))
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "缺少customid");
+                    Code.Result(ref msg, 编码.消息头错误, "缺少appid");
                     goto 退出;
                 }
-                msg.customid = customid.First();
-                if (string.IsNullOrEmpty(msg.customid))
+                msg.appid = appid.First();
+                if (string.IsNullOrEmpty(msg.appid))
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "customid值无效");
+                    Code.Result(ref msg, 编码.消息头错误, "appid值无效");
                     goto 退出;
                 }
 
                 string clienttype = string.Empty;
                 string secret = string.Empty;
-                //验证数据库中customid
-                DataHelper.M_验证客户ID(msg.customid, ref msg, out clienttype, out secret);
-                if (msg.state != 0) goto 退出;
+                //验证数据库中appid
+                DataHelper.M_验证客户ID(msg.appid, ref msg, out clienttype, out secret);
+                if (msg.errcode != 0) goto 退出;
                 msg.clienttype = clienttype;
                 #endregion
 
-                #region token、customid
+                #region token、appid
                 IEnumerable<string> token;
                 if (!headers.TryGetValues("token", out token))
                 {
@@ -121,7 +121,7 @@ namespace WebAPI.filters
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)
                     {
-                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && msg.code != "login")
+                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && msg.method != "login")
                         {
                             Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
                             goto 退出;
@@ -222,15 +222,15 @@ namespace WebAPI.filters
                 goto 退出;
             }
 
-            退出: if (msg.state != 0)
+            退出: if (msg.errcode != 0)
             {
                 ResponseModel res = new ResponseModel(msg);
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, res);
                 HttpRequestHeaders headers = actionContext.Request.Headers;
                 RequestModel req = new RequestModel();
                 req.clienttype = GetValue("clienttype", headers);
-                req.code = GetValue("code", headers);
-                req.customid = GetValue("customid", headers);
+                req.method = GetValue("method", headers);
+                req.appid = GetValue("appid", headers);
                 req.msgid = GetValue("msgid", headers);
                 req.reqtime = GetValue("reqtime", headers);
                 req.sign = GetValue("sign", headers);

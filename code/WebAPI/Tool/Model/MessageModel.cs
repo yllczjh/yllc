@@ -19,7 +19,7 @@ namespace Tool.Model
         /// <summary>
         /// 处理结果。0成功
         /// </summary>
-        public int state { get; set; }
+        public int errcode { get; set; }
         /// <summary>
         /// 处理消息
         /// </summary>
@@ -27,12 +27,12 @@ namespace Tool.Model
         /// <summary>
         /// 返回结果数据
         /// </summary>
-        public object dateset { get; set; }
+        public object dataset { get; set; }
 
         /// <summary>
         /// 客户ID
         /// </summary>
-        public string customid { get; set; }
+        public string appid { get; set; }
         /// <summary>
         /// Token
         /// </summary>
@@ -40,7 +40,7 @@ namespace Tool.Model
         /// <summary>
         /// 业务编码
         /// </summary>
-        public string code { get; set; }
+        public string method { get; set; }
         /// <summary>
         /// 客户端类别
         /// </summary>
@@ -58,12 +58,12 @@ namespace Tool.Model
         {
             msgid = string.Empty;
             remsgid = Guid.NewGuid().ToString("N");
-            state = 0;
+            errcode = 0;
             msgtext = "成功!";
-            dateset = new ArrayList();
-            customid = string.Empty;
+            dataset = new ArrayList();
+            appid = string.Empty;
             token = string.Empty;
-            code = string.Empty;
+            method = string.Empty;
             sign = string.Empty;
         }
     }
@@ -81,7 +81,7 @@ namespace Tool.Model
         /// <summary>
         /// 处理结果。0成功
         /// </summary>
-        public int state { get; set; }
+        public int errcode { get; set; }
         /// <summary>
         /// 处理消息
         /// </summary>
@@ -89,15 +89,15 @@ namespace Tool.Model
         /// <summary>
         /// 返回结果数据
         /// </summary>
-        public object dateset { get; set; }
+        public object dataset { get; set; }
 
         public ResponseModel(MessageModel msg)
         {
             this.msgid = msg.msgid;
             this.remsgid = msg.remsgid;
-            this.state = msg.state;
-            this.msgtext = "(" + msg.state + ")" + msg.msgtext;
-            this.dateset = msg.dateset;
+            this.errcode = msg.errcode;
+            this.msgtext = "(" + msg.errcode + ")" + msg.msgtext;
+            this.dataset = msg.dataset;
         }
     }
     public class RequestModel
@@ -109,7 +109,7 @@ namespace Tool.Model
         /// <summary>
         /// 客户ID
         /// </summary>
-        public string customid { get; set; }
+        public string appid { get; set; }
         /// <summary>
         /// Token
         /// </summary>
@@ -117,7 +117,7 @@ namespace Tool.Model
         /// <summary>
         /// 业务编码
         /// </summary>
-        public string code { get; set; }
+        public string method { get; set; }
         /// <summary>
         /// 客户端类别
         /// </summary>

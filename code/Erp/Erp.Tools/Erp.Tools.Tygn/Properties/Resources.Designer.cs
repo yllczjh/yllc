@@ -63,6 +63,16 @@ namespace Erp.Tools.Tygn.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap add_32 {
+            get {
+                object obj = ResourceManager.GetObject("add_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap close_32 {
             get {
                 object obj = ResourceManager.GetObject("close_32", resourceCulture);
@@ -73,9 +83,29 @@ namespace Erp.Tools.Tygn.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap doc_edit_32 {
+            get {
+                object obj = ResourceManager.GetObject("doc_edit_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap doc_save_32 {
             get {
                 object obj = ResourceManager.GetObject("doc_save_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap trash_32 {
+            get {
+                object obj = ResourceManager.GetObject("trash_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

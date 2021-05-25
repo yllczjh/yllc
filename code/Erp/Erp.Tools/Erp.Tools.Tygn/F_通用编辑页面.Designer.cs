@@ -39,8 +39,9 @@
             // 
             this.panel1.Location = new System.Drawing.Point(12, 71);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 12);
+            this.panel1.Size = new System.Drawing.Size(61, 12);
             this.panel1.TabIndex = 0;
+            this.panel1.Visible = false;
             // 
             // toolStrip1
             // 
@@ -78,8 +79,10 @@
             this.ClientSize = new System.Drawing.Size(512, 261);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "F_通用编辑页面";
             this.Text = "F_通用编辑页面";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.F_通用编辑页面_FormClosed);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

@@ -1,12 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Erp.Tools.Tygn
@@ -18,6 +13,7 @@ namespace Erp.Tools.Tygn
         DataTable dt_数据源;
         int i_数据源行号 = 0;
         int i_每行显示列数 = 2;
+        string str_操作类型="新增";
 
         int i_行号 = 1;
         int i_列号 = 1;
@@ -28,18 +24,31 @@ namespace Erp.Tools.Tygn
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="str_操作类型">新增、修改</param>
         /// <param name="dt">数据源</param>
         /// <param name="控件参数"></param>
         /// <param name="i_行号">修改的行号</param>
         /// <param name="i_每行显示列数">每行显示列数</param>
-        public F_通用编辑页面(DataTable dt_数据源, C_控件参数[] 控件参数, int i_数据源行号, int i_每行显示列数 = 2)
+        public F_通用编辑页面(F_通用列表界面 f_父窗体, string str_操作类型, DataTable dt_数据源, C_控件参数[] 控件参数, int i_数据源行号, int i_每行显示列数 = 2)
         {
             InitializeComponent();
 
+            this.str_操作类型 = str_操作类型;
             this.dt_数据源 = dt_数据源;
             this.i_每行显示列数 = i_每行显示列数;
             this.i_数据源行号 = i_数据源行号;
             显示页面(控件参数);
+        }
+
+        public F_通用编辑页面(F_通用列表界面 f_父窗体)
+        {
+            InitializeComponent();
+
+            this.str_操作类型 = f_父窗体.P_操作类型;
+            this.dt_数据源 = f_父窗体.u_列表控件.GridControl.DataSource as DataTable  ;
+            this.i_每行显示列数 = f_父窗体.P_每行显示列数;
+            this.i_数据源行号 = f_父窗体.P_焦点行;
+            显示页面(f_父窗体.P_控件参数);
         }
 
         public void 显示页面(C_控件参数[] 控件参数)
@@ -47,7 +56,14 @@ namespace Erp.Tools.Tygn
             int x = 0;
             int y = 0;
             cm_绑定管理 = (CurrencyManager)this.BindingContext[dt_数据源];
-            cm_绑定管理.Position = i_数据源行号;
+            if (str_操作类型 == "新增")
+            {
+                cm_绑定管理.AddNew();
+            }
+            else
+            {
+                cm_绑定管理.Position = i_数据源行号;
+            }
             int label_width = M_获取Label_Width(控件参数);
             this.Width = 200 * i_每行显示列数;
             Label l = new Label();
@@ -106,7 +122,7 @@ namespace Erp.Tools.Tygn
             i_行号 = i / i_每行显示列数 + 1;
             i_列号 = i % i_每行显示列数 + 1;
             x = (i_列号 - 1) * 200;
-            y = i_行号 * 24+24;
+            y = i_行号 * 24+10;
         }
 
         private int M_获取Label_Width(C_控件参数[] 控件参数)
@@ -132,15 +148,42 @@ namespace Erp.Tools.Tygn
 
         private void btn_保存_Click(object sender, EventArgs e)
         {
-            cm_绑定管理.EndCurrentEdit();
+            if (str_操作类型 == "新增")
+            {
+                if (DialogResult.Yes == MessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    cm_绑定管理.EndCurrentEdit();
+                    cm_绑定管理.ResumeBinding();
+                    cm_绑定管理.AddNew();
 
-            //cm_绑定管理.EndCurrentEdit();
-            //cm_绑定管理.ResumeBinding();
-            //cm_绑定管理.AddNew();
+                    //M_初始化();
+                }
+                else
+                {
+                    cm_绑定管理.EndCurrentEdit();
+                    this.Close();
+                }
+            }
+            else
+            {
+                cm_绑定管理.EndCurrentEdit();
+                cm_绑定管理.ResumeBinding();
+                MessageBox.Show("修改成功");
+                this.Close();
+            }
         }
 
         private void btn_关闭_Click(object sender, EventArgs e)
         {
+            cm_绑定管理.CancelCurrentEdit();
+            cm_绑定管理.EndCurrentEdit();
+            this.Close();
+        }
+
+        private void F_通用编辑页面_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            cm_绑定管理.CancelCurrentEdit();
+            cm_绑定管理.EndCurrentEdit();
             this.Close();
         }
     }

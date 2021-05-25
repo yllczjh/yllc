@@ -34,8 +34,8 @@ namespace WebAPI.Controllers
                 HttpRequestHeaders headers = actionContext.Request.Headers;
                 RequestModel req = new RequestModel();
                 req.clienttype = GetValue("clienttype", headers);
-                req.code = GetValue("code", headers);
-                req.customid = GetValue("customid", headers);
+                req.method = GetValue("method", headers);
+                req.appid = GetValue("appid", headers);
                 req.msgid = GetValue("msgid", headers);
                 req.reqtime = GetValue("reqtime", headers);
                 req.sign = GetValue("sign", headers);

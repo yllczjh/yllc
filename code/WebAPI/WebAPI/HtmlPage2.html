@@ -35,7 +35,7 @@
         //$.ajax({
         //    url: "api/v1/Main/bbb",
         //    type: "post",
-        //    headers: { msgid: guid(),userid:"user1",token:"12345",code:"1001",sign:"" },
+        //    headers: { msgid: guid(),userid:"user1",token:"12345",method:"1001",sign:"" },
         //    data: JSON.stringify({ id: "a" }),
         //    contentType: "application/json;charset=utf-8",
         //    dataType:"text"
@@ -46,7 +46,7 @@
         //$.ajax({
         //    url: "api/v1/Main/Token/1",
         //    type: "post",
-        //    headers: { msgid: guid(), customid: "wx15f7a5e149460ffb", clienttype: "wx", token: "123455", code: "1002", sign: "" },
+        //    headers: { msgid: guid(), appid: "wx15f7a5e149460ffb", clienttype: "wx", token: "123455", method: "1002", sign: "" },
         //    //data: JSON.stringify({ "datacount": 2, "dataset": [{ "单据编号": "123", "客户编码": "123", "rowcount": 2, "datadetail": [{ "产品编号": "123", "数量": 10 }, { "产品编号": "456", "数量": 12 }] }, { "单据编号": "456", "客户编码": "122", "rowcount": 1, "datadetail": [{ "产品编号": "123", "数量": 10 }] }] }),
         //    contentType: "application/json;charset=utf-8",
         //    data: "{ \"datacount\": 2, \"dataset\": [{ \"单据编号\": \"123\", \"客户编码\": \"123\", \"rowcount\": 2, \"datadetail\": [{ \"产品编号\": \"123\", \"数量\": 10 }, { \"产品编号\": \"456\", \"数量\": 12 }] }, { \"单据编号\": \"456\", \"客户编码\": \"122\", \"rowcount\": 1, \"datadetail\": [{ \"产品编号\": \"123\", \"数量\": 10 }] }] }",
@@ -59,7 +59,7 @@
         $.ajax({
             url: "api/v1/Main/Token/1",
             type: "post",
-            headers: { msgid: guid(), token: "123455", code: "1002", sign: "", customid: "wx15f7a5e149460ffb", clienttype: "wx" },
+            headers: { msgid: guid(), token: "123455", method: "1002", sign: "", appid: "wx15f7a5e149460ffb", clienttype: "wx" },
             //data: JSON.stringify({ "datacount": 2, "dataset": [{ "单据编号": "123", "客户编码": "123", "rowcount": 2, "datadetail": [{ "产品编号": "123", "数量": 10 }, { "产品编号": "456", "数量": 12 }] }, { "单据编号": "456", "客户编码": "122", "rowcount": 1, "datadetail": [{ "产品编号": "123", "数量": 10 }] }] }),
             contentType: "application/json;charset=utf-8",
             data: "{ \"datacount\": 2, \"dataset\": [{ \"单据编号\": \"123\", \"客户编码\": \"123\", \"rowcount\": 2, \"datadetail\": [{ \"产品编号\": \"123\", \"数量\": 10 }, { \"产品编号\": \"456\", \"数量\": 12 }] }, { \"单据编号\": \"456\", \"客户编码\": \"122\", \"rowcount\": 1, \"datadetail\": [{ \"产品编号\": \"123\", \"数量\": 10 }] }] }",

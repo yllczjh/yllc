@@ -19,7 +19,7 @@ namespace WebAPI.Models
 
         public TokenModel(MessageModel msg)
         {
-            accessToken = EnHelper.EncryptForMD5(msg.msgid+ msg.customid+ msg.token+ msg.reqtime);
+            accessToken = EnHelper.EncryptForMD5(msg.msgid+ msg.appid+ msg.token+ msg.reqtime);
             accessPastTime =DateTimeOffset.Now.AddMinutes(Config.AccessTokenTime).ToUnixTimeMilliseconds();
         }
     }

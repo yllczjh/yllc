@@ -32,12 +32,14 @@
             // 
             // F_用户信息
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 261);
+            this.ClientSize = new System.Drawing.Size(661, 304);
             this.Name = "F_用户信息";
             this.Text = "F_用户信息";
+            this.Load += new System.EventHandler(this.F_用户信息_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
