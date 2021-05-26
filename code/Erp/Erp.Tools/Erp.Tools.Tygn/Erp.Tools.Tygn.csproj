@@ -77,6 +77,12 @@
     <Compile Include="自定义控件\U_列表控件.Designer.cs">
       <DependentUpon>U_列表控件.cs</DependentUpon>
     </Compile>
+    <Compile Include="自定义控件\U_通用列表.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="自定义控件\U_通用列表.Designer.cs">
+      <DependentUpon>U_通用列表.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="F_通用列表界面.resx">
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="自定义控件\U_列表控件.resx">
       <DependentUpon>U_列表控件.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="自定义控件\U_通用列表.resx">
+      <DependentUpon>U_通用列表.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

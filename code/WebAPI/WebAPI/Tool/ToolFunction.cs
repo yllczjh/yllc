@@ -15,7 +15,7 @@ namespace WebAPI.Tool
     public class ToolFunction
     {
         #region 数据处理相关
-        public static SqlParameter[] GetParameter(string str_sql, Dictionary<string, object> p, ref MessageModel  msg, params Dictionary<string, object>[] p1)
+        public static SqlParameter[] GetParameter(string str_sql, Dictionary<string, object> p, ref MessageModel msg, params Dictionary<string, object>[] p1)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace WebAPI.Tool
                     {
                         string str_参数名 = list_SQL参数[i].ToString();
                         str_参数名 = str_参数名.Replace("?", "");
-                        string str_参数值 = string.Empty;
+                        object str_参数值 = DBNull.Value;
                         if (null == p || !p.ContainsKey(str_参数名))
                         {
                             if (p1.Count() > 0)
@@ -47,7 +47,7 @@ namespace WebAPI.Tool
                                 }
                                 else
                                 {
-                                    str_参数值 = p1[0][str_参数名].ToString();
+                                    str_参数值 = p1[0][str_参数名];
                                 }
                             }
                             else
@@ -58,9 +58,9 @@ namespace WebAPI.Tool
                         }
                         else
                         {
-                            str_参数值 = p[str_参数名].ToString();
+                            str_参数值 = p[str_参数名];
                         }
-                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值);
+                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), (null == str_参数值) ? DBNull.Value : str_参数值);
                     }
                     return parameters;
                 }
@@ -93,7 +93,7 @@ namespace WebAPI.Tool
                     {
                         string str_参数名 = list_SQL参数[i].ToString();
                         str_参数名 = str_参数名.Replace("?", "");
-                        string str_参数值 = string.Empty;
+                        object str_参数值 = DBNull.Value;
                         if (str_参数名 == "dataname" && !string.IsNullOrEmpty(str_数据集名称))
                         {
                             str_参数值 = str_数据集名称;
@@ -102,13 +102,13 @@ namespace WebAPI.Tool
                         {
                             if (row.Table.Columns.Contains(str_参数名))
                             {
-                                str_参数值 = row[str_参数名].ToString();
+                                str_参数值 = row[str_参数名];
                             }
                             else
                             {
                                 if (p.ContainsKey(str_参数名))
                                 {
-                                    str_参数值 = p[str_参数名].ToString();
+                                    str_参数值 = p[str_参数名];
                                 }
                                 else
                                 {
@@ -117,7 +117,7 @@ namespace WebAPI.Tool
                                 }
                             }
                         }
-                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值);
+                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), (null == str_参数值) ? DBNull.Value : str_参数值);
                     }
                     return parameters;
                 }
@@ -238,7 +238,7 @@ namespace WebAPI.Tool
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 return null;
             }
-            
+
             return out_dic;
             //finishsql:"完成语言"
             //datasql:"主插入语言"
@@ -254,7 +254,7 @@ namespace WebAPI.Tool
 
         #region 数据转换工具
 
-       
+
         /// <summary>
         /// 替换表头及顺序
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using Erp.Tools.Tygn.自定义控件;
 using System;
 using System.Data;
 using System.Drawing;
@@ -49,6 +50,17 @@ namespace Erp.Tools.Tygn
             this.i_每行显示列数 = f_父窗体.P_每行显示列数;
             this.i_数据源行号 = f_父窗体.P_焦点行;
             显示页面(f_父窗体.P_控件参数);
+        }
+
+        public F_通用编辑页面(U_通用列表 f_父窗体)
+        {
+            InitializeComponent();
+
+            //this.str_操作类型 = f_父窗体.P_操作类型;
+            //this.dt_数据源 = f_父窗体.u_列表控件.GridControl.DataSource as DataTable;
+            //this.i_每行显示列数 = f_父窗体.P_每行显示列数;
+            //this.i_数据源行号 = f_父窗体.P_焦点行;
+            //显示页面(f_父窗体.P_控件参数);
         }
 
         public void 显示页面(C_控件参数[] 控件参数)

@@ -60,6 +60,7 @@ namespace Erp.Pro.Jcxx
             P_控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true, new C_数据源(dt1, "cc", "bb"));
 
             base.M_修改();
+
         }
     }
 }

@@ -71,8 +71,8 @@ namespace WebAPI.Controllers.v1
                             {
                                 userModel = new UserModel();
                             }
-                            userModel.onlyid = p["username"];
-                            //userModel.userinfo = result;
+                            userModel.onlyid = msg.appid;
+                            userModel.userinfo = msg.appid;
                             TokenModel token = new TokenModel(msg);
                             userModel.token = token;
                             msg.dataset = token;

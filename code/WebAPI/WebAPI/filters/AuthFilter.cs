@@ -131,27 +131,27 @@ namespace WebAPI.filters
 
                             if (userModel.token.accessToken != msg.token)
                             {
-                                Code.Result(ref msg, 编码.Token错误, "请重新获取");
+                                Code.Result(ref msg, 编码.用户身份错误, "无效的token");
                                 goto 退出;
                             }
                             else
                             {
                                 if (DateTimeOffset.Now.ToUnixTimeMilliseconds() > userModel.token.accessPastTime)
                                 {
-                                    Code.Result(ref msg, 编码.Token错误, "Token已过期");
+                                    Code.Result(ref msg, 编码.用户身份错误, "Token已过期");
                                     goto 退出;
                                 }
                             }
                         }
                         else
                         {
-                            Code.Result(ref msg, 编码.Token错误, "无效的Token");
+                            Code.Result(ref msg, 编码.用户身份错误, "无效的Token");
                             goto 退出;
                         }
                     }
                     else
                     {
-                        Code.Result(ref msg, 编码.Token错误, "无效的Token");
+                        Code.Result(ref msg, 编码.用户身份错误, "无效的Token");
                         goto 退出;
                     }
                 }
