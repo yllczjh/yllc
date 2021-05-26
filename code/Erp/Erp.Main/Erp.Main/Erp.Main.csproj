@@ -156,13 +156,9 @@
     <None Include="Resources\yd_refresh1.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.DB\Erp.Tools.DB.csproj">
-      <Project>{B41B137D-07A1-4685-A709-248D86468F98}</Project>
-      <Name>Erp.Tools.DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.Tygn\Erp.Tools.Tygn.csproj">
-      <Project>{46F47726-ACF3-42F9-A320-431E790DBD47}</Project>
-      <Name>Erp.Tools.Tygn</Name>
+    <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
+      <Project>{0F7C4903-AE7F-447E-954B-62FE2A820C31}</Project>
+      <Name>Erp.Pro.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

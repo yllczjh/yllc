@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3C98F512-9ECA-4BC4-A2E3-E84EB0B02A54}</ProjectGuid>
+    <ProjectGuid>{46F47726-ACF3-42F9-A320-431E790DBD47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Erp.Pro.Test</RootNamespace>
-    <AssemblyName>Erp.Pro.Test</AssemblyName>
+    <RootNamespace>Erp.Tools.Tygn</RootNamespace>
+    <AssemblyName>Erp.Tools.Tygn</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Erp.Dll\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,17 +32,15 @@
   <ItemGroup>
     <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="Erp.Tools.Control">
-      <HintPath>..\..\Erp.Tools\Erp.Tools.Control\obj\Debug\Erp.Tools.Control.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,19 +50,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="F_Test.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="F_Test.Designer.cs">
-      <DependentUpon>F_Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="自定义控件\U_通用列表.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="自定义控件\U_通用列表.Designer.cs">
+      <DependentUpon>U_通用列表.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="F_Test.resx">
-      <DependentUpon>F_Test.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="自定义控件\U_通用列表.resx">
+      <DependentUpon>U_通用列表.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_save_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\doc_edit_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
+      <Project>{0F7C4903-AE7F-447E-954B-62FE2A820C31}</Project>
+      <Name>Erp.Pro.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Init\Erp.Server.Init.csproj">
+      <Project>{82E4B82D-0F25-428E-9A30-B2475B80A10F}</Project>
+      <Name>Erp.Server.Init</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

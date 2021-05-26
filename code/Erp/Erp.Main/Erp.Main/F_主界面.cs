@@ -1,9 +1,7 @@
 ﻿using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
-using Erp.Tools.DB;
-using Erp.Tools.Tygn;
+using Erp.Pro.Utils;
 using System;
 using System.Data;
 using System.Reflection;
@@ -100,7 +98,7 @@ namespace Erp.Main
 
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
-            HttpHelper.HTTP.HttpPost("http://test7.ql-soft.com/api/v1/main/webapi", "");
+            //HttpHelper.HTTP.HttpPost("http://test7.ql-soft.com/api/v1/main/webapi", "");
         }
 
         private void barButtonItem9_ItemClick(object sender, ItemClickEventArgs e)
@@ -110,7 +108,7 @@ namespace Erp.Main
             控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
             控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true,new C_数据源(dt1,"cc","bb"));
 
-            //F_通用编辑页面 f_编辑 = new F_通用编辑页面("新增",dt, 控件参数, 0, 3);
+            //F_通用编辑页面 f_编辑 = new F_通用编辑页面("新增", dt, 控件参数, 0, 3);
             //f_编辑.StartPosition = FormStartPosition.CenterParent;
             //f_编辑.ShowDialog();
         }

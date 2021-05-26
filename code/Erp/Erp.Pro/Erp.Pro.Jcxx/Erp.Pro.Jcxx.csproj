@@ -31,7 +31,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Erp.Pro.Utils">
+      <HintPath>..\Erp.Pro.Utils\obj\Debug\Erp.Pro.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Erp.Server.Init, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
+    </Reference>
     <Reference Include="Erp.Tools.Control">
       <HintPath>..\..\Erp.Tools\Erp.Tools.Control\obj\Debug\Erp.Tools.Control.dll</HintPath>
     </Reference>
@@ -53,12 +61,6 @@
     <Compile Include="F_用户信息.Designer.cs">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </Compile>
-    <Compile Include="F_用户信息1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="F_用户信息1.Designer.cs">
-      <DependentUpon>F_用户信息1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -70,9 +72,6 @@
     <EmbeddedResource Include="F_用户信息.resx">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="F_用户信息1.resx">
-      <DependentUpon>F_用户信息1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -83,16 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\doc_edit_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.DB\Erp.Tools.DB.csproj">
-      <Project>{B41B137D-07A1-4685-A709-248D86468F98}</Project>
-      <Name>Erp.Tools.DB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Erp.Tools\Erp.Tools.Tygn\Erp.Tools.Tygn.csproj">
-      <Project>{46F47726-ACF3-42F9-A320-431E790DBD47}</Project>
-      <Name>Erp.Tools.Tygn</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

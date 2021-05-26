@@ -19,6 +19,8 @@ namespace WebAPI.Tool
         {
             try
             {
+                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);
+
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
                 foreach (Match mat in mats)
@@ -40,6 +42,7 @@ namespace WebAPI.Tool
                         {
                             if (p1.Count() > 0)
                             {
+                                p1[0] = new Dictionary<string, object>(p1[0], StringComparer.CurrentCultureIgnoreCase);
                                 if (!p1[0].ContainsKey(str_参数名))
                                 {
                                     Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
@@ -80,6 +83,8 @@ namespace WebAPI.Tool
         {
             try
             {
+                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);
+
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
                 foreach (Match mat in mats)

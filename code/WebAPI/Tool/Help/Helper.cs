@@ -75,7 +75,7 @@ namespace Tool.Help
             try
             {
                 //将指定的 JSON 字符串转换为 Dictionary<string, object> 类型的对象
-                return jss.Deserialize<Dictionary<string, object>>(jsonData);
+                return jss.Deserialize<Dictionary<string, object>> (jsonData);
             }
             catch (Exception ex)
             {

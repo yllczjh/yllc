@@ -1,11 +1,18 @@
-﻿using Erp.Tools.DB;
-using Erp.Tools.Tygn;
+﻿
+using Erp.Pro.Utils;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Erp.Pro.Jcxx
 {
-    public partial class F_用户信息 : F_通用列表界面
+    public partial class F_用户信息 : Form
     {
         DataTable dt = new DataTable();
         DataTable dt1 = new DataTable();
@@ -40,27 +47,26 @@ namespace Erp.Pro.Jcxx
                 dt1.Rows.Add(row);
             }
 
-            base.u_列表控件.GridControl.DataSource = dt;
+            u_通用列表编辑2.GridControl.DataSource = dt;
         }
 
-        public override void M_新增()
+
+        private void u_通用列表编辑2_新增处理(object sender, EventArgs e)
         {
-            P_控件参数 = new C_控件参数[3];
+            C_控件参数[] P_控件参数 = new C_控件参数[3];
             P_控件参数[0] = new C_控件参数("a", "aaaaa", E_控件类型.Dev_Text, true, true);
             P_控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
             P_控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true, new C_数据源(dt1, "cc", "bb"));
-            base.M_新增();
+            u_通用列表编辑2.P_控件参数 = P_控件参数;
         }
 
-        public override void M_修改()
+        private void u_通用列表编辑2_修改处理(object sender, EventArgs e)
         {
-            P_控件参数 = new C_控件参数[3];
+            C_控件参数[] P_控件参数 = new C_控件参数[3];
             P_控件参数[0] = new C_控件参数("a", "aaaaa", E_控件类型.Dev_Text, true, true);
             P_控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
             P_控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true, new C_数据源(dt1, "cc", "bb"));
-
-            base.M_修改();
-
+            u_通用列表编辑2.P_控件参数 = P_控件参数;
         }
     }
 }

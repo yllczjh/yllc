@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 using Tool.DB;
 using Tool.Help;
 using Tool.Model;
@@ -24,14 +26,15 @@ namespace WebAPI.Tool
             try
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
+                //Dictionary<string, object> param = new Dictionary<string, object>(p.ToObject<IDictionary<string, object>>(), StringComparer.CurrentCultureIgnoreCase);
+
                 string str_json = JsonConvert.SerializeObject(p);
                 Dictionary<string, object> param = Helper.JsonToDictionary(str_json, ref msg);
+
                 if (msg.errcode != 0)
                 {
                     return null;
                 }
-                //string sql = $@"SELECT * from webapi_list where 业务编号='{msg.method}' and 有效状态='True'";
-                //string sql = $@"SELECT * from webapi_list t left join webapi_link t1 on t.连接标识=t1.连接标识 where t.业务编号='{msg.method}' and t.有效状态='True'";
 
                 string sql = $@"SELECT t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型 from webapi_customtolist t1 left join webapi_list t2 on t1.业务编号=t2.业务编号 left join webapi_link t3 on t2.连接标识=t3.连接标识 where t1.客户ID='{msg.appid}' and t1.业务编号='{msg.method}' and t1.有效状态='True' and t2.有效状态='True'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
