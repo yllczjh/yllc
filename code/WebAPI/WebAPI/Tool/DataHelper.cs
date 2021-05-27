@@ -42,6 +42,19 @@ namespace WebAPI.Tool
                 {
                     string str_数据库连接串 = dt.Rows[0]["数据库连接串"].ToString();
                     string str_数据库类型 = dt.Rows[0]["数据库类型"].ToString();
+                    if (param.ContainsKey("dbcon"))
+                    {
+                        sql = $@"SELECT t.数据库连接串, t.数据库类型 webapi_link t where t.连接标识='{param["dbcon"]}'";
+                        DataTable dt_连接 = DbHelper.Db().GetDataTable(sql);
+                        if (null == dt_连接 || dt_连接.Rows.Count <= 0)
+                        {
+                            Code.Result(ref msg, 编码.参数错误, "[dbcon]未查到有效的数据信息");
+                            return null;
+                        }
+
+                        str_数据库连接串 = dt_连接.Rows[0]["数据库连接串"].ToString();
+                        str_数据库类型 = dt_连接.Rows[0]["数据库类型"].ToString();
+                    }
 
                     #region 插入更新
                     if (!string.IsNullOrEmpty(dt.Rows[0]["主插入语言"].ToString()))

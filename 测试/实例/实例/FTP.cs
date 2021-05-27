@@ -78,6 +78,30 @@ namespace 实例
             string FileName = string.Empty;
             //string FileName = Path.GetFullPath(downloadUrl) + Path.DirectorySeparatorChar.ToString() + Path.GetFileName(uri.LocalPath);
 
+            pictureEdit1.Image = new Bitmap((new System.Net.WebClient()).OpenRead(uri));
+
+            DevExpress.XtraEditors.VScrollBar vScrl = null;
+            DevExpress.XtraEditors.HScrollBar hScrl = null;
+            // 查找水平和垂直滚动条
+            foreach (Control ctrl in pictureEdit1.Controls)
+            {
+                if (ctrl is DevExpress.XtraEditors.VScrollBar)
+                    vScrl = ctrl as DevExpress.XtraEditors.VScrollBar;
+                if (ctrl is DevExpress.XtraEditors.HScrollBar)
+                    hScrl = ctrl as DevExpress.XtraEditors.HScrollBar;
+            }
+            // 设置滚动条值，让图片中心显示在PictureEdit中心！
+            //vScrl.Value = (pictureEdit1.Image.Height - pictureEdit1.ClientSize.Height) / 2;
+            //hScrl.Value = (pictureEdit1.Image.Width - pictureEdit1.ClientSize.Width) / 2;
+            hScrl.Visible = true;
+            vScrl.Visible = true;
+            vScrl.Location = new Point(pictureEdit1.Width - vScrl.Width, 0);
+            hScrl.Location = new Point(0, pictureEdit1.Height - hScrl.Height);
+            hScrl.Width = pictureEdit1.Width;
+            vScrl.Height = pictureEdit1.Height;
+
+
+            return;
             //创建文件流
             FileStream fs = null;
             Stream responseStream = null;
@@ -122,6 +146,22 @@ namespace 实例
                         fs.Close();
                         responseStream.Close();
                     }
+
+                    //PrintDialog MyPrintDg = new PrintDialog();
+                    //MyPrintDg.Document = printDocument1;
+                    //if (MyPrintDg.ShowDialog() == DialogResult.OK)
+                    //{
+                    //    try
+                    //    {
+                    //        printDocument1.Print();
+                    //    }
+                    //    catch
+                    //    {   // 停止打印
+                    //        printDocument1.PrintController.OnEndPrint(printDocument1, new System.Drawing.Printing.PrintEventArgs());
+                    //    }
+                    //}
+                    //pictureEdit1.Image = new Bitmap((new System.Net.WebClient()).OpenRead(uri));
+                    //pictureEdit1.Image = Image.FromFile(FileName);
                     this.pictureBox1.Image = Image.FromFile(FileName);
                 }
             }
@@ -137,6 +177,69 @@ namespace 实例
         private void button2_Click(object sender, EventArgs e)
         {
             UploadFtp("E:\\", "111.png", "localhost", "ftp", "ftp");
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(pictureBox1.Image, 20, 20);
+        }
+
+
+        private void FTP_Load(object sender, EventArgs e)
+        {
+            this.pictureEdit1.Properties.AllowFocused = false;
+            this.pictureEdit1.Properties.AllowScrollViaMouseDrag = true;
+            this.pictureEdit1.Properties.ShowMenu = false;
+            this.pictureEdit1.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.False;
+            this.pictureEdit1.Properties.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pictureEdit1_Properties_MouseWheel);
+            this.pictureEdit1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureEdit1_MouseClick);
+            this.pictureEdit1.AllowDrop = true;
+        }
+
+        private void pictureEdit1_Properties_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                this.pictureEdit1.Properties.ZoomPercent += 5;
+            }
+            else if (e.Delta < 0)
+            {
+                this.pictureEdit1.Properties.ZoomPercent -= 5;
+            }
+        }
+        private void pictureEdit1_MouseClick(object sender, MouseEventArgs e)
+        {
+            return;
+            Point p = e.Location;
+
+            Point center=new Point();
+            center.X = pictureEdit1.ClientSize.Width / 2;
+            center.Y = pictureEdit1.ClientSize.Height / 2;
+
+
+            DevExpress.XtraEditors.VScrollBar vScrl = null;
+            DevExpress.XtraEditors.HScrollBar hScrl = null;
+
+            foreach (Control ctrl in pictureEdit1.Controls)
+            {
+                if (ctrl is DevExpress.XtraEditors.VScrollBar)
+                    vScrl = ctrl as DevExpress.XtraEditors.VScrollBar;
+                if (ctrl is DevExpress.XtraEditors.HScrollBar)
+                    hScrl = ctrl as DevExpress.XtraEditors.HScrollBar;
+            }
+
+            p.X += hScrl.Value;
+            p.Y += vScrl.Value;
+
+            int deltaX = p.X - center.X;
+            int deltaY = p.Y - center.Y;
+
+            hScrl.Value = deltaX;
+            vScrl.Value = deltaY;
+            //hScrl.Height = pictureEdit1.Height;
+            //hScrl.Width = pictureEdit1.Width;
+            hScrl.Visible = true;
+            vScrl.Visible = true;
         }
     }
 }

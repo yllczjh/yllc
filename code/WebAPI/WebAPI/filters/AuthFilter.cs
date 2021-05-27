@@ -43,7 +43,17 @@ namespace WebAPI.filters
                 #region 验证
 
                 StreamReader reader = new StreamReader(HttpContext.Current.Request.GetBufferedInputStream());
-                p = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
+                try
+                {
+                    p = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
+                }
+                catch (Exception)
+                {
+                    Code.Result(ref msg, 编码.参数错误, "解析消息内容失败,请检查是否为正确的Json格式");
+                    Log.Error("DataValidation", "解析消息内容失败,请检查是否为正确的Json格式");
+                    goto 退出;
+                }
+                
                 HttpRequestHeaders headers = actionContext.Request.Headers;
 
                 #region msgid 消息ID
