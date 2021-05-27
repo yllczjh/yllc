@@ -33,19 +33,26 @@ namespace WebAPI.Controllers.v1
             dic.Add("remsgid", msg.remsgid);
             dic.Add("errcode", msg.errcode);
             dic.Add("msgtext", "(" + msg.errcode + ")" + msg.msgtext);
-            if (msg.errcode == 0 && null != dic_返回数据)
+            if (msg.errcode == 0)
             {
-                foreach (KeyValuePair<string, object> pair in dic_返回数据)
+                if (null != dic_返回数据 && dic_返回数据.Count > 0)
                 {
-                    if (!string.IsNullOrEmpty(pair.Key))
+                    foreach (KeyValuePair<string, object> pair in dic_返回数据)
                     {
-                        dic.Add(pair.Key, pair.Value);
+                        if (!string.IsNullOrEmpty(pair.Key))
+                        {
+                            dic.Add(pair.Key, pair.Value);
+                        }
                     }
+                }
+                else
+                {
+                    dic.Add("dataset", msg.dataset);
                 }
             }
             else
             {
-                dic.Add("dataset", new ArrayList() { msg.dataset });
+                dic.Add("dataset", msg.dataset);
             }
             return Json(dic);
         }

@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web.Script.Serialization;
 using Tool.Model;
 using Tool.Help;
 using Tool.DB;
@@ -19,7 +18,7 @@ namespace WebAPI.Tool
         {
             try
             {
-                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);
+                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);//参数不区分大小写
 
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
@@ -83,7 +82,7 @@ namespace WebAPI.Tool
         {
             try
             {
-                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);
+                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);//参数不区分大小写
 
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
@@ -156,86 +155,84 @@ namespace WebAPI.Tool
                 string str_主更新语言 = row["主更新语言"].ToString();
                 if (param.ContainsKey("dataset"))
                 {
-                    if (!string.IsNullOrEmpty(str_主插入语言))
+
+                    out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
+                    out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
+                    out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
+                    out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
+                    if (param.ContainsKey("datacount"))
                     {
-                        out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
-                        out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
-                        out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
-                        out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
-                        if (param.ContainsKey("datacount"))
-                        {
-                            out_dic.Add("datacount", param["datacount"]);
-                        }
-                        else
-                        {
-                            Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
-                            return null;
-                        }
-                        ArrayList in_arr_dataset = param["dataset"] as ArrayList;
-                        ArrayList out_listset = new ArrayList();
-                        for (int i = 0; i < in_arr_dataset.Count; i++)
-                        {
-                            Dictionary<string, object> out_dic_set = new Dictionary<string, object>();
-                            Dictionary<string, object> in_dic_dataset = in_arr_dataset[i] as Dictionary<string, object>;
-                            out_dic_set.Add("dataparam", GetParameter(str_主插入语言, in_dic_dataset, ref msg));
-                            if (msg.errcode != 0)
-                            {
-                                return null;
-                            }
-                            out_dic_set.Add("updateparam", GetParameter(str_主更新语言, in_dic_dataset, ref msg));
-                            if (msg.errcode != 0)
-                            {
-                                return null;
-                            }
-
-                            if (in_dic_dataset.ContainsKey("datadetail"))
-                            {
-                                if (in_dic_dataset.ContainsKey("rowcount"))
-                                {
-                                    out_dic_set.Add("rowcount", in_dic_dataset["rowcount"]);
-                                }
-                                else
-                                {
-                                    Code.Result(ref msg, 编码.参数错误, "入参缺少rowcount节点");
-                                    return null;
-                                }
-                                if (!string.IsNullOrEmpty(str_明细插入语言))
-                                {
-                                    ArrayList in_arr_datadetail = in_dic_dataset["datadetail"] as ArrayList;
-                                    ArrayList out_listdetail = new ArrayList();
-                                    for (int j = 0; j < in_arr_datadetail.Count; j++)
-                                    {
-                                        Dictionary<string, object> in_dic_datadetail = in_arr_datadetail[j] as Dictionary<string, object>;
-                                        out_listdetail.Add(GetParameter(str_明细插入语言, in_dic_datadetail, ref msg, in_dic_dataset));
-                                        if (msg.errcode != 0)
-                                        {
-                                            return null;
-                                        }
-                                    }
-                                    out_dic_set.Add("rowparam", out_listdetail);
-                                }
-                                else
-                                {
-                                    Code.Result(ref msg, 编码.参数错误, "未设置明细插入语言");
-                                    return null;
-                                }
-                            }
-                            out_listset.Add(out_dic_set);
-                        }
-                        out_dic.Add("dataparam", out_listset);
-
-                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, ref msg);
+                        out_dic.Add("datacount", param["datacount"]);
+                    }
+                    else
+                    {
+                        Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
+                        return null;
+                    }
+                    ArrayList in_arr_dataset = param["dataset"] as ArrayList;
+                    ArrayList out_listset = new ArrayList();
+                    for (int i = 0; i < in_arr_dataset.Count; i++)
+                    {
+                        Dictionary<string, object> out_dic_set = new Dictionary<string, object>();
+                        Dictionary<string, object> in_dic_dataset = in_arr_dataset[i] as Dictionary<string, object>;
+                        out_dic_set.Add("dataparam", GetParameter(str_主插入语言, in_dic_dataset, ref msg));
                         if (msg.errcode != 0)
                         {
                             return null;
                         }
-                        out_dic.Add("finishparam", parameters_主);
+                        out_dic_set.Add("updateparam", GetParameter(str_主更新语言, in_dic_dataset, ref msg));
+                        if (msg.errcode != 0)
+                        {
+                            return null;
+                        }
+
+                        if (in_dic_dataset.ContainsKey("datadetail"))
+                        {
+                            if (in_dic_dataset.ContainsKey("rowcount"))
+                            {
+                                out_dic_set.Add("rowcount", in_dic_dataset["rowcount"]);
+                            }
+                            else
+                            {
+                                Code.Result(ref msg, 编码.参数错误, "入参缺少rowcount节点");
+                                return null;
+                            }
+                            if (!string.IsNullOrEmpty(str_明细插入语言))
+                            {
+                                ArrayList in_arr_datadetail = in_dic_dataset["datadetail"] as ArrayList;
+                                ArrayList out_listdetail = new ArrayList();
+                                for (int j = 0; j < in_arr_datadetail.Count; j++)
+                                {
+                                    Dictionary<string, object> in_dic_datadetail = in_arr_datadetail[j] as Dictionary<string, object>;
+                                    out_listdetail.Add(GetParameter(str_明细插入语言, in_dic_datadetail, ref msg, in_dic_dataset));
+                                    if (msg.errcode != 0)
+                                    {
+                                        return null;
+                                    }
+                                }
+                                out_dic_set.Add("rowparam", out_listdetail);
+                            }
+                            else
+                            {
+                                Code.Result(ref msg, 编码.参数错误, "未设置明细插入语言");
+                                return null;
+                            }
+                        }
+                        out_listset.Add(out_dic_set);
                     }
-                    else
+                    out_dic.Add("dataparam", out_listset);
+
+                    SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, ref msg);
+                    if (msg.errcode != 0)
                     {
-                        Code.Result(ref msg, 编码.参数错误, "未设置主插入语言");
                         return null;
                     }
+                    out_dic.Add("finishparam", parameters_主);
+                }
+                else
+                {
+                    Code.Result(ref msg, 编码.参数错误, "插入语言需在参数中配置[dataset]结点信息");
+                    return null;
                 }
             }
             catch (Exception e)

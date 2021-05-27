@@ -75,7 +75,7 @@ namespace WebAPI.Controllers.v1
                             userModel.userinfo = msg.appid;
                             TokenModel token = new TokenModel(msg);
                             userModel.token = token;
-                            msg.dataset = token;
+                            msg.dataset = new ArrayList() { token};
 
                             HttpContext.Current.Session["UserModel"] = userModel;
                             HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
