@@ -29,8 +29,6 @@ namespace Erp.Pro.Utils
             InitializeComponent();
         }
 
-
-
         public F_通用编辑页面(U_通用列表编辑 f_父窗体)
         {
             InitializeComponent();

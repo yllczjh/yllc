@@ -29,29 +29,20 @@ namespace Erp.Pro.Utils.自定义控件
 
         public E_模块名称 _P_模块名称;
         [Browsable(true)]
-        [Description("模块名称(通过[页面名称_按钮显示名]来定义服务名)"), Category("#通用列表自定义属性")]
+        [Description("模块名称"), Category("#通用列表自定义属性")]
         public E_模块名称 P_模块名称
         {
             get { return _P_模块名称; }
             set { _P_模块名称 = value; }
         }
 
-        public string _P_列表页名称;
-        [Browsable(true)]
-        [Description("列表页名称(通过[页面名称_按钮显示名]来定义服务名)"), Category("#通用列表自定义属性")]
-        public string P_列表页名称
+        public string _P_页面名称;
+        [Browsable(false)]
+        [Description("页面名称(通过[页面名称_按钮显示名]来定义服务名)"), Category("#通用列表自定义属性")]
+        public string P_页面名称
         {
-            get { return _P_列表页名称; }
-            set { _P_列表页名称 = value; }
-        }
-
-        public string _P_编辑页名称;
-        [Browsable(true)]
-        [Description("编辑页名称(通过[页面名称_按钮显示名]来定义服务名)"), Category("#通用列表自定义属性")]
-        public string P_编辑页名称
-        {
-            get { return _P_编辑页名称; }
-            set { _P_编辑页名称 = value; }
+            get { return _P_页面名称; }
+            set { _P_页面名称 = value; }
         }
 
         public U_通用列表编辑()
