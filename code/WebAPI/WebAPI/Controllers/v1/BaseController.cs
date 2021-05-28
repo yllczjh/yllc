@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Tool.Helper;
@@ -33,28 +34,30 @@ namespace WebAPI.Controllers.v1
             dic.Add("remsgid", msg.remsgid);
             dic.Add("errcode", msg.errcode);
             dic.Add("msgtext", "(" + msg.errcode + ")" + msg.msgtext);
-            if (msg.errcode == 0)
+            if (null != dic_返回数据 && dic_返回数据.Count > 0)
             {
-                if (null != dic_返回数据 && dic_返回数据.Count > 0)
+                foreach (KeyValuePair<string, object> pair in dic_返回数据)
                 {
-                    foreach (KeyValuePair<string, object> pair in dic_返回数据)
+                    if (!string.IsNullOrEmpty(pair.Key))
                     {
-                        if (!string.IsNullOrEmpty(pair.Key))
-                        {
-                            dic.Add(pair.Key, pair.Value);
-                        }
+                        dic.Add(pair.Key, pair.Value);
                     }
-                }
-                else
-                {
-                    dic.Add("dataset", msg.dataset);
                 }
             }
             else
             {
                 dic.Add("dataset", msg.dataset);
             }
-            return Json(dic);
+            Encoding utf8 = Encoding.GetEncoding(65001);
+            byte[] temp = utf8.GetBytes("yyyy-MM-dd hh:mm:ss");
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Converters.Add(
+                new Newtonsoft.Json.Converters.IsoDateTimeConverter()
+                {
+                    DateTimeFormat = utf8.GetString(temp)
+                }
+            );
+
+            return Json(dic, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
         }
         public IHttpActionResult RedirectWX()
         {

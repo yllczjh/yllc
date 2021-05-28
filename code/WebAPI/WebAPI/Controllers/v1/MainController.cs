@@ -29,6 +29,7 @@ namespace WebAPI.Controllers.v1
 
             Dictionary<string, object> result;
             UserModel userModel;
+            TokenModel token;
             try
             {
                 switch (msg.method)
@@ -47,24 +48,18 @@ namespace WebAPI.Controllers.v1
                                 }
                                 userModel.onlyid = p["username"];
                                 userModel.userinfo = result;
-                                TokenModel token = new TokenModel(msg);
+                                token = new TokenModel(msg);
                                 userModel.token = token;
-                                try
-                                {
-                                    ((result["dataset"] as ArrayList)[0] as Dictionary<string, object>).Add("accessToken", token.accessToken);
-                                    ((result["dataset"] as ArrayList)[0] as Dictionary<string, object>).Add("accessPastTime", token.accessPastTime);
-                                }
-                                catch (System.Exception)
-                                {
-                                    result.Add("token", token);
-                                }
+
+                                result.Add("token", token);
+
                                 HttpContext.Current.Session["UserModel"] = userModel;
                                 HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
                             }
 
                             return GetResponseString(msg, result);
                         }
-                        if(msg.clienttype == "third")
+                        if (msg.clienttype == "third")
                         {
                             userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                             if (null == userModel)
@@ -73,13 +68,16 @@ namespace WebAPI.Controllers.v1
                             }
                             userModel.onlyid = msg.appid;
                             userModel.userinfo = msg.appid;
-                            TokenModel token = new TokenModel(msg);
+                            token = new TokenModel(msg);
                             userModel.token = token;
-                            msg.dataset = new ArrayList() { token};
 
                             HttpContext.Current.Session["UserModel"] = userModel;
                             HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
-                            return GetResponseString(msg, null);
+
+                            result = new Dictionary<string, object>();
+                            result.Add("dataset", new ArrayList());
+                            result.Add("token", token);
+                            return GetResponseString(msg, result);
                         }
                         break;
                     case "logout":
@@ -102,7 +100,47 @@ namespace WebAPI.Controllers.v1
                         result = DataHelper.Process(jo, ref msg);
                         return GetResponseString(msg, result);
                     default:
+                        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
+                        if (null == userModel)
+                        {
+                            if (Config.YanZheng == "1")
+                            {
+                                Code.Result(ref msg, 编码.用户身份错误, "未登录");
+                                return GetResponseString(msg, null);
+                            }
+                            else
+                            {
+                                userModel = new UserModel();
+                            }
+                        }
+
+                        token = userModel.token;
+                        if (null == token)
+                        {
+                            if (Config.YanZheng == "1")
+                            {
+                                Code.Result(ref msg, 编码.用户身份错误, "未登录");
+                                return GetResponseString(msg, null);
+                            }
+                            else
+                            {
+                                token = new TokenModel(msg);
+                            }
+                        }
+                        else
+                        {
+                            token.RefreshAccessTokenTime();
+                        }
+
+                        userModel.token = token;
+                        HttpContext.Current.Session["UserModel"] = userModel;
+
                         result = DataHelper.Process(p, ref msg);
+                        if(null== result)
+                        {
+                            result = new Dictionary<string, object>();
+                        }
+                        result.Add("token", token);
                         return GetResponseString(msg, result);
                 }
             }

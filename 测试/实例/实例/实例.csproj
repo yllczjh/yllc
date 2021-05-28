@@ -77,6 +77,12 @@
     <Compile Include="FTP.Designer.cs">
       <DependentUpon>FTP.cs</DependentUpon>
     </Compile>
+    <Compile Include="F_心电图显示.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_心电图显示.Designer.cs">
+      <DependentUpon>F_心电图显示.cs</DependentUpon>
+    </Compile>
     <Compile Include="F_自定义控件.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FTP.resx">
       <DependentUpon>FTP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_心电图显示.resx">
+      <DependentUpon>F_心电图显示.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="F_自定义控件.resx">
       <DependentUpon>F_自定义控件.cs</DependentUpon>

@@ -369,7 +369,7 @@ namespace Tool.DB
                                 return dt;
                             }
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
                             Con.Close();
                             throw;

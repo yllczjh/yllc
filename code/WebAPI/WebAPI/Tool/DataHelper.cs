@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections;
@@ -26,10 +27,13 @@ namespace WebAPI.Tool
             try
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
-                //Dictionary<string, object> param = new Dictionary<string, object>(p.ToObject<IDictionary<string, object>>(), StringComparer.CurrentCultureIgnoreCase);
 
-                string str_json = JsonConvert.SerializeObject(p);
-                Dictionary<string, object> param = Helper.JsonToDictionary(str_json, ref msg);
+                JObject jjj=(JObject)p;
+
+                Dictionary<string, object> param = new Dictionary<string, object>(p.ToObject<IDictionary<string, object>>(), StringComparer.CurrentCultureIgnoreCase);
+
+                //string str_json = JsonConvert.SerializeObject(p);
+                //Dictionary<string, object> param = Helper.JsonToDictionary(str_json, ref msg);
 
                 if (msg.errcode != 0)
                 {
@@ -44,7 +48,7 @@ namespace WebAPI.Tool
                     string str_数据库类型 = dt.Rows[0]["数据库类型"].ToString();
                     if (param.ContainsKey("dbcon"))
                     {
-                        sql = $@"SELECT t.数据库连接串, t.数据库类型 webapi_link t where t.连接标识='{param["dbcon"]}'";
+                        sql = $@"SELECT t.数据库连接串, t.数据库类型 from webapi_link t where t.连接标识='{param["dbcon"]}'";
                         DataTable dt_连接 = DbHelper.Db().GetDataTable(sql);
                         if (null == dt_连接 || dt_连接.Rows.Count <= 0)
                         {
@@ -93,7 +97,7 @@ namespace WebAPI.Tool
                             {
                                 //包含query节点则有点读取query节点下的参数
                                 dic_query = arr_query[i] as Dictionary<string, object>;
-                                parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, ref msg, param);
+                                parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, param, ref msg);
                                 if (msg.errcode != 0)
                                 {
                                     return null;
@@ -111,7 +115,7 @@ namespace WebAPI.Tool
                             else
                             {
                                 //不包含query节点则读取主节点的参数
-                                parameters_主 = ToolFunction.GetParameter(str_sql, param, ref msg);
+                                parameters_主 = ToolFunction.GetParameter(str_sql, param, null, ref msg);
                                 if (msg.errcode != 0)
                                 {
                                     return null;
@@ -190,26 +194,29 @@ namespace WebAPI.Tool
                 }
                 return dic_返回;
             }
-            catch (Exception e)
+            catch (SqlException e)
             {
                 try
                 {
-                    if (e.GetType().Name == "SqlException")
+                    if (((SqlException)e).State == 255)
                     {
-                        if (((SqlException)e).State == 255)
-                        {
-                            int errcode = int.Parse(e.Message.Split(')')[0].Split('(')[1]);
-                            string errmsg = e.Message.Split(')')[1];
-                            Code.Result(ref msg, errcode, errmsg);
-                            return null;
-                        }
+                        int errcode = int.Parse(e.Message.Split(')')[0].Split('(')[1]);
+                        string errmsg = e.Message.Split(')')[1];
+                        Code.Result(ref msg, errcode, errmsg);
+                        return null;
                     }
                 }
                 catch (Exception)
                 {
 
                 }
+                Code.Result(ref msg, 编码.程序错误, e.Message);
+                Log.Error("M_业务数据处理", e.Message);
+                return null;
+            }
 
+            catch (Exception e)
+            {
                 Code.Result(ref msg, 编码.程序错误, e.Message);
                 Log.Error("M_业务数据处理", e.Message);
                 return null;

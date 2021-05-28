@@ -78,27 +78,17 @@ namespace 实例
             string FileName = string.Empty;
             //string FileName = Path.GetFullPath(downloadUrl) + Path.DirectorySeparatorChar.ToString() + Path.GetFileName(uri.LocalPath);
 
-            pictureEdit1.Image = new Bitmap((new System.Net.WebClient()).OpenRead(uri));
+            //pictureEdit1.Image = new Bitmap((new System.Net.WebClient()).OpenRead(uri));
 
-            DevExpress.XtraEditors.VScrollBar vScrl = null;
-            DevExpress.XtraEditors.HScrollBar hScrl = null;
-            // 查找水平和垂直滚动条
-            foreach (Control ctrl in pictureEdit1.Controls)
-            {
-                if (ctrl is DevExpress.XtraEditors.VScrollBar)
-                    vScrl = ctrl as DevExpress.XtraEditors.VScrollBar;
-                if (ctrl is DevExpress.XtraEditors.HScrollBar)
-                    hScrl = ctrl as DevExpress.XtraEditors.HScrollBar;
-            }
-            // 设置滚动条值，让图片中心显示在PictureEdit中心！
-            //vScrl.Value = (pictureEdit1.Image.Height - pictureEdit1.ClientSize.Height) / 2;
-            //hScrl.Value = (pictureEdit1.Image.Width - pictureEdit1.ClientSize.Width) / 2;
-            hScrl.Visible = true;
-            vScrl.Visible = true;
-            vScrl.Location = new Point(pictureEdit1.Width - vScrl.Width, 0);
-            hScrl.Location = new Point(0, pictureEdit1.Height - hScrl.Height);
-            hScrl.Width = pictureEdit1.Width;
-            vScrl.Height = pictureEdit1.Height;
+
+            WebClient web = new WebClient();
+            web.Credentials = new NetworkCredential("ftp", "ftp");
+            var bytes = web.DownloadData(fileUploadPath + "/" + fileName);
+            //pictureEdit1.Image = Bitmap.FromStream(new MemoryStream(bytes));
+            pictureBox1.Image = Bitmap.FromStream(new MemoryStream(bytes));
+
+            M_map_bufferpic =(Bitmap) Bitmap.FromStream(new MemoryStream(bytes));
+            pictureBox1.Image = M_map_bufferpic;
 
 
             return;
@@ -162,7 +152,7 @@ namespace 实例
                     //}
                     //pictureEdit1.Image = new Bitmap((new System.Net.WebClient()).OpenRead(uri));
                     //pictureEdit1.Image = Image.FromFile(FileName);
-                    this.pictureBox1.Image = Image.FromFile(FileName);
+                    //this.pictureBox1.Image = Image.FromFile(FileName);
                 }
             }
             finally
@@ -181,65 +171,117 @@ namespace 实例
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            e.Graphics.DrawImage(pictureBox1.Image, 20, 20);
+            //e.Graphics.DrawImage(pictureBox1.Image, 20, 20);
         }
 
 
         private void FTP_Load(object sender, EventArgs e)
         {
-            this.pictureEdit1.Properties.AllowFocused = false;
-            this.pictureEdit1.Properties.AllowScrollViaMouseDrag = true;
-            this.pictureEdit1.Properties.ShowMenu = false;
-            this.pictureEdit1.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.False;
-            this.pictureEdit1.Properties.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pictureEdit1_Properties_MouseWheel);
-            this.pictureEdit1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureEdit1_MouseClick);
-            this.pictureEdit1.AllowDrop = true;
+            
         }
 
-        private void pictureEdit1_Properties_MouseWheel(object sender, MouseEventArgs e)
+      
+
+
+       
+
+        private void button3_Click(object sender, EventArgs e)
         {
-            if (e.Delta > 0)
+            SaveFileDialog saveImageDialog = new SaveFileDialog();
+            saveImageDialog.Title = "图片保存";
+            saveImageDialog.Filter = @"jpeg|*.jpg|bmp|*.bmp";
+            saveImageDialog.FileName = "1212";
+            if (saveImageDialog.ShowDialog() == DialogResult.OK)
             {
-                this.pictureEdit1.Properties.ZoomPercent += 5;
-            }
-            else if (e.Delta < 0)
-            {
-                this.pictureEdit1.Properties.ZoomPercent -= 5;
+                string fileName = saveImageDialog.FileName.ToString();
+                if (fileName != "" && fileName != null)
+                {
+                    string fileExtName = fileName.Substring(fileName.LastIndexOf(".") + 1).ToString();
+                    System.Drawing.Imaging.ImageFormat imgformat = null;
+
+                    if (fileExtName != "")
+                    {
+                        switch (fileExtName)
+                        {
+                            case "jpg":
+                                imgformat = System.Drawing.Imaging.ImageFormat.Jpeg;
+                                break;
+                            case "bmp":
+                                imgformat = System.Drawing.Imaging.ImageFormat.Bmp;
+                                break;
+                            default:
+                                imgformat = System.Drawing.Imaging.ImageFormat.Jpeg;
+                                break;
+                        }
+
+
+                        try
+                        {
+                            pictureBox1.Image.Save(fileName, imgformat);
+                        }
+                        catch
+                        {
+
+
+                        }
+                    }
+                }
             }
         }
-        private void pictureEdit1_MouseClick(object sender, MouseEventArgs e)
+
+        private void button4_Click(object sender, EventArgs e)
         {
-            return;
-            Point p = e.Location;
-
-            Point center=new Point();
-            center.X = pictureEdit1.ClientSize.Width / 2;
-            center.Y = pictureEdit1.ClientSize.Height / 2;
+            F_心电图显示 f = new F_心电图显示("1212","23234");
+            f.ShowDialog();
+            f.Dispose();
+        }
 
 
-            DevExpress.XtraEditors.VScrollBar vScrl = null;
-            DevExpress.XtraEditors.HScrollBar hScrl = null;
+        Point M_pot_p = new Point();//原始位置
+        int M_int_mx = 0, M_int_my = 0;//下次能继续
+        int M_int_maxX, M_int_maxY;//加快读取用
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
+        {
+            M_pot_p = e.Location;
+            M_int_maxX = pictureBox1.Width - M_map_bufferpic.Width;
+            M_int_maxY = pictureBox1.Height - M_map_bufferpic.Height;
+            Cursor = Cursors.SizeAll;
+        }
 
-            foreach (Control ctrl in pictureEdit1.Controls)
+        int driftX = 0, driftY = 0;
+        int mx = 0, my = 0;
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string s = string.Empty;
+            string[] ss = s.Split(',');
+        }
+
+        private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
+        {
+            
+        }
+        Bitmap M_map_bufferpic;//加快GDI读取用缓存图片
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)//当按左键的时候
             {
-                if (ctrl is DevExpress.XtraEditors.VScrollBar)
-                    vScrl = ctrl as DevExpress.XtraEditors.VScrollBar;
-                if (ctrl is DevExpress.XtraEditors.HScrollBar)
-                    hScrl = ctrl as DevExpress.XtraEditors.HScrollBar;
+                //算差值
+                M_int_mx = M_int_mx - M_pot_p.X + e.X;
+                M_int_my = M_int_my - M_pot_p.Y + e.Y;
+                //锁定范围
+                M_int_mx = Math.Min(0, Math.Max(M_int_maxX, M_int_mx));
+                M_int_my = Math.Min(0, Math.Max(M_int_maxY, M_int_my));
+
+                Graphics g = pictureBox1.CreateGraphics();
+                g.DrawImage(M_map_bufferpic, new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height), new Rectangle(-M_int_mx, -M_int_my, pictureBox1.Width, pictureBox1.Height), GraphicsUnit.Pixel);
+
+                M_pot_p = e.Location;
             }
-
-            p.X += hScrl.Value;
-            p.Y += vScrl.Value;
-
-            int deltaX = p.X - center.X;
-            int deltaY = p.Y - center.Y;
-
-            hScrl.Value = deltaX;
-            vScrl.Value = deltaY;
-            //hScrl.Height = pictureEdit1.Height;
-            //hScrl.Width = pictureEdit1.Width;
-            hScrl.Visible = true;
-            vScrl.Visible = true;
+            else
+            {
+                Cursor = Cursors.Default;
+            }
         }
     }
 }
