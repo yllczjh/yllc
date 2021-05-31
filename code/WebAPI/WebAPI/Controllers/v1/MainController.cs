@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -48,7 +47,6 @@ namespace WebAPI.Controllers.v1
                             }
                             userModel.onlyid = p["username"].ToString();
                             userModel.loginmethod = msg.method;
-                            userModel.userinfo = result;
                             token = new TokenModel(msg);
                             userModel.token = token;
 
@@ -69,7 +67,6 @@ namespace WebAPI.Controllers.v1
                         }
                         userModel.onlyid = msg.appid;
                         userModel.loginmethod = msg.method;
-                        userModel.userinfo = msg.appid;
                         token = new TokenModel(msg);
                         userModel.token = token;
 
@@ -94,52 +91,30 @@ namespace WebAPI.Controllers.v1
                 else if (msg.method == "init")
                 {
                     userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                    if (null == userModel)
-                    {
-                        Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                        return GetResponseString(msg, null);
-                    }
-                    string json = "{\"username\": \"" + userModel.onlyid + "\",\"password\": \"1\",\"login\": \"0\"}";
-                    JObject jo = (JObject)JsonConvert.DeserializeObject(json.ToString());
-                    msg.method = userModel.loginmethod;
+                    token = userModel.token;//获取session-token
+                    token.RefreshAccessTokenTime();//刷新token过期时间
+                    userModel.token = token;//写回session
+                    HttpContext.Current.Session["UserModel"] = userModel;
+
+                    JObject jo = new JObject();
+                    jo.Add("username", userModel.onlyid);
+                    jo.Add("password", "1");//无意义 占位用
+                    jo.Add("login", "0");//标识初始化信息，不验证用户名密码
+                    msg.method = userModel.loginmethod;//初始化 调用登录方法
                     result = DataHelper.Process(jo, ref msg);
+                    if (null == result)
+                    {
+                        result = new Dictionary<string, object>();
+                    }
+                    result.Add("token", token);
                     return GetResponseString(msg, result);
                 }
                 else
                 {
-                    userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                    if (null == userModel)
-                    {
-                        if (Config.YanZheng == "1")
-                        {
-                            Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                            return GetResponseString(msg, null);
-                        }
-                        else
-                        {
-                            userModel = new UserModel();
-                        }
-                    }
-
-                    token = userModel.token;
-                    if (null == token)
-                    {
-                        if (Config.YanZheng == "1")
-                        {
-                            Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                            return GetResponseString(msg, null);
-                        }
-                        else
-                        {
-                            token = new TokenModel(msg);
-                        }
-                    }
-                    else
-                    {
-                        token.RefreshAccessTokenTime();
-                    }
-
-                    userModel.token = token;
+                    userModel = (UserModel)HttpContext.Current.Session["UserModel"];//获取session
+                    token = userModel.token;//获取session-token
+                    token.RefreshAccessTokenTime();//刷新token过期时间
+                    userModel.token = token;//写回session
                     HttpContext.Current.Session["UserModel"] = userModel;
 
                     result = DataHelper.Process(p, ref msg);
@@ -149,121 +124,7 @@ namespace WebAPI.Controllers.v1
                     }
                     result.Add("token", token);
                     return GetResponseString(msg, result);
-
                 }
-
-
-                //switch (msg.method)
-                //{
-                //    case "login":
-                //            if (msg.clienttype == "wx") return RedirectWX();
-                //        if (msg.clienttype == "web")
-                //        {
-                //            result = DataHelper.Process(p, ref msg);
-                //            if (msg.errcode == 0)
-                //            {
-                //                userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                //                if (null == userModel)
-                //                {
-                //                    userModel = new UserModel();
-                //                }
-                //                userModel.onlyid = p["username"];
-                //                userModel.userinfo = result;
-                //                token = new TokenModel(msg);
-                //                userModel.token = token;
-
-                //                result.Add("token", token);
-
-                //                HttpContext.Current.Session["UserModel"] = userModel;
-                //                HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
-                //            }
-
-                //            return GetResponseString(msg, result);
-                //        }
-                //        if (msg.clienttype == "third")
-                //        {
-                //            userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                //            if (null == userModel)
-                //            {
-                //                userModel = new UserModel();
-                //            }
-                //            userModel.onlyid = msg.appid;
-                //            userModel.userinfo = msg.appid;
-                //            token = new TokenModel(msg);
-                //            userModel.token = token;
-
-                //            HttpContext.Current.Session["UserModel"] = userModel;
-                //            HttpContext.Current.Session.Timeout = Config.AccessTokenTime;
-
-                //            result = new Dictionary<string, object>();
-                //            result.Add("dataset", new ArrayList());
-                //            result.Add("token", token);
-                //            return GetResponseString(msg, result);
-                //        }
-                //        break;
-                //    case "logout":
-                //        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                //        if (null != userModel)
-                //        {
-                //            HttpContext.Current.Session["UserModel"] = null;
-                //        }
-                //        return GetResponseString(msg, null);
-
-                //    case "init":
-                //        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                //        if (null == userModel)
-                //        {
-                //            Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                //            return GetResponseString(msg, null);
-                //        }
-                //        string json = "{\"username\": \"" + userModel.onlyid + "\"}";
-                //        JObject jo = (JObject)JsonConvert.DeserializeObject(json.ToString());
-                //        result = DataHelper.Process(jo, ref msg);
-                //        return GetResponseString(msg, result);
-                //    default:
-                //        userModel = (UserModel)HttpContext.Current.Session["UserModel"];
-                //        if (null == userModel)
-                //        {
-                //            if (Config.YanZheng == "1")
-                //            {
-                //                Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                //                return GetResponseString(msg, null);
-                //            }
-                //            else
-                //            {
-                //                userModel = new UserModel();
-                //            }
-                //        }
-
-                //        token = userModel.token;
-                //        if (null == token)
-                //        {
-                //            if (Config.YanZheng == "1")
-                //            {
-                //                Code.Result(ref msg, 编码.用户身份错误, "未登录");
-                //                return GetResponseString(msg, null);
-                //            }
-                //            else
-                //            {
-                //                token = new TokenModel(msg);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            token.RefreshAccessTokenTime();
-                //        }
-
-                //        userModel.token = token;
-                //        HttpContext.Current.Session["UserModel"] = userModel;
-
-                //        result = DataHelper.Process(p, ref msg);
-                //        if(null== result)
-                //        {
-                //            result = new Dictionary<string, object>();
-                //        }
-                //        result.Add("token", token);
-                //        return GetResponseString(msg, result);
-                //}
             }
             catch (System.Exception e)
             {

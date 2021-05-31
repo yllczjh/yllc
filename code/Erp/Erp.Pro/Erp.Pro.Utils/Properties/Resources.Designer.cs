@@ -83,6 +83,16 @@ namespace Erp.Pro.Utils.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap doc_continuPrint1 {
+            get {
+                object obj = ResourceManager.GetObject("doc_continuPrint1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap doc_edit_32 {
             get {
                 object obj = ResourceManager.GetObject("doc_edit_32", resourceCulture);
@@ -96,6 +106,16 @@ namespace Erp.Pro.Utils.Properties {
         internal static System.Drawing.Bitmap doc_save_32 {
             get {
                 object obj = ResourceManager.GetObject("doc_save_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap excel_32 {
+            get {
+                object obj = ResourceManager.GetObject("excel_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -25,7 +25,6 @@ namespace WebAPI.Models
         public void RefreshAccessTokenTime()
         {
             accessPastTime = DateTimeOffset.Now.AddMinutes(Config.AccessTokenTime).ToUnixTimeMilliseconds();
-
         }
     }
 }

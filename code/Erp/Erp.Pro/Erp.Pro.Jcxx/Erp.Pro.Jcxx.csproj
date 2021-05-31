@@ -40,9 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
     </Reference>
-    <Reference Include="Erp.Tools.Control">
-      <HintPath>..\..\Erp.Tools\Erp.Tools.Control\obj\Debug\Erp.Tools.Control.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

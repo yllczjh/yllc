@@ -89,9 +89,9 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "method值无效");
                     goto 退出;
                 }
-                int i_基础业务 = 0;
-                DataHelper.M_验证Code(msg.method, ref msg, out i_基础业务);
-                if (msg.errcode != 0) goto 退出;
+                //int i_基础业务 = 0;
+                //DataHelper.M_验证Code(msg.method, ref msg, out i_基础业务);
+                //if (msg.errcode != 0) goto 退出;
                 #endregion
 
                 #region appid 
@@ -124,21 +124,20 @@ namespace WebAPI.filters
                     goto 退出;
                 }
 
-
                 msg.token = token.First();
-                if (Config.YanZheng == "1")
+
+                if (!msg.method.Contains("login"))
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)
                     {
-                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && !msg.method.Contains("login"))
+                        if ((string.IsNullOrEmpty(userModel.onlyid)))
                         {
                             Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
                             goto 退出;
                         }
                         if (null != userModel.token)
                         {
-
                             if (userModel.token.accessToken != msg.token)
                             {
                                 Code.Result(ref msg, 编码.用户身份错误, "无效的token");
@@ -161,10 +160,11 @@ namespace WebAPI.filters
                     }
                     else
                     {
-                        Code.Result(ref msg, 编码.用户身份错误, "无效的Token");
+                        Code.Result(ref msg, 编码.用户身份错误, "未登录");
                         goto 退出;
                     }
                 }
+
                 #endregion
 
                 #region reqtime 请求时间
@@ -186,13 +186,11 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "reqtime格式错误");
                     goto 退出;
                 }
-                if (Config.YanZheng == "1")
+
+                if ((DateTime.Now - dt_请求时间).TotalMinutes > 5)
                 {
-                    if ((DateTime.Now - dt_请求时间).TotalMinutes > 5)
-                    {
-                        Code.Result(ref msg, 编码.消息头错误, "请求消息已超时");
-                        goto 退出;
-                    }
+                    Code.Result(ref msg, 编码.消息头错误, "请求消息已超时");
+                    goto 退出;
                 }
 
 

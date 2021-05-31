@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Erp.Pro.Utils.工具类;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 using static Erp.Server.Init.C_系统参数;
 
@@ -107,6 +109,26 @@ namespace Erp.Pro.Utils.自定义控件
             if (删除处理 != null)
             {
                 删除处理(sender, e);
+            }
+        }
+
+        private void btn_导出_Click(object sender, EventArgs e)
+        {
+            ExportUtil exportUtil = new ExportUtil();
+            SaveFileDialog saveDialog = new SaveFileDialog();
+
+            saveDialog.RestoreDirectory = true;
+            saveDialog.FilterIndex = 1;
+
+            saveDialog.FileName = P_页面名称 + "_" + DateTime.Now.ToString("yyyyMMdd") + ".xls";
+
+            saveDialog.Title = "保存文件";
+            saveDialog.Filter = "Excel files(*.xls)|*.xls|Excel files(*.xlsx)|*.xlsx|All files|*.*";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                string str_文件类型 = Path.GetExtension(saveDialog.FileName).Split('.')[1].ToLower();
+                exportUtil.ExportGridDataEx(GridControl, str_文件类型, saveDialog.FileName);
             }
         }
     }

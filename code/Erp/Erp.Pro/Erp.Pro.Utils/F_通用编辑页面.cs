@@ -21,6 +21,7 @@ namespace Erp.Pro.Utils
         int i_数据源行号 = 0;
         int i_每行显示列数 = 2;
         string str_操作类型 = "新增";
+        C_控件参数[] 控件参数;
 
         int i_行号 = 1;
         int i_列号 = 1;
@@ -38,10 +39,11 @@ namespace Erp.Pro.Utils
             this.dt_数据源 = f_父窗体.GridControl.DataSource as DataTable;
             this.i_每行显示列数 = f_父窗体.P_每行显示列数;
             this.i_数据源行号 = f_父窗体.P_焦点行;
-            显示页面(f_父窗体.P_控件参数);
+            this.控件参数 = f_父窗体.P_控件参数;
+            显示页面();
         }
 
-        public void 显示页面(C_控件参数[] 控件参数)
+        public void 显示页面()
         {
             int x = 0;
             int y = 0;
@@ -138,11 +140,12 @@ namespace Erp.Pro.Utils
 
         private void btn_保存_Click(object sender, EventArgs e)
         {
+            if (!M_必填项验证()) return;
             if (str_操作类型 == "新增")
             {
                 inParam.Clear();
                 inParam.p0 = f_父窗体.P_模块名称;
-                inParam.p1 = f_父窗体.P_编辑页名称 + "_新增";
+                inParam.p1 = f_父窗体.P_页面名称 + "_新增";
                 outParam = C_Server.Call(inParam);
 
                 if (DialogResult.Yes == MessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
@@ -163,7 +166,7 @@ namespace Erp.Pro.Utils
             {
                 inParam.Clear();
                 inParam.p0 = f_父窗体.P_模块名称;
-                inParam.p1 = f_父窗体.P_编辑页名称 + "_修改";
+                inParam.p1 = f_父窗体.P_页面名称 + "_修改";
                 outParam = C_Server.Call(inParam);
 
                 cm_绑定管理.EndCurrentEdit();
@@ -189,13 +192,59 @@ namespace Erp.Pro.Utils
 
         private void F_通用编辑页面_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(f_父窗体.P_编辑页名称))
+            if (string.IsNullOrEmpty(f_父窗体.P_页面名称))
             {
                 MessageBox.Show("未设置编辑界面名称,请联系开发人员");
                 cm_绑定管理.CancelCurrentEdit();
                 cm_绑定管理.EndCurrentEdit();
                 this.Close();
             }
+        }
+
+        private bool M_必填项验证()
+        {
+            for (int i = 0; i < 控件参数.Length; i++)
+            {
+                C_控件参数 entity = 控件参数[i];
+                if (entity.是否必填)
+                {
+                    Control[] array = this.Controls.Find(entity.数据名称, false);
+                    if (array.Length <= 0) continue;
+                    switch (entity.控件类型)
+                    {
+                        case E_控件类型.Win_Text:
+                            TextBox textBox = (TextBox)array[0];
+                            if (string.IsNullOrEmpty(textBox.Text))
+                            {
+                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                textBox.Focus();
+                                return false;
+                            }
+                            break;
+                        case E_控件类型.Dev_Text:
+                            TextEdit textEdit = (TextEdit)array[0];
+                            if (string.IsNullOrEmpty(textEdit.Text))
+                            {
+                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                textEdit.Focus();
+                                return false;
+                            }
+                            break;
+                        case E_控件类型.Dev_LookUpEdit:
+                            LookUpEdit lookUpEdit = (LookUpEdit)array[0];
+                            if (string.IsNullOrEmpty(lookUpEdit.EditValue?.ToString()))
+                            {
+                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                lookUpEdit.Focus();
+                                return false;
+                            }
+                            break;
+
+                    }
+
+                }
+            }
+            return true;
         }
     }
 }

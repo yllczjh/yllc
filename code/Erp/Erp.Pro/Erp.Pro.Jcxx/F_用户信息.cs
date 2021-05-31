@@ -48,8 +48,7 @@ namespace Erp.Pro.Jcxx
             }
 
             u_通用列表编辑2.GridControl.DataSource = dt;
-            u_通用列表编辑2.P_列表页名称 = "用户信息列表";
-            u_通用列表编辑2.P_编辑页名称 = "用户信息编辑";
+            u_通用列表编辑2.P_页面名称 = "用户信息";
         }
 
 
