@@ -42,9 +42,9 @@ namespace WebAPI.filters
             {
                 #region 验证
 
-                StreamReader reader = new StreamReader(HttpContext.Current.Request.GetBufferedInputStream());
                 try
                 {
+                    StreamReader reader = new StreamReader(HttpContext.Current.Request.GetBufferedInputStream());
                     p = (JObject)JsonConvert.DeserializeObject(reader.ReadToEnd());
                 }
                 catch (Exception)
@@ -53,7 +53,7 @@ namespace WebAPI.filters
                     Log.Error("DataValidation", "解析消息内容失败,请检查是否为正确的Json格式");
                     goto 退出;
                 }
-                
+
                 HttpRequestHeaders headers = actionContext.Request.Headers;
 
                 #region msgid 消息ID
@@ -131,7 +131,7 @@ namespace WebAPI.filters
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)
                     {
-                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && msg.method != "login")
+                        if ((null == userModel.userinfo || string.IsNullOrEmpty(userModel.onlyid)) && i_基础业务 == 0 && !msg.method.Contains("login"))
                         {
                             Code.Result(ref msg, 编码.用户身份错误, "用户未登录");
                             goto 退出;

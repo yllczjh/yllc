@@ -8,18 +8,17 @@ using System.Text.RegularExpressions;
 using Tool.Model;
 using Tool.Help;
 using Tool.DB;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Tool
 {
     public class ToolFunction
     {
         #region 数据处理相关
-        public static SqlParameter[] GetParameter(string str_sql, Dictionary<string, object> p,Dictionary<string, object> p1,ref MessageModel msg)
+        public static SqlParameter[] GetParameter(string str_sql, JObject p, JObject p1, ref MessageModel msg)
         {
             try
             {
-                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);//参数不区分大小写
-
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
                 foreach (Match mat in mats)
@@ -37,20 +36,11 @@ namespace WebAPI.Tool
                         string str_参数名 = list_SQL参数[i].ToString();
                         str_参数名 = str_参数名.Replace("?", "");
                         object str_参数值 = DBNull.Value;
-                        if (null == p || !p.ContainsKey(str_参数名))
+                        if (null == JsonValue(p, str_参数名))
                         {
-                            if (null != p1)
+                            if (null != JsonValue(p1, str_参数名))
                             {
-                                p1 = new Dictionary<string, object>(p1, StringComparer.CurrentCultureIgnoreCase);
-                                if (!p1.ContainsKey(str_参数名))
-                                {
-                                    Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
-                                    return null;
-                                }
-                                else
-                                {
-                                    str_参数值 = p1[str_参数名];
-                                }
+                                str_参数值 = JsonValue(p1, str_参数名);
                             }
                             else
                             {
@@ -60,9 +50,15 @@ namespace WebAPI.Tool
                         }
                         else
                         {
-                            str_参数值 = p[str_参数名];
+                            str_参数值 = JsonValue(p, str_参数名);
                         }
-                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), (null == str_参数值) ? DBNull.Value : str_参数值);
+                        if(null == str_参数值)
+                        {
+                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"),  DBNull.Value );
+                        }else
+                        {
+                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值.ToString());
+                        }
                     }
                     return parameters;
                 }
@@ -78,12 +74,10 @@ namespace WebAPI.Tool
             }
         }
 
-        public static SqlParameter[] GetParameter(string str_sql, Dictionary<string, object> p, DataRow row, string str_数据集名称, ref MessageModel msg)
+        public static SqlParameter[] GetParameter(string str_sql, JObject p, DataRow row, string str_数据集名称, ref MessageModel msg)
         {
             try
             {
-                p = new Dictionary<string, object>(p, StringComparer.CurrentCultureIgnoreCase);//参数不区分大小写
-
                 MatchCollection mats = Regex.Matches(str_sql, @"(?<p>\?\w+)");
                 List<string> list_SQL参数 = new List<string>();
                 foreach (Match mat in mats)
@@ -110,9 +104,9 @@ namespace WebAPI.Tool
                             }
                             else
                             {
-                                if (p.ContainsKey(str_参数名))
+                                if (null != JsonValue(p, str_参数名))
                                 {
-                                    str_参数值 = p[str_参数名];
+                                    str_参数值 = JsonValue(p, str_参数名);
                                 }
                                 else
                                 {
@@ -121,7 +115,14 @@ namespace WebAPI.Tool
                                 }
                             }
                         }
-                        parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), (null == str_参数值) ? DBNull.Value : str_参数值);
+                        if (null == str_参数值)
+                        {
+                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value);
+                        }
+                        else
+                        {
+                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值.ToString());
+                        }
                     }
                     return parameters;
                 }
@@ -144,7 +145,7 @@ namespace WebAPI.Tool
         /// <param name="row">接口列表信息</param>
         /// <param name="str_error">错误信息</param>
         /// <returns></returns>
-        public static Dictionary<string, object> getInsert(Dictionary<string, object> param, DataRow row, ref MessageModel msg)
+        public static Dictionary<string, object> getInsert(JObject param, DataRow row, ref MessageModel msg)
         {
             Dictionary<string, object> out_dic = new Dictionary<string, object>();//返回主Dictionary
             try
@@ -153,13 +154,13 @@ namespace WebAPI.Tool
                 string str_主插入语言 = row["主插入语言"].ToString();
                 string str_明细插入语言 = row["明细插入语言"].ToString();
                 string str_主更新语言 = row["主更新语言"].ToString();
-                if (param.ContainsKey("dataset"))
+                if (null != param["dataset"])
                 {
                     out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
                     out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
                     out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
                     out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
-                    if (param.ContainsKey("datacount"))
+                    if (null != param["datacount"])
                     {
                         out_dic.Add("datacount", param["datacount"]);
                     }
@@ -168,28 +169,35 @@ namespace WebAPI.Tool
                         Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
                         return null;
                     }
-                    ArrayList in_arr_dataset = param["dataset"] as ArrayList;
-                    ArrayList out_listset = new ArrayList();
-                    for (int i = 0; i < in_arr_dataset.Count; i++)
+
+
+                    JArray in_主记录集合 = param["dataset"] as JArray;
+                    ArrayList out_主记录参数集合 = new ArrayList();
+                    for (int i = 0; i < in_主记录集合.Count; i++)
                     {
-                        Dictionary<string, object> out_dic_set = new Dictionary<string, object>();
-                        Dictionary<string, object> in_dic_dataset = in_arr_dataset[i] as Dictionary<string, object>;
-                        out_dic_set.Add("dataparam", GetParameter(str_主插入语言, in_dic_dataset, null, ref msg));
-                        if (msg.errcode != 0)
-                        {
-                            return null;
-                        }
-                        out_dic_set.Add("updateparam", GetParameter(str_主更新语言, in_dic_dataset, null, ref msg));
+                        Dictionary<string, object> out_主记录参数对象 = new Dictionary<string, object>();
+                        JObject in_主记录对象 = in_主记录集合[i] as JObject;
+                        out_主记录参数对象.Add("dataparam", GetParameter(str_主插入语言, in_主记录对象, null, ref msg));
                         if (msg.errcode != 0)
                         {
                             return null;
                         }
 
-                        if (in_dic_dataset.ContainsKey("datadetail"))
+                        if (!string.IsNullOrEmpty(str_主更新语言))
                         {
-                            if (in_dic_dataset.ContainsKey("rowcount"))
+                            out_主记录参数对象.Add("updateparam", GetParameter(str_主更新语言, in_主记录对象, null, ref msg));
+                            if (msg.errcode != 0)
                             {
-                                out_dic_set.Add("rowcount", in_dic_dataset["rowcount"]);
+                                return null;
+                            }
+                        }
+                       
+
+                        if (null != in_主记录对象["datadetail"])
+                        {
+                            if (null != in_主记录对象["rowcount"])
+                            {
+                                out_主记录参数对象.Add("rowcount", in_主记录对象["rowcount"]);
                             }
                             else
                             {
@@ -198,18 +206,18 @@ namespace WebAPI.Tool
                             }
                             if (!string.IsNullOrEmpty(str_明细插入语言))
                             {
-                                ArrayList in_arr_datadetail = in_dic_dataset["datadetail"] as ArrayList;
-                                ArrayList out_listdetail = new ArrayList();
-                                for (int j = 0; j < in_arr_datadetail.Count; j++)
+                                JArray in_明细记录集合 = in_主记录对象["datadetail"] as JArray;
+                                ArrayList out_明细参数集合 = new ArrayList();
+                                for (int j = 0; j < in_明细记录集合.Count; j++)
                                 {
-                                    Dictionary<string, object> in_dic_datadetail = in_arr_datadetail[j] as Dictionary<string, object>;
-                                    out_listdetail.Add(GetParameter(str_明细插入语言, in_dic_datadetail, in_dic_dataset, ref msg));
+                                    JObject in_明细记录对象 = in_明细记录集合[j] as JObject;
+                                    out_明细参数集合.Add(GetParameter(str_明细插入语言, in_明细记录对象, in_主记录对象, ref msg));
                                     if (msg.errcode != 0)
                                     {
                                         return null;
                                     }
                                 }
-                                out_dic_set.Add("rowparam", out_listdetail);
+                                out_主记录参数对象.Add("rowparam", out_明细参数集合);
                             }
                             else
                             {
@@ -217,16 +225,19 @@ namespace WebAPI.Tool
                                 return null;
                             }
                         }
-                        out_listset.Add(out_dic_set);
+                        out_主记录参数集合.Add(out_主记录参数对象);
                     }
-                    out_dic.Add("dataparam", out_listset);
+                    out_dic.Add("dataparam", out_主记录参数集合);
 
-                    SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, null, ref msg);
-                    if (msg.errcode != 0)
+                    if (!string.IsNullOrEmpty(str_完成语言))
                     {
-                        return null;
+                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, null, ref msg);
+                        if (msg.errcode != 0)
+                        {
+                            return null;
+                        }
+                        out_dic.Add("finishparam", parameters_主);
                     }
-                    out_dic.Add("finishparam", parameters_主);
                 }
                 else
                 {
@@ -330,5 +341,14 @@ namespace WebAPI.Tool
         }
 
         #endregion
+
+        public static JToken JsonValue(JObject p, string name)
+        {
+            if (null == p)
+            {
+                return null;
+            }
+            return p.GetValue(name, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

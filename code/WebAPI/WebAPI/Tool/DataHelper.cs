@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 using Tool.DB;
 using Tool.Help;
 using Tool.Model;
@@ -22,23 +19,11 @@ namespace WebAPI.Tool
         /// <param name="msg">消息</param>
         /// <param name="Code">业务编码</param>
         /// <param name="p">参数</param>
-        public static Dictionary<string, object> Process(dynamic p, ref MessageModel msg)
+        public static Dictionary<string, object> Process(JObject param, ref MessageModel msg)
         {
             try
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
-
-                JObject jjj=(JObject)p;
-
-                Dictionary<string, object> param = new Dictionary<string, object>(p.ToObject<IDictionary<string, object>>(), StringComparer.CurrentCultureIgnoreCase);
-
-                //string str_json = JsonConvert.SerializeObject(p);
-                //Dictionary<string, object> param = Helper.JsonToDictionary(str_json, ref msg);
-
-                if (msg.errcode != 0)
-                {
-                    return null;
-                }
 
                 string sql = $@"SELECT t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型 from webapi_customtolist t1 left join webapi_list t2 on t1.业务编号=t2.业务编号 left join webapi_link t3 on t2.连接标识=t3.连接标识 where t1.客户ID='{msg.appid}' and t1.业务编号='{msg.method}' and t1.有效状态='True' and t2.有效状态='True'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
@@ -46,9 +31,9 @@ namespace WebAPI.Tool
                 {
                     string str_数据库连接串 = dt.Rows[0]["数据库连接串"].ToString();
                     string str_数据库类型 = dt.Rows[0]["数据库类型"].ToString();
-                    if (param.ContainsKey("dbcon"))
+                    if (null != JsonValue(param, "dbcon"))
                     {
-                        sql = $@"SELECT t.数据库连接串, t.数据库类型 from webapi_link t where t.连接标识='{param["dbcon"]}'";
+                        sql = $@"SELECT t.数据库连接串, t.数据库类型 from webapi_link t where t.连接标识='{JsonValue(param, "dbcon")}'";
                         DataTable dt_连接 = DbHelper.Db().GetDataTable(sql);
                         if (null == dt_连接 || dt_连接.Rows.Count <= 0)
                         {
@@ -81,30 +66,30 @@ namespace WebAPI.Tool
                     DataTable dt_主记录 = new DataTable();
                     if (!string.IsNullOrEmpty(str_sql))
                     {
-                        ArrayList arr_query = new ArrayList();
+                        JArray arr_query = new JArray();
                         int count = 1;
-                        if (null != param && param.ContainsKey("query"))
+                        if (null != JsonValue(param, "query"))
                         {
-                            arr_query = param["query"] as ArrayList;
+                            arr_query = JsonValue(param, "query") as JArray;
                             count = arr_query.Count;
                         }
                         for (int i = 0; i < count; i++)
                         {
                             SqlParameter[] parameters_主 = null;
-                            Dictionary<string, object> dic_query = null;
+                            JObject dic_query = null;
                             string str_数据集名称 = string.Empty;
-                            if (null != param && param.ContainsKey("query"))
+                            if (null != JsonValue(param, "query"))
                             {
                                 //包含query节点则有点读取query节点下的参数
-                                dic_query = arr_query[i] as Dictionary<string, object>;
+                                dic_query = arr_query[i] as JObject;
                                 parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, param, ref msg);
                                 if (msg.errcode != 0)
                                 {
                                     return null;
                                 }
-                                if (dic_query.ContainsKey("dataname"))
+                                if (null != JsonValue(dic_query, "dataname"))
                                 {
-                                    str_数据集名称 = dic_query["dataname"].ToString();
+                                    str_数据集名称 = JsonValue(dic_query, "dataname").ToString();
                                 }
                                 else
                                 {
@@ -155,9 +140,9 @@ namespace WebAPI.Tool
                                 }
                             }
                             #endregion
-                            if (null != param && param.ContainsKey("query"))
+                            if (null != JsonValue(param, "query"))
                             {
-                                if (!dic_query.ContainsKey("dataname"))
+                                if (null == JsonValue(dic_query, "dataname"))
                                 {
                                     Code.Result(ref msg, 编码.参数错误, "query节点下缺少dataname节点");
                                     return null;
@@ -165,11 +150,11 @@ namespace WebAPI.Tool
 
                                 if (list_返回.Count == 0)
                                 {
-                                    dic_返回.Add(dic_query["dataname"].ToString(), dt_主记录);
+                                    dic_返回.Add(JsonValue(dic_query, "dataname").ToString(), dt_主记录);
                                 }
                                 else
                                 {
-                                    dic_返回.Add(dic_query["dataname"].ToString(), list_返回);
+                                    dic_返回.Add(JsonValue(dic_query, "dataname").ToString(), list_返回);
                                 }
                             }
                             else
@@ -205,14 +190,20 @@ namespace WebAPI.Tool
                         Code.Result(ref msg, errcode, errmsg);
                         return null;
                     }
+                    else
+                    {
+                        Code.Result(ref msg, 编码.数据库错误, e.Message);
+                        Log.Error("M_业务数据处理", e.Message);
+                        return null;
+                    }
                 }
-                catch (Exception)
+                catch (Exception e1)
                 {
-
+                    Code.Result(ref msg, 编码.程序错误, e1.Message);
+                    Log.Error("M_业务数据处理", e.Message);
+                    return null;
                 }
-                Code.Result(ref msg, 编码.程序错误, e.Message);
-                Log.Error("M_业务数据处理", e.Message);
-                return null;
+
             }
 
             catch (Exception e)
@@ -289,5 +280,13 @@ namespace WebAPI.Tool
             return DbHelper.Db().ExecuteSql(sql);
         }
 
+        public static JToken JsonValue(JObject p, string name)
+        {
+            if (null == p)
+            {
+                return null;
+            }
+            return p.GetValue(name, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
