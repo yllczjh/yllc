@@ -19,7 +19,7 @@ namespace Erp.Pro.Utils
         public C_数据源 数据源 { get; set; }
         public bool 是否显示 { get; set; }
         public bool 是否必填 { get; set; }
-        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型,bool 是否显示, bool 是否必填, C_数据源 数据源)
+        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型, C_数据源 数据源, bool 是否显示 = true, bool 是否必填 = false)
         {
             this.数据名称 = 数据名称;
             this.显示名称 = 显示名称;
@@ -28,7 +28,7 @@ namespace Erp.Pro.Utils
             this.是否显示 = 是否显示;
             this.是否必填 = 是否必填;
         }
-        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型,  bool 是否显示, bool 是否必填)
+        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型, bool 是否显示 = true, bool 是否必填 = false)
         {
             this.数据名称 = 数据名称;
             this.显示名称 = 显示名称;
@@ -43,7 +43,7 @@ namespace Erp.Pro.Utils
         public string ValueMember { get; set; }
         public string DisplayMember { get; set; }
         public DataTable DataSource { get; set; }
-        public C_数据源(DataTable DataSource,string ValueMember, string DisplayMember)
+        public C_数据源(DataTable DataSource, string ValueMember, string DisplayMember)
         {
             this.ValueMember = ValueMember;
             this.DisplayMember = DisplayMember;

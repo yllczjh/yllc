@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Erp.Server.WebAPI;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +27,7 @@ namespace Erp.Server.Init
         }
 
 
-        public static ServerParams Call_基础业务(ServerParams param)
+        private static ServerParams Call_基础业务(ServerParams param)
         {
             string str_功能 = param.p1?.ToString();
             if (string.IsNullOrEmpty(str_功能))
@@ -34,7 +36,12 @@ namespace Erp.Server.Init
             }
             switch (str_功能)
             {
-                case "用户信息编辑_新增":
+                case "用户信息_初始化":
+                    JObject o = new JObject();
+                    o.Add("sql", "select * from xt_yh");
+                    string str = HttpHelper.HTTP.HttpPost(o, "sys.execsql");
+                    break;
+                case "用户信息_新增":
                     break;
             }
             return null;

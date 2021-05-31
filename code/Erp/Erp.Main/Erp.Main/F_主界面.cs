@@ -47,11 +47,23 @@ namespace Erp.Main
 
         private void barButtonItem1_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            //xtraTabControl1.TabPages[1].Name
+            foreach(XtraTabPage p in xtraTabControl1.TabPages)
+            {
+                if(p.Name== "Erp.Pro.Jcxx.F_用户信息")
+                {
+                    xtraTabControl1.SelectedTabPage = p;
+                    return;
+                }
+            }
+
+
             Form form = GetForm("Erp.Pro.Jcxx.dll", "Erp.Pro.Jcxx", "F_用户信息");
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             XtraTabPage page = new XtraTabPage();
-            page.Text = "124";
+            page.Name = "Erp.Pro.Jcxx.F_用户信息";
+            page.Text = "用户信息";
             page.Controls.Add(form);
             form.Show();
             form.Dock = DockStyle.Fill;
@@ -103,10 +115,10 @@ namespace Erp.Main
 
         private void barButtonItem9_ItemClick(object sender, ItemClickEventArgs e)
         {
-            C_控件参数[] 控件参数 = new C_控件参数[3];
-            控件参数[0] = new C_控件参数("a", "aaaaa", E_控件类型.Dev_Text, true, true);
-            控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
-            控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true,new C_数据源(dt1,"cc","bb"));
+            //C_控件参数[] 控件参数 = new C_控件参数[3];
+            //控件参数[0] = new C_控件参数("a", "aaaaa", E_控件类型.Dev_Text, true, true);
+            //控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
+            //控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true,new C_数据源(dt1,"cc","bb"));
 
             //F_通用编辑页面 f_编辑 = new F_通用编辑页面("新增", dt, 控件参数, 0, 3);
             //f_编辑.StartPosition = FormStartPosition.CenterParent;
