@@ -70,12 +70,12 @@ namespace Erp.Pro.Jcxx
                 }
             }
 
-            Form form = GetForm("Erp.Pro.Jcxx.dll", "Erp.Pro.Jcxx", "F_菜单编辑");
+            Form form = GetForm("Erp.Pro.Jcxx.dll", "Erp.Pro.Jcxx", "F_用户信息");
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             XtraTabPage page = new XtraTabPage();
-            page.Name = "Erp.Pro.Jcxx.F_菜单编辑";
-            page.Text = "菜单编辑";
+            page.Name = "Erp.Pro.Jcxx.F_用户信息";
+            page.Text = "F_用户信息";
             page.Controls.Add(form);
             form.Show();
             form.Dock = DockStyle.Fill;

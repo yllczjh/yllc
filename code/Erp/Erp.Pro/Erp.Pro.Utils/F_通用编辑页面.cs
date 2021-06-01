@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using Erp.Pro.Utils.自定义控件;
 using Erp.Server.Init;
 
@@ -19,7 +20,7 @@ namespace Erp.Pro.Utils
         U_通用列表编辑 f_父窗体;
         DataTable dt_数据源;
         int i_数据源行号 = 0;
-        int i_每行显示列数 = 2;
+        int i_每行显示列数 = 3;
         string str_操作类型 = "新增";
         C_控件参数[] 控件参数;
 
@@ -82,7 +83,7 @@ namespace Erp.Pro.Utils
                         textBox.Name = entity.数据名称;
                         this.Controls.Add(textBox);
                         textBox.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
-                        textBox.Width = 120;
+                        textBox.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         textBox.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textBox.Show();
                         break;
@@ -91,7 +92,7 @@ namespace Erp.Pro.Utils
                         textEdit.Name = entity.数据名称;
                         this.Controls.Add(textEdit);
                         textEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
-                        textEdit.Width = 120;
+                        textEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         textEdit.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textEdit.Show();
                         break;
@@ -100,10 +101,29 @@ namespace Erp.Pro.Utils
                         lookUpEdit.Name = entity.数据名称;
                         this.Controls.Add(lookUpEdit);
                         lookUpEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
-                        lookUpEdit.Width = 120;
+                        lookUpEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         C_通用方法.M_绑定控件(lookUpEdit, entity.数据源);
                         lookUpEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
                         lookUpEdit.Show();
+                        break;
+                    case E_控件类型.Dev_ComboBoxEdit:
+                        ComboBoxEdit comboBoxEdit = new ComboBoxEdit();
+                        comboBoxEdit.Name = entity.数据名称;
+                        this.Controls.Add(comboBoxEdit);
+                        comboBoxEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
+                        comboBoxEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        C_通用方法.M_绑定控件(comboBoxEdit, entity.数据源);
+                        comboBoxEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
+                        comboBoxEdit.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+                        comboBoxEdit.Show();
+                        break;
+                    case E_控件类型.Win_DateTimePicker:
+                        DateTimePicker dateTimePicker = new DateTimePicker();
+                        dateTimePicker.Name = entity.数据名称;
+                        this.Controls.Add(dateTimePicker);
+                        dateTimePicker.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
+                        dateTimePicker.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        dateTimePicker.Show();
                         break;
                 }
             }

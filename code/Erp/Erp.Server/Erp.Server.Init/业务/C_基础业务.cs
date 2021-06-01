@@ -21,7 +21,7 @@ namespace Erp.Server.Init.业务
                 outObject = HttpHelper.HTTP.HttpPost(inObject, "sys.execsql");
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {
-                    DataTable dt = Convert.JObjectToDataTable(outObject);
+                    DataTable dt = TypeConvert.JObjectToDataTable(outObject);
                     outParam.p0 = "1";
                     outParam.p1 = "成功!";
                     outParam.p2 = dt;
@@ -53,7 +53,7 @@ namespace Erp.Server.Init.业务
                 outObject = HttpHelper.HTTP.HttpPost(inObject, "sys.execsql");
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {
-                    DataTable dt = Convert.JObjectToDataTable(outObject);
+                    DataTable dt = TypeConvert.JObjectToDataTable(outObject);
                     outParam.p0 = "1";
                     outParam.p1 = "成功!";
                     outParam.p2 = dt;

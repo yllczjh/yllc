@@ -49,5 +49,15 @@ namespace Erp.Pro.Utils
             lue_绑定控件.Properties.ValueMember = c_数据源.ValueMember;
             //lue_绑定控件.ItemIndex = 0;
         }
+
+        public static void M_绑定控件(ComboBoxEdit com_绑定控件, C_数据源 c_数据源)
+        {
+            com_绑定控件.Properties.Items.Clear();
+
+            foreach (string str in c_数据源.list)
+            {
+                com_绑定控件.Properties.Items.Add(str);
+            }
+        }
     }
 }

@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert.cs" />
     <Compile Include="C_Server.cs" />
     <Compile Include="C_系统参数.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

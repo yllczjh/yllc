@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace Erp.Pro.Utils
 {
@@ -10,7 +11,21 @@ namespace Erp.Pro.Utils
         /// <summary>
         /// 对应数据集中DataTable中的ColumeName
         /// </summary>
-        public string 数据名称 { get; set; }
+        private string _数据名称;
+        public string 数据名称
+        {
+            get { return _数据名称; }
+            set
+            {
+                _数据名称 = value;
+                if (string.IsNullOrEmpty(显示名称))
+                {
+                    显示名称 = value;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Label控件显示的内容
         /// </summary>
@@ -19,22 +34,13 @@ namespace Erp.Pro.Utils
         public C_数据源 数据源 { get; set; }
         public bool 是否显示 { get; set; }
         public bool 是否必填 { get; set; }
-        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型, C_数据源 数据源, bool 是否显示 = true, bool 是否必填 = false)
+        public bool 是否填充 { get; set; }
+
+        public C_控件参数()
         {
-            this.数据名称 = 数据名称;
-            this.显示名称 = 显示名称;
-            this.控件类型 = 控件类型;
-            this.数据源 = 数据源;
-            this.是否显示 = 是否显示;
-            this.是否必填 = 是否必填;
-        }
-        public C_控件参数(string 数据名称, string 显示名称, E_控件类型 控件类型, bool 是否显示 = true, bool 是否必填 = false)
-        {
-            this.数据名称 = 数据名称;
-            this.显示名称 = 显示名称;
-            this.控件类型 = 控件类型;
-            this.是否显示 = 是否显示;
-            this.是否必填 = 是否必填;
+            是否显示 = true;
+            是否必填 = false;
+            是否填充 = false;
         }
     }
 
@@ -48,6 +54,12 @@ namespace Erp.Pro.Utils
             this.ValueMember = ValueMember;
             this.DisplayMember = DisplayMember;
             this.DataSource = DataSource;
+        }
+
+        public List<string> list { get; set; }
+        public C_数据源(List<string> list)
+        {
+            this.list = list;
         }
     }
 }

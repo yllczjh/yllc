@@ -7,7 +7,7 @@ namespace Erp.Server.Init
     {
         public static ServerParams Call(ServerParams param)
         {
-            ServerParams outParam=new ServerParams();
+            ServerParams outParam = new ServerParams();
             E_模块名称 e_模块名称 = (E_模块名称)param.p0;
             switch (e_模块名称)
             {
@@ -28,7 +28,9 @@ namespace Erp.Server.Init
             string str_功能 = param.p1?.ToString();
             if (string.IsNullOrEmpty(str_功能))
             {
-
+                outParam.p0 = "0";
+                outParam.p1 = "找不到方法!";
+                return outParam;
             }
             switch (str_功能)
             {
@@ -37,6 +39,10 @@ namespace Erp.Server.Init
                     break;
                 case "菜单信息_初始化":
                     outParam = c_基础业务.M_菜单信息_初始化(param);
+                    break;
+                default:
+                    outParam.p0 = "0";
+                    outParam.p1 = "找不到方法!";
                     break;
             }
             return outParam;

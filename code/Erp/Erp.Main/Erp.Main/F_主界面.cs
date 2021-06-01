@@ -1,5 +1,4 @@
-﻿using DevExpress.Utils;
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
 using Erp.Pro.Jcxx;
@@ -8,8 +7,6 @@ using Erp.Server.WebAPI;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using static Erp.Server.Init.C_系统参数;
@@ -79,10 +76,7 @@ namespace Erp.Main
             xttc_主界面.SelectedTabPage = page;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+    
 
         private void F_主界面_Load(object sender, EventArgs e)
         {
@@ -95,6 +89,7 @@ namespace Erp.Main
             if (outParam.p0.ToString() == "1")
             {
                 DataTable dt_菜单 = outParam.p2 as DataTable;
+                //JObject ob = Server.Init.TypeConvert.DataTableToJObject(dt_菜单);
                 C_菜单加载.Init(xttc_主界面, ribbon_菜单, dt_菜单);
             }
             else

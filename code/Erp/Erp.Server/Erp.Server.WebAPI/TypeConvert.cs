@@ -1,0 +1,52 @@
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Data;
+
+namespace Erp.Server.Init
+{
+    public class TypeConvert
+    {
+        /// <summary>
+        /// dataset(不含明细)节点转为DatTable
+        /// </summary>
+        /// <param name="Object">返回的JObject</param>
+        /// <returns></returns>
+        public static DataTable JObjectToDataTable(JObject Object)
+        {
+            try
+            {
+                JArray Array = (JArray)Object.GetValue("dataset");
+                DataTable dt = new DataTable();
+                dt = JsonConvert.DeserializeObject<DataTable>(Array.ToString());
+                return dt;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 将DataTable转为插入用的JSON串
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static JObject DataTableToJObject(DataTable dt)
+        {
+            try
+            {
+                string str = JsonConvert.SerializeObject(dt);
+                JArray Array = (JArray)JsonConvert.DeserializeObject(str);
+                JObject jo = new JObject();
+                jo.Add("datacount", dt.Rows.Count);
+                jo.Add("dataset", Array);
+                return jo;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+    }
+}
