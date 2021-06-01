@@ -1,10 +1,4 @@
-﻿using Erp.Server.WebAPI;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Erp.Server.Init.业务;
 using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Server.Init
@@ -13,7 +7,7 @@ namespace Erp.Server.Init
     {
         public static ServerParams Call(ServerParams param)
         {
-            ServerParams outParam = new ServerParams();
+            ServerParams outParam=new ServerParams();
             E_模块名称 e_模块名称 = (E_模块名称)param.p0;
             switch (e_模块名称)
             {
@@ -29,6 +23,8 @@ namespace Erp.Server.Init
 
         private static ServerParams Call_基础业务(ServerParams param)
         {
+            C_基础业务 c_基础业务 = new C_基础业务();
+            ServerParams outParam = new ServerParams();
             string str_功能 = param.p1?.ToString();
             if (string.IsNullOrEmpty(str_功能))
             {
@@ -37,15 +33,13 @@ namespace Erp.Server.Init
             switch (str_功能)
             {
                 case "用户信息_初始化":
-                    JObject o = new JObject();
-                    o.Add("sql", "select * from xt_yh");
-                    string str = HttpHelper.HTTP.HttpPost(o, "sys.execsql");
+                    outParam = c_基础业务.M_用户信息_初始化(param);
                     break;
-                case "用户信息_新增":
+                case "菜单信息_初始化":
+                    outParam = c_基础业务.M_菜单信息_初始化(param);
                     break;
             }
-            return null;
+            return outParam;
         }
     }
-
 }

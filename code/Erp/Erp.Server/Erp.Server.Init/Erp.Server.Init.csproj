@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert.cs" />
     <Compile Include="C_Server.cs" />
     <Compile Include="C_系统参数.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="业务\C_基础业务.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Erp.Server.WebAPI\Erp.Server.WebAPI.csproj">

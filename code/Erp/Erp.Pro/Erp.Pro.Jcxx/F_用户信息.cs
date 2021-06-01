@@ -47,12 +47,21 @@ namespace Erp.Pro.Jcxx
             }
 
 
-            u_通用列表编辑2.GridControl.DataSource = dt;
-            u_通用列表编辑2.P_页面名称 = "用户信息";
+            //u_通用列表编辑2.GridControl.DataSource = dt;
+            //u_通用列表编辑2.P_页面名称 = "用户信息";
 
             inParam.p0 = E_模块名称.基础业务;
             inParam.p1 = "用户信息_初始化";
             outParam = C_Server.Call(inParam);
+            if (outParam.p0.ToString() == "1")
+            {
+                u_通用列表编辑2.GridControl.DataSource = outParam.p2;
+                u_通用列表编辑2.P_页面名称 = "用户信息";
+            }
+            else
+            {
+                MessageBox.Show(outParam.p1.ToString(), "提示");
+            }
         }
 
 

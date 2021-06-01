@@ -53,6 +53,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.XtraEditors.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.XtraEditors.v14.1.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -156,9 +157,21 @@
     <None Include="Resources\yd_refresh1.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Jcxx\Erp.Pro.Jcxx.csproj">
+      <Project>{8A597BB6-27FE-4896-8DDF-B44E5C121FF1}</Project>
+      <Name>Erp.Pro.Jcxx</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
       <Project>{0F7C4903-AE7F-447E-954B-62FE2A820C31}</Project>
       <Name>Erp.Pro.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Init\Erp.Server.Init.csproj">
+      <Project>{82E4B82D-0F25-428E-9A30-B2475B80A10F}</Project>
+      <Name>Erp.Server.Init</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.WebAPI\Erp.Server.WebAPI.csproj">
+      <Project>{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}</Project>
+      <Name>Erp.Server.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

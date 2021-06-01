@@ -1,19 +1,18 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Erp.Server.WebAPI
 {
-   public class HttpHelper
+    public class HttpHelper
     {
         private readonly static object lockObj = new object();
         private static HttpHelper instance = null;
         private HttpClient client = new HttpClient();
         private string webURL = "http://test7.ql-soft.com/api/v1/main/webapi";
+        private string accessToken = string.Empty;
         private HttpHelper() { }
 
         public static HttpHelper HTTP
@@ -27,6 +26,7 @@ namespace Erp.Server.WebAPI
                         if (instance == null)
                         {
                             instance = new HttpHelper();
+
                         }
                     }
                 }
@@ -34,10 +34,10 @@ namespace Erp.Server.WebAPI
             }
         }
 
-        
-        public string HttpPost(JObject body,string method)
+
+        public JObject HttpPost(JObject body, string method)
         {
-            HttpContent httpContent = new StringContent(body.ToString());
+            StringContent httpContent = new StringContent(body?.ToString(), Encoding.UTF8, "application/json");
 
             if (client.DefaultRequestHeaders.Contains("msgid"))
             {
@@ -63,10 +63,9 @@ namespace Erp.Server.WebAPI
             {
                 client.DefaultRequestHeaders.Remove("sign");
             }
-
             client.DefaultRequestHeaders.Add("msgid", Guid.NewGuid().ToString("N"));
-            client.DefaultRequestHeaders.Add("appid", "mainapp");
-            client.DefaultRequestHeaders.Add("token", "1");
+            client.DefaultRequestHeaders.Add("appid", "test");
+            client.DefaultRequestHeaders.Add("token", accessToken);
             client.DefaultRequestHeaders.Add("reqtime", DateTime.Now.ToString("yyyyMMddHHmmss"));
             client.DefaultRequestHeaders.Add("method", method);
             client.DefaultRequestHeaders.Add("sign", "12");
@@ -77,7 +76,13 @@ namespace Erp.Server.WebAPI
             if (response.IsSuccessStatusCode)
             {
                 string result = response.Content.ReadAsStringAsync().Result;
-                return result;
+                JObject ob = (JObject)JsonConvert.DeserializeObject(result);
+                if (null != ob.GetValue("token"))
+                {
+                    JObject t = (JObject)ob.GetValue("token");
+                    accessToken = t.GetValue("accessToken").ToString();
+                }
+                return ob;
             }
             return null;
         }

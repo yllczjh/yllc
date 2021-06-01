@@ -1,30 +1,39 @@
-﻿using DevExpress.XtraBars;
+﻿using DevExpress.Utils;
+using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
-using Erp.Pro.Utils;
+using Erp.Pro.Jcxx;
+using Erp.Server.Init;
+using Erp.Server.WebAPI;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Main
 {
     public partial class F_主界面 : XtraForm
     {
+        ServerParams inParam = new ServerParams();
+        ServerParams outParam = new ServerParams();
+
+        
         public F_主界面()
         {
             InitializeComponent();
         }
-        DataTable dt = new DataTable();
-        DataTable dt1 = new DataTable();
 
         private void xtraTabControl1_CloseButtonClick(object sender, EventArgs e)
         {
-            if (xtraTabControl1.SelectedTabPage.Name != "首页")
+            if (xttc_主界面.SelectedTabPage.Name != "首页")
             {
-                int index = xtraTabControl1.SelectedTabPageIndex;
-                xtraTabControl1.TabPages.RemoveAt(index);
-                xtraTabControl1.SelectedTabPageIndex = index - 1;
+                int index = xttc_主界面.SelectedTabPageIndex;
+                xttc_主界面.TabPages.RemoveAt(index);
+                xttc_主界面.SelectedTabPageIndex = index - 1;
             }
         }
 
@@ -45,14 +54,13 @@ namespace Erp.Main
             }
         }
 
-        private void barButtonItem1_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        public void barButtonItem1_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //xtraTabControl1.TabPages[1].Name
-            foreach(XtraTabPage p in xtraTabControl1.TabPages)
+            foreach (XtraTabPage p in xttc_主界面.TabPages)
             {
-                if(p.Name== "Erp.Pro.Jcxx.F_用户信息")
+                if (p.Name == "Erp.Pro.Jcxx.F_用户信息")
                 {
-                    xtraTabControl1.SelectedTabPage = p;
+                    xttc_主界面.SelectedTabPage = p;
                     return;
                 }
             }
@@ -67,8 +75,8 @@ namespace Erp.Main
             page.Controls.Add(form);
             form.Show();
             form.Dock = DockStyle.Fill;
-            xtraTabControl1.TabPages.Add(page);
-            xtraTabControl1.SelectedTabPage = page;
+            xttc_主界面.TabPages.Add(page);
+            xttc_主界面.SelectedTabPage = page;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -78,28 +86,20 @@ namespace Erp.Main
 
         private void F_主界面_Load(object sender, EventArgs e)
         {
-            dt.Columns.Add("a", typeof(string));
-            dt.Columns.Add("b", typeof(string));
-            dt.Columns.Add("c", typeof(string));
-            for (int i = 0; i < 5; i++)
-            {
-                DataRow row = dt.NewRow();
-                row["a"] = "a" + i;
-                row["b"] = "b" + i;
-                row["c"] = "c" + i;
-                dt.Rows.Add(row);
-            }
+            JObject json = HttpHelper.HTTP.HttpPost(new Newtonsoft.Json.Linq.JObject(), "login");
 
-            dt1.Columns.Add("aa", typeof(string));
-            dt1.Columns.Add("bb", typeof(string));
-            dt1.Columns.Add("cc", typeof(string));
-            for (int i = 0; i < 5; i++)
+
+            inParam.p0 = E_模块名称.基础业务;
+            inParam.p1 = "菜单信息_初始化";
+            outParam = C_Server.Call(inParam);
+            if (outParam.p0.ToString() == "1")
             {
-                DataRow row = dt1.NewRow();
-                row["aa"] = "a" + i;
-                row["bb"] = "b" + i;
-                row["cc"] = "c" + i;
-                dt1.Rows.Add(row);
+                DataTable dt_菜单 = outParam.p2 as DataTable;
+                C_菜单加载.Init(xttc_主界面, ribbon_菜单, dt_菜单);
+            }
+            else
+            {
+                MessageBox.Show(outParam.p1.ToString(), "提示");
             }
         }
 
@@ -111,18 +111,6 @@ namespace Erp.Main
         private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
         {
             //HttpHelper.HTTP.HttpPost("http://test7.ql-soft.com/api/v1/main/webapi", "");
-        }
-
-        private void barButtonItem9_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //C_控件参数[] 控件参数 = new C_控件参数[3];
-            //控件参数[0] = new C_控件参数("a", "aaaaa", E_控件类型.Dev_Text, true, true);
-            //控件参数[1] = new C_控件参数("b", "bbbbb", E_控件类型.Dev_Text, true, true);
-            //控件参数[2] = new C_控件参数("c", "ccccc", E_控件类型.Dev_LookUpEdit, true, true,new C_数据源(dt1,"cc","bb"));
-
-            //F_通用编辑页面 f_编辑 = new F_通用编辑页面("新增", dt, 控件参数, 0, 3);
-            //f_编辑.StartPosition = FormStartPosition.CenterParent;
-            //f_编辑.ShowDialog();
         }
     }
 }
