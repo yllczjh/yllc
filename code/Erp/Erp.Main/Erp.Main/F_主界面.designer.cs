@@ -319,7 +319,6 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ribbon_菜单);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "F_主界面";
             this.Text = "F_主界面";
             this.Load += new System.EventHandler(this.F_主界面_Load);

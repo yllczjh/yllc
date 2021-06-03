@@ -7,7 +7,7 @@ using DevExpress.XtraGrid;
 
 namespace Erp.Pro.Utils.工具类
 {
-    public class ExportUtil
+    public class C_文件导出
     {
         #region XtraGrid导出
 

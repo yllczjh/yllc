@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
+using System.Text;
 
 namespace Erp.Server.Init
 {
@@ -43,10 +44,34 @@ namespace Erp.Server.Init
                 jo.Add("dataset", Array);
                 return jo;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
+        }
+        /// <summary>
+        /// DataTable转为insert或update语句
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string DataTableToSQL(DataTable dt)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow row in dt.Rows)
+            {
+                StringBuilder sb1 = new StringBuilder();
+                if (null == row["rowid"])
+                {
+
+                }else
+                {
+                    foreach(DataColumn column in dt.Columns)
+                    {
+
+                    }
+                }
+            }
+            return null;
         }
     }
 }

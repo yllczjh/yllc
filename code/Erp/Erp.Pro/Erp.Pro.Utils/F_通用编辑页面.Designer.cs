@@ -32,6 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btn_保存 = new System.Windows.Forms.ToolStripButton();
             this.btn_关闭 = new System.Windows.Forms.ToolStripButton();
+            this.t_结束编辑 = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +73,13 @@
             this.btn_关闭.Text = "关闭";
             this.btn_关闭.Click += new System.EventHandler(this.btn_关闭_Click);
             // 
+            // t_结束编辑
+            // 
+            this.t_结束编辑.Location = new System.Drawing.Point(412, 3);
+            this.t_结束编辑.Name = "t_结束编辑";
+            this.t_结束编辑.Size = new System.Drawing.Size(25, 22);
+            this.t_结束编辑.TabIndex = 2;
+            // 
             // F_通用编辑页面
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -79,6 +87,7 @@
             this.ClientSize = new System.Drawing.Size(512, 261);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.t_结束编辑);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "F_通用编辑页面";
             this.Text = "F_通用编辑页面";
@@ -97,5 +106,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btn_保存;
         private System.Windows.Forms.ToolStripButton btn_关闭;
+        private System.Windows.Forms.TextBox t_结束编辑;
     }
 }

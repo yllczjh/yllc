@@ -2,12 +2,12 @@
 using DevExpress.XtraEditors.Controls;
 using Erp.Pro.Utils.自定义控件;
 using Erp.Server.Init;
-
 using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using static Erp.Server.Init.C_系统参数;
+using static Erp.Pro.Utils.C_实体信息;
 
 namespace Erp.Pro.Utils
 {
@@ -52,6 +52,7 @@ namespace Erp.Pro.Utils
             if (str_操作类型 == "新增")
             {
                 cm_绑定管理.AddNew();
+                i_数据源行号 = cm_绑定管理.Position;
             }
             else
             {
@@ -76,6 +77,7 @@ namespace Erp.Pro.Utils
                     l.Width = label_width;
                     l.Show();
                 }
+
                 switch (entity.控件类型)
                 {
                     case E_控件类型.Win_Text:
@@ -87,6 +89,7 @@ namespace Erp.Pro.Utils
                         textBox.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textBox.Show();
                         break;
+
                     case E_控件类型.Dev_Text:
                         TextEdit textEdit = new TextEdit();
                         textEdit.Name = entity.数据名称;
@@ -96,6 +99,7 @@ namespace Erp.Pro.Utils
                         textEdit.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textEdit.Show();
                         break;
+
                     case E_控件类型.Dev_LookUpEdit:
                         LookUpEdit lookUpEdit = new LookUpEdit();
                         lookUpEdit.Name = entity.数据名称;
@@ -106,6 +110,7 @@ namespace Erp.Pro.Utils
                         lookUpEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
                         lookUpEdit.Show();
                         break;
+
                     case E_控件类型.Dev_ComboBoxEdit:
                         ComboBoxEdit comboBoxEdit = new ComboBoxEdit();
                         comboBoxEdit.Name = entity.数据名称;
@@ -117,24 +122,55 @@ namespace Erp.Pro.Utils
                         comboBoxEdit.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
                         comboBoxEdit.Show();
                         break;
+
                     case E_控件类型.Win_DateTimePicker:
                         DateTimePicker dateTimePicker = new DateTimePicker();
                         dateTimePicker.Name = entity.数据名称;
                         this.Controls.Add(dateTimePicker);
                         dateTimePicker.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
                         dateTimePicker.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        dateTimePicker.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         dateTimePicker.Show();
                         break;
+
+                    case E_控件类型.Dev_CheckEdit:
+                        CheckEdit checkEdit = new CheckEdit();
+                        checkEdit.Name = entity.数据名称;
+                        this.Controls.Add(checkEdit);
+                        checkEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y + 3) : new Point(0, 0);
+                        checkEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        checkEdit.Text = "";
+                        checkEdit.DataBindings.Add("Checked", dt_数据源, entity.数据名称);
+                        checkEdit.Show();
+                        break;
+                }
+
+                if (entity.是否填充)
+                {
+                    i_行号 += 1;
+                    i_列号 = 1;
+                }
+                else
+                {
+                    if (i_列号 < i_每行显示列数)
+                    {
+                        i_列号 += 1;
+                    }
+                    else
+                    {
+                        i_列号 = 1;
+                        i_行号 += 1;
+                    }
                 }
             }
         }
 
         private void M_获取位置(int i, ref int x, ref int y)
         {
-            i_行号 = i / i_每行显示列数 + 1;
-            i_列号 = i % i_每行显示列数 + 1;
+            //i_行号 = i / i_每行显示列数 + 1;
+            //i_列号 = i % i_每行显示列数 + 1;
             x = (i_列号 - 1) * 200;
-            y = i_行号 * 24 + 10;
+            y = i_行号 * 25 + 10;
         }
 
         private int M_获取Label_Width(C_控件参数[] 控件参数)
@@ -161,37 +197,58 @@ namespace Erp.Pro.Utils
         private void btn_保存_Click(object sender, EventArgs e)
         {
             if (!M_必填项验证()) return;
+            t_结束编辑.Focus();
             if (str_操作类型 == "新增")
             {
                 inParam.Clear();
-                inParam.p0 = f_父窗体.P_模块名称;
-                inParam.p1 = f_父窗体.P_页面名称 + "_新增";
+                inParam.p0 = E_模块名称.通用业务;
+                inParam.p1 = f_父窗体.P_页面名称;
+                inParam.p2 = "新增";
+                inParam.p3 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
 
-                if (DialogResult.Yes == MessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                if (outParam.p0.ToString() == "1")
                 {
-                    cm_绑定管理.EndCurrentEdit();
-                    cm_绑定管理.ResumeBinding();
-                    cm_绑定管理.AddNew();
-
-                    //M_初始化();
+                    if (DialogResult.Yes == MessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        cm_绑定管理.EndCurrentEdit();
+                        cm_绑定管理.ResumeBinding();
+                        cm_绑定管理.AddNew();
+                        i_数据源行号 = cm_绑定管理.Position;
+                        f_父窗体.P_焦点行 = cm_绑定管理.Position;
+                    }
+                    else
+                    {
+                        cm_绑定管理.EndCurrentEdit();
+                        this.Close();
+                    }
                 }
                 else
                 {
-                    cm_绑定管理.EndCurrentEdit();
-                    this.Close();
+                    MessageBox.Show(outParam.p1.ToString(), "提示");
+                    return;
                 }
             }
             else
             {
                 inParam.Clear();
-                inParam.p0 = f_父窗体.P_模块名称;
-                inParam.p1 = f_父窗体.P_页面名称 + "_修改";
+                inParam.p0 = E_模块名称.通用业务;
+                inParam.p1 = f_父窗体.P_页面名称;
+                inParam.p2 = "修改";
+                inParam.p3 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
 
-                cm_绑定管理.EndCurrentEdit();
-                cm_绑定管理.ResumeBinding();
-                MessageBox.Show("修改成功");
+                if (outParam.p0.ToString() == "1")
+                {
+                    MessageBox.Show("修改成功", "提示");
+                    cm_绑定管理.ResumeBinding();
+                }
+                else
+                {
+                    MessageBox.Show(outParam.p1.ToString(), "提示");
+                    return;
+                }
+
                 this.Close();
             }
         }

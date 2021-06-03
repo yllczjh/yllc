@@ -16,7 +16,8 @@ namespace Erp.Pro.Utils
         Dev_Text,
         Dev_LookUpEdit,
         Dev_ComboBoxEdit,
-        Win_DateTimePicker
+        Win_DateTimePicker,
+        Dev_CheckEdit
     }
 
 }

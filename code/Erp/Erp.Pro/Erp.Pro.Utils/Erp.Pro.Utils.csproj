@@ -33,6 +33,7 @@
     <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -49,9 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="C_实体类.cs" />
+    <Compile Include="C_实体信息.cs" />
     <Compile Include="C_枚举类.cs" />
     <Compile Include="C_通用方法.cs" />
+    <Compile Include="F_修改列别名.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_修改列别名.Designer.cs">
+      <DependentUpon>F_修改列别名.cs</DependentUpon>
+    </Compile>
     <Compile Include="F_通用编辑页面.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,8 +71,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="工具类\ExportUtil.cs" />
+    <Compile Include="工具类\C_文件导出.cs" />
     <Compile Include="工具类\FileHelper.cs" />
+    <Compile Include="工具类\MyException.cs" />
+    <Compile Include="工具类\C_样式设置.cs" />
     <Compile Include="自定义控件\U_通用列表编辑.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,6 +83,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="F_修改列别名.resx">
+      <DependentUpon>F_修改列别名.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="F_通用编辑页面.resx">
       <DependentUpon>F_通用编辑页面.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\doc_continuPrint1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yd_refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
