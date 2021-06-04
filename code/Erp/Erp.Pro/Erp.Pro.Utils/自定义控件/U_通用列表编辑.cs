@@ -2,6 +2,7 @@
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Erp.Pro.Utils.工具类;
+using Erp.Pro.Utils.公共窗体;
 using Erp.Server.Init;
 using System;
 using System.ComponentModel;
@@ -106,12 +107,22 @@ namespace Erp.Pro.Utils.自定义控件
 
         private void btn_删除_Click(object sender, EventArgs e)
         {
-            P_焦点行 = GridView.FocusedRowHandle;
-            DataRow dr_删除行 = GridView.GetDataRow(P_焦点行);
-            if (null == dr_删除行)
+            GridView.CloseEditor();
+            dt_数据源.AcceptChanges();
+            DataTable dt_删除行 = dt_数据源.Copy();
+            dt_删除行.DefaultView.RowFilter = "选择='True'";
+            dt_删除行 = dt_删除行.DefaultView.ToTable();
+            //有复选框选择的则删除选中的，没有则删除焦点行的
+            if (dt_删除行.Rows.Count <= 0)
             {
-                MessageBox.Show("请选择要删除的数据!", "提示");
-                return;
+                P_焦点行 = GridView.FocusedRowHandle;
+                DataRow dr_删除行 = GridView.GetDataRow(P_焦点行);
+                if (null == dr_删除行)
+                {
+                    MessageBox.Show("请选择要删除的数据!", "提示");
+                    return;
+                }
+                dt_删除行.Rows.Add(dr_删除行.ItemArray);
             }
 
             if (DialogResult.Yes == MessageBox.Show("是否要删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
@@ -119,13 +130,14 @@ namespace Erp.Pro.Utils.自定义控件
                 inParam.p0 = E_模块名称.通用业务;
                 inParam.p1 = P_页面名称;
                 inParam.p2 = "删除";
-                inParam.p3 = dr_删除行;
+                inParam.p3 = dt_删除行;
                 outParam = C_Server.Call(inParam);
 
                 if (outParam.p0.ToString() == "1")
                 {
                     MessageBox.Show("删除成功!", "提示");
-                    M_加载列表数据();
+                    GridView.DeleteSelectedRows();
+                    //M_加载列表数据();
                     GridView.FocusedRowHandle = P_焦点行;
                 }
                 else
@@ -233,7 +245,12 @@ namespace Erp.Pro.Utils.自定义控件
             }
             else if (e.Item.Name == "menu_隐藏列")
             {
-                GridView.Columns[info.Column.FieldName].Visible = false;
+                int index = GridView.Columns[info.Column.FieldName].VisibleIndex;
+                GridView.Columns[info.Column.FieldName].VisibleIndex = -1;
+                if (!C_样式设置.Save(GridView, P_页面名称))
+                {
+                    GridView.Columns[info.Column.FieldName].VisibleIndex = index;
+                }
             }
             else if (e.Item.Name == "menu_显示隐藏列")
             {

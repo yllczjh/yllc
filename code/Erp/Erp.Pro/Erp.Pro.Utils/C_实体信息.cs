@@ -48,6 +48,7 @@ namespace Erp.Pro.Utils
             public bool 是否必填 { get; set; }
             public bool 是否填充 { get; set; }
             public bool 值唯一 { get; set; }
+            public object 默认值 { get; set; }
 
             public C_控件参数()
             {

@@ -1,10 +1,11 @@
 ﻿using DevExpress.XtraEditors;
 using System.Data;
+using System.Text;
 using static Erp.Pro.Utils.C_实体信息;
 
 namespace Erp.Pro.Utils
 {
-    class C_通用方法
+    public class C_通用方法
     {
         public static void M_绑定控件(LookUpEdit lue_绑定控件, C_数据源 c_数据源)
         {
@@ -26,6 +27,22 @@ namespace Erp.Pro.Utils
             {
                 com_绑定控件.Properties.Items.Add(str);
             }
+        }
+        /// <summary>
+        /// 根据主键拼接sql in字符串
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="str_主键"></param>
+        /// <returns></returns>
+        public static string M_获取主键IN(DataTable dt, string str_主键)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow row in dt.Rows)
+            {
+                sb.Append("'").Append(row[str_主键]).Append("',");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString(); 
         }
     }
 }

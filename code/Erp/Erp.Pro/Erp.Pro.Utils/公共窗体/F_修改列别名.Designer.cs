@@ -1,4 +1,4 @@
-﻿namespace Erp.Pro.Utils
+﻿namespace Erp.Pro.Utils.公共窗体
 {
     partial class F_修改列别名
     {

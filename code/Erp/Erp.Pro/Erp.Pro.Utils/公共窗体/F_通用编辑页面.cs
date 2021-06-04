@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using static Erp.Server.Init.C_系统参数;
 using static Erp.Pro.Utils.C_实体信息;
 
-namespace Erp.Pro.Utils
+namespace Erp.Pro.Utils.公共窗体
 {
     public partial class F_通用编辑页面 : XtraForm
     {
@@ -86,6 +86,10 @@ namespace Erp.Pro.Utils
                         this.Controls.Add(textBox);
                         textBox.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
                         textBox.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        if (str_操作类型 == "新增")
+                        {
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值;
+                        }
                         textBox.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textBox.Show();
                         break;
@@ -96,6 +100,10 @@ namespace Erp.Pro.Utils
                         this.Controls.Add(textEdit);
                         textEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
                         textEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        if (str_操作类型 == "新增")
+                        {
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值;
+                        }
                         textEdit.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         textEdit.Show();
                         break;
@@ -129,6 +137,10 @@ namespace Erp.Pro.Utils
                         this.Controls.Add(dateTimePicker);
                         dateTimePicker.Location = (entity.是否显示) ? new Point(x + l.Width, y) : new Point(0, 0);
                         dateTimePicker.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
+                        if (str_操作类型 == "新增")
+                        {
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值 ?? "1900-01-01";
+                        }
                         dateTimePicker.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         dateTimePicker.Show();
                         break;
@@ -140,6 +152,11 @@ namespace Erp.Pro.Utils
                         checkEdit.Location = (entity.是否显示) ? new Point(x + l.Width, y + 3) : new Point(0, 0);
                         checkEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         checkEdit.Text = "";
+                        if (str_操作类型 == "新增")
+                        {
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值 ?? false;
+                        }
+
                         checkEdit.DataBindings.Add("Checked", dt_数据源, entity.数据名称);
                         checkEdit.Show();
                         break;
@@ -167,8 +184,6 @@ namespace Erp.Pro.Utils
 
         private void M_获取位置(int i, ref int x, ref int y)
         {
-            //i_行号 = i / i_每行显示列数 + 1;
-            //i_列号 = i % i_每行显示列数 + 1;
             x = (i_列号 - 1) * 200;
             y = i_行号 * 25 + 10;
         }

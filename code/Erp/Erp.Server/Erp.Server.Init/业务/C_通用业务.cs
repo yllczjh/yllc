@@ -1,10 +1,12 @@
 ﻿using Erp.Pro.Utils.工具类;
+using Erp.Pro.Utils;
 using Erp.Server.WebAPI;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using System.Text;
 using static Erp.Server.Init.C_系统参数;
+using Erp.Server.Init.业务;
 
 namespace Erp.Server.Init.业务
 {
@@ -107,11 +109,11 @@ namespace Erp.Server.Init.业务
         }
         private void M_删除(ServerParams inParam, ref JObject inObject)
         {
-            DataRow row = inParam.p3 as DataRow;
+            DataTable dt = inParam.p3 as DataTable;
             switch (inParam.p1.ToString())
             {
                 case "用户信息":
-                    inObject.Add("sql", $"delete from xt_yh where rowid='{row["rowid"]}'");
+                    inObject.Add("sql", $"delete from xt_yh where rowid in({C_通用方法.M_获取主键IN(dt, "rowid")})");
                     break;
             }
         }

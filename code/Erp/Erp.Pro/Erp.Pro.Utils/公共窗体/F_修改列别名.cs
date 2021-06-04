@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Erp.Pro.Utils
+namespace Erp.Pro.Utils.公共窗体
 {
     public partial class F_修改列别名 : Form
     {
