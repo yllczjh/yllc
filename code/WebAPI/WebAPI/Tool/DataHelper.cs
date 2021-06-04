@@ -25,7 +25,7 @@ namespace WebAPI.Tool
             {
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
 
-                string sql = $@"SELECT t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型 from webapi_customtolist t1 left join webapi_list t2 on t1.业务编号=t2.业务编号 left join webapi_link t3 on t2.连接标识=t3.连接标识 where t1.客户ID='{msg.appid}' and t1.业务编号='{msg.method}' and t1.有效状态='True' and t2.有效状态='True'";
+                string sql = $@"SELECT t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型 from webapi_xttolist t1 left join webapi_list t2 on t1.业务编号=t2.业务编号 left join webapi_link t3 on t2.连接标识=t3.连接标识 where t1.系统ID='{msg.appid}' and t1.业务编号='{msg.method}' and t1.有效状态='True' and t2.有效状态='True'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null != dt && dt.Rows.Count == 1)
                 {
@@ -245,7 +245,7 @@ namespace WebAPI.Tool
         {
             try
             {
-                string sql = $@"select * from webapi_customer where 客户ID='{appid}' and 有效状态='True'";
+                string sql = $@"select * from xt_xt where 系统ID='{appid}'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
                 if (null == dt || dt.Rows.Count <= 0)
                 {

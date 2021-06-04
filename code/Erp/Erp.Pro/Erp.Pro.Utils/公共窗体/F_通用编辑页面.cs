@@ -17,12 +17,12 @@ namespace Erp.Pro.Utils.公共窗体
         ServerParams outParam = new ServerParams();
         CurrencyManager cm_绑定管理;
 
-        U_通用列表编辑 f_父窗体;
-        DataTable dt_数据源;
-        int i_数据源行号 = 0;
-        int i_每行显示列数 = 3;
-        string str_操作类型 = "新增";
-        C_控件参数[] 控件参数;
+        private U_通用列表编辑 f_父窗体;
+        private DataTable dt_数据源;
+        private int i_数据源行号 = 0;
+        private int i_每行显示列数 = 3;
+        private string str_操作类型 = "新增";
+        private C_控件参数[] 控件参数;
 
         int i_行号 = 1;
         int i_列号 = 1;
@@ -41,6 +41,7 @@ namespace Erp.Pro.Utils.公共窗体
             this.i_每行显示列数 = f_父窗体.P_每行显示列数;
             this.i_数据源行号 = f_父窗体.P_焦点行;
             this.控件参数 = f_父窗体.P_控件参数;
+
             显示页面();
         }
 
@@ -231,6 +232,7 @@ namespace Erp.Pro.Utils.公共窗体
                         cm_绑定管理.AddNew();
                         i_数据源行号 = cm_绑定管理.Position;
                         f_父窗体.P_焦点行 = cm_绑定管理.Position;
+                        M_初始化();
                     }
                     else
                     {
@@ -331,12 +333,52 @@ namespace Erp.Pro.Utils.公共窗体
                                 return false;
                             }
                             break;
-
+                        case E_控件类型.Dev_ComboBoxEdit:
+                            ComboBoxEdit comboBoxEdit = (ComboBoxEdit)array[0];
+                            if (string.IsNullOrEmpty(comboBoxEdit.Text))
+                            {
+                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                comboBoxEdit.Focus();
+                                return false;
+                            }
+                            break;
                     }
-
                 }
             }
             return true;
+        }
+
+        private void M_初始化()
+        {
+            for (int i = 0; i < 控件参数.Length; i++)
+            {
+                C_控件参数 entity = 控件参数[i];
+                if (entity.是否必填)
+                {
+                    Control[] array = this.Controls.Find(entity.数据名称, false);
+                    if (array.Length <= 0) continue;
+                    switch (entity.控件类型)
+                    {
+                        case E_控件类型.Win_Text:
+                            TextBox textBox = (TextBox)array[0];
+                            textBox.Text = entity.默认值?.ToString();
+                            break;
+                        case E_控件类型.Dev_Text:
+                            TextEdit textEdit = (TextEdit)array[0];
+                            textEdit.Text = entity.默认值?.ToString();
+                            break;
+                        case E_控件类型.Dev_LookUpEdit:
+                            LookUpEdit lookUpEdit = (LookUpEdit)array[0];
+                            //lookUpEdit.Text = entity.默认值?.ToString();
+                            break;
+                        case E_控件类型.Dev_CheckEdit:
+                            CheckEdit checkEdit = (CheckEdit)array[0];
+                            bool b = entity.默认值.GetType() == typeof(bool) ? bool.Parse(entity.默认值.ToString()) : false;
+                            checkEdit.Checked = b; ;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

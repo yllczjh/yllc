@@ -89,9 +89,7 @@ namespace WebAPI.filters
                     Code.Result(ref msg, 编码.消息头错误, "method值无效");
                     goto 退出;
                 }
-                //int i_基础业务 = 0;
-                //DataHelper.M_验证Code(msg.method, ref msg, out i_基础业务);
-                //if (msg.errcode != 0) goto 退出;
+
                 #endregion
 
                 #region appid 

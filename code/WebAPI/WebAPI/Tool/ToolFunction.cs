@@ -9,6 +9,8 @@ using Tool.Model;
 using Tool.Help;
 using Tool.DB;
 using Newtonsoft.Json.Linq;
+using WebAPI.Models;
+using System.Web;
 
 namespace WebAPI.Tool
 {
@@ -52,10 +54,15 @@ namespace WebAPI.Tool
                         {
                             str_参数值 = JsonValue(p, str_参数名);
                         }
-                        if(null == str_参数值)
+                        if (str_参数名 == "user")
                         {
-                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"),  DBNull.Value );
-                        }else
+                            str_参数值 = ((UserModel)HttpContext.Current.Session["UserModel"]).onlyid;
+                        }
+                        if (null == str_参数值)
+                        {
+                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value);
+                        }
+                        else
                         {
                             parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值.ToString());
                         }
@@ -191,7 +198,7 @@ namespace WebAPI.Tool
                                 return null;
                             }
                         }
-                       
+
 
                         if (null != in_主记录对象["datadetail"])
                         {

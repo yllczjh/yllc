@@ -38,6 +38,10 @@
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Erp.Server.Init, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -112,12 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\trash_32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Init\Erp.Server.Init.csproj">
-      <Project>{82E4B82D-0F25-428E-9A30-B2475B80A10F}</Project>
-      <Name>Erp.Server.Init</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\excel_32.png" />
