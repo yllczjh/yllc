@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid;
+using DevExpress.XtraEditors;
 
 namespace Erp.Pro.Utils.工具类
 {
@@ -79,7 +80,7 @@ namespace Erp.Pro.Utils.工具类
             }
             catch (Exception ex)
             {
-                MessageBox.Show("导出文件错误,原因:" + ex.Message, "提示");
+                XtraMessageBox.Show("导出文件错误,原因:" + ex.Message, "提示");
             }
 
             Cursor.Current = currentCursor;

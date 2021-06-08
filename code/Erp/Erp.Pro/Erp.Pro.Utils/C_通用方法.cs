@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraEditors;
 using System.Data;
 using System.Text;
+using System.Configuration;
 using static Erp.Pro.Utils.C_实体信息;
 
 namespace Erp.Pro.Utils
@@ -42,7 +43,8 @@ namespace Erp.Pro.Utils
                 sb.Append("'").Append(row[str_主键]).Append("',");
             }
             sb.Remove(sb.Length - 1, 1);
-            return sb.ToString(); 
+            return sb.ToString();
         }
+
     }
 }

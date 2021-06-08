@@ -7,6 +7,7 @@ namespace Erp.Pro.Utils
     {
         public class C_共享变量
         {
+            public static string ServicesAddress { get; set; }
             public static string 系统ID { get; set; }
             public static string 用户ID { get; set; }
         }

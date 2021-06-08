@@ -11,6 +11,7 @@ using Tool.DB;
 using Newtonsoft.Json.Linq;
 using WebAPI.Models;
 using System.Web;
+using Tool.Helper;
 
 namespace WebAPI.Tool
 {
@@ -27,7 +28,10 @@ namespace WebAPI.Tool
                 {
                     if (!list_SQL参数.Contains(mat.Value))
                     {
-                        list_SQL参数.Add(mat.Value);
+                        if (!list_SQL参数.Contains(mat.Value))
+                        {
+                            list_SQL参数.Add(mat.Value);
+                        }
                     }
                 }
                 if (list_SQL参数.Count > 0)
@@ -89,7 +93,10 @@ namespace WebAPI.Tool
                 List<string> list_SQL参数 = new List<string>();
                 foreach (Match mat in mats)
                 {
-                    list_SQL参数.Add(mat.Value);
+                    if (!list_SQL参数.Contains(mat.Value))
+                    {
+                        list_SQL参数.Add(mat.Value);
+                    }
                 }
                 if (list_SQL参数.Count > 0)
                 {
@@ -356,6 +363,24 @@ namespace WebAPI.Tool
                 return null;
             }
             return p.GetValue(name, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static bool VerifyLogin(string method)
+        {
+            string s = Config.NoVerifyLogin;
+            if (string.IsNullOrEmpty(s))
+            {
+                return true;
+            }
+            string[] ss = s.Split('|');
+            foreach(string str in ss)
+            {
+                if (method.Contains(str))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

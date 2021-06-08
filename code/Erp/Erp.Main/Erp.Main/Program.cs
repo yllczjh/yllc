@@ -12,10 +12,7 @@ namespace Erp.Main
         [STAThread]
         static void Main()
         {
-            //DevExpress.UserSkins.OfficeSkins.Register();
-            //DevExpress.UserSkins.BonusSkins.Register();
             UserLookAndFeel.Default.SetSkinStyle("Office 2010 Blue");//皮肤主题
-                                                                     //UserLookAndFeel.Default.SetSkinStyle("Office 2007 Green");//皮肤主题
 
             //设置默认字体,解决XtraGrid导出PDF中文乱码
             //DevExpress.Utils.AppearanceObject.DefaultFont = new System.Drawing.Font("宋体", 9);
@@ -27,7 +24,17 @@ namespace Erp.Main
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new F_主界面());
+
+
+            F_Login myLogin = new F_Login();//加载登录窗体
+            if (myLogin.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new F_主界面());//如果登录成功则打开主窗体
+            }
+            else
+            {
+                GC.Collect();
+            }
         }
     }
 }

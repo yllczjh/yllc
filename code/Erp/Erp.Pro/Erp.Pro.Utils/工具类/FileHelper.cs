@@ -6,15 +6,15 @@ using System.Xml;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using DevExpress.XtraEditors;
+
 namespace Erp.Pro.Utils.工具类
 {
     public class FileHelper
     {
         private const string DELIMITER_BACKSLASH = @"\";
         private const string str_反斜杠 = @"/";
-        private const string str_默认配置文件名 = "Cloud.Xt.exe.config";
-        //2012.1.3邓启亮新增，与EMPI交互的配置文件
-        //private const string str_EMPI_文件 = @"C:\Carefx\conf\EMPI\realtimeConfig.properties";
+        private const string str_默认配置文件名 = "Erp.Main.exe.config";
         private const string str_EMPI_文件 = @"F:\realtimeConfig.properties";
 
         ////声明读写INI文件的API函数 
@@ -163,7 +163,7 @@ namespace Erp.Pro.Utils.工具类
             }
             else
             {
-                MessageBox.Show("文件不存在！");
+                XtraMessageBox.Show("文件不存在！");
             }
         }
 

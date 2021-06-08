@@ -36,7 +36,16 @@ namespace WebAPI.Controllers.v1
                     if (msg.clienttype == "wx") return RedirectWX();
                     if (msg.clienttype == "web")
                     {
+                        if (null != p["login"])
+                        {
+                            p.Remove("login");
+                        }
+                        if (null != p["systemid"])
+                        {
+                            p.Remove("systemid");
+                        }
                         p.Add("login", "1");
+                        p.Add("systemid", msg.appid);
                         result = DataHelper.Process(p, ref msg);
                         if (msg.errcode == 0)
                         {
@@ -100,6 +109,7 @@ namespace WebAPI.Controllers.v1
                     jo.Add("username", userModel.onlyid);
                     jo.Add("password", "1");//无意义 占位用
                     jo.Add("login", "0");//标识初始化信息，不验证用户名密码
+                    jo.Add("systemid", msg.appid);
                     msg.method = userModel.loginmethod;//初始化 调用登录方法
                     result = DataHelper.Process(jo, ref msg);
                     if (null == result)
@@ -111,18 +121,21 @@ namespace WebAPI.Controllers.v1
                 }
                 else
                 {
-                    userModel = (UserModel)HttpContext.Current.Session["UserModel"];//获取session
-                    token = userModel.token;//获取session-token
-                    token.RefreshAccessTokenTime();//刷新token过期时间
-                    userModel.token = token;//写回session
-                    HttpContext.Current.Session["UserModel"] = userModel;
-
                     result = DataHelper.Process(p, ref msg);
-                    if (null == result)
+                    if (ToolFunction.VerifyLogin(msg.method))
                     {
-                        result = new Dictionary<string, object>();
+                        userModel = (UserModel)HttpContext.Current.Session["UserModel"];//获取session
+                        token = userModel.token;//获取session-token
+                        token.RefreshAccessTokenTime();//刷新token过期时间
+                        userModel.token = token;//写回session
+                        HttpContext.Current.Session["UserModel"] = userModel;
+                        if (null == result)
+                        {
+                            result = new Dictionary<string, object>();
+                        }
+                        result.Add("token", token);
                     }
-                    result.Add("token", token);
+
                     return GetResponseString(msg, result);
                 }
             }

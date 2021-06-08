@@ -225,7 +225,7 @@ namespace Erp.Pro.Utils.公共窗体
 
                 if (outParam.p0.ToString() == "1")
                 {
-                    if (DialogResult.Yes == MessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    if (DialogResult.Yes == XtraMessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
                         cm_绑定管理.EndCurrentEdit();
                         cm_绑定管理.ResumeBinding();
@@ -242,7 +242,7 @@ namespace Erp.Pro.Utils.公共窗体
                 }
                 else
                 {
-                    MessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
                     return;
                 }
             }
@@ -257,12 +257,12 @@ namespace Erp.Pro.Utils.公共窗体
 
                 if (outParam.p0.ToString() == "1")
                 {
-                    MessageBox.Show("修改成功", "提示");
+                    XtraMessageBox.Show("修改成功", "提示");
                     cm_绑定管理.ResumeBinding();
                 }
                 else
                 {
-                    MessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
                     return;
                 }
 
@@ -288,7 +288,7 @@ namespace Erp.Pro.Utils.公共窗体
         {
             if (string.IsNullOrEmpty(f_父窗体.P_页面名称))
             {
-                MessageBox.Show("未设置编辑界面名称,请联系开发人员");
+                XtraMessageBox.Show("未设置编辑界面名称,请联系开发人员");
                 cm_绑定管理.CancelCurrentEdit();
                 cm_绑定管理.EndCurrentEdit();
                 this.Close();
@@ -310,7 +310,7 @@ namespace Erp.Pro.Utils.公共窗体
                             TextBox textBox = (TextBox)array[0];
                             if (string.IsNullOrEmpty(textBox.Text))
                             {
-                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                XtraMessageBox.Show(entity.显示名称 + "不能为空");
                                 textBox.Focus();
                                 return false;
                             }
@@ -319,7 +319,7 @@ namespace Erp.Pro.Utils.公共窗体
                             TextEdit textEdit = (TextEdit)array[0];
                             if (string.IsNullOrEmpty(textEdit.Text))
                             {
-                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                XtraMessageBox.Show(entity.显示名称 + "不能为空");
                                 textEdit.Focus();
                                 return false;
                             }
@@ -328,7 +328,7 @@ namespace Erp.Pro.Utils.公共窗体
                             LookUpEdit lookUpEdit = (LookUpEdit)array[0];
                             if (string.IsNullOrEmpty(lookUpEdit.EditValue?.ToString()))
                             {
-                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                XtraMessageBox.Show(entity.显示名称 + "不能为空");
                                 lookUpEdit.Focus();
                                 return false;
                             }
@@ -337,7 +337,7 @@ namespace Erp.Pro.Utils.公共窗体
                             ComboBoxEdit comboBoxEdit = (ComboBoxEdit)array[0];
                             if (string.IsNullOrEmpty(comboBoxEdit.Text))
                             {
-                                MessageBox.Show(entity.显示名称 + "不能为空");
+                                XtraMessageBox.Show(entity.显示名称 + "不能为空");
                                 comboBoxEdit.Focus();
                                 return false;
                             }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Erp.Pro.Utils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
@@ -11,7 +12,6 @@ namespace Erp.Server.WebAPI
         private readonly static object lockObj = new object();
         private static HttpHelper instance = null;
         private HttpClient client = new HttpClient();
-        private string webURL = "http://test7.ql-soft.com/api/v1/main/webapi";
         private string accessToken = string.Empty;
         private HttpHelper() { }
 
@@ -70,7 +70,7 @@ namespace Erp.Server.WebAPI
             client.DefaultRequestHeaders.Add("method", method);
             client.DefaultRequestHeaders.Add("sign", "12");
 
-            HttpResponseMessage response = client.PostAsync(webURL, httpContent).Result;
+            HttpResponseMessage response = client.PostAsync(C_实体信息.C_共享变量.ServicesAddress, httpContent).Result;
 
             string statusCode = response.StatusCode.ToString();
             if (response.IsSuccessStatusCode)

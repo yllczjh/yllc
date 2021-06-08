@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraGrid.Columns;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using Erp.Server.Init;
 using System.Data;
@@ -62,7 +63,7 @@ namespace Erp.Pro.Utils.工具类
             }
             else
             {
-                MessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
                 return false;
             }
         }
@@ -83,7 +84,7 @@ namespace Erp.Pro.Utils.工具类
             }
             else
             {
-                MessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
             }
         }
 

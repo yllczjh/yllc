@@ -11,6 +11,7 @@ using System.IO;
 using System.Windows.Forms;
 using static Erp.Pro.Utils.C_实体信息;
 using static Erp.Server.Init.C_系统参数;
+using DevExpress.XtraEditors;
 
 namespace Erp.Pro.Utils.自定义控件
 {
@@ -73,7 +74,7 @@ namespace Erp.Pro.Utils.自定义控件
             }
             else
             {
-                MessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
             }
         }
 
@@ -119,13 +120,13 @@ namespace Erp.Pro.Utils.自定义控件
                 DataRow dr_删除行 = GridView.GetDataRow(P_焦点行);
                 if (null == dr_删除行)
                 {
-                    MessageBox.Show("请选择要删除的数据!", "提示");
+                    XtraMessageBox.Show("请选择要删除的数据!", "提示");
                     return;
                 }
                 dt_删除行.Rows.Add(dr_删除行.ItemArray);
             }
 
-            if (DialogResult.Yes == MessageBox.Show("是否要删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            if (DialogResult.Yes == XtraMessageBox.Show("是否要删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 inParam.p0 = E_模块名称.通用业务;
                 inParam.p1 = P_页面名称;
@@ -135,14 +136,29 @@ namespace Erp.Pro.Utils.自定义控件
 
                 if (outParam.p0.ToString() == "1")
                 {
-                    MessageBox.Show("删除成功!", "提示");
-                    GridView.DeleteSelectedRows();
+                    XtraMessageBox.Show("删除成功!", "提示");
+                    if (dt_删除行.Rows.Count <= 0)
+                    {
+                        GridView.DeleteSelectedRows();
+                    }
+                    else
+                    {
+                        for (int i = GridView.RowCount - 1; i > 0; i--)
+                        {
+                            DataRow dr = GridView.GetDataRow(i);
+                            if (dr["选择"].ToString() == "True")
+                            {
+                                GridView.DeleteRow(i);
+                            }
+                        }
+                    }
+
                     //M_加载列表数据();
                     GridView.FocusedRowHandle = P_焦点行;
                 }
                 else
                 {
-                    MessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
                 }
             }
         }
@@ -268,7 +284,15 @@ namespace Erp.Pro.Utils.自定义控件
         {
             if (C_样式设置.Save(GridView, P_页面名称))
             {
-                MessageBox.Show("保存成功", "提示");
+                XtraMessageBox.Show("保存成功", "提示");
+            }
+        }
+
+        private void GridView_CustomDrawRowIndicator(object sender, DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventArgs e)
+        {
+            if (e.Info.IsRowIndicator && e.RowHandle > -1)
+            {
+                e.Info.DisplayText = (e.RowHandle + 1).ToString();
             }
         }
     }

@@ -124,7 +124,7 @@ namespace WebAPI.filters
 
                 msg.token = token.First();
 
-                if (!msg.method.Contains("login"))
+                if (ToolFunction.VerifyLogin(msg.method))
                 {
                     UserModel userModel = (UserModel)HttpContext.Current.Session["UserModel"];
                     if (null != userModel)

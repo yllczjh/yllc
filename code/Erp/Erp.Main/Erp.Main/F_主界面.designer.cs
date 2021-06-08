@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_主界面));
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.styleManager1 = new DevComponents.DotNetBar.StyleManager();
+            this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.ribbon_菜单 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer(this.components);
+            this.sib_最小化 = new DevExpress.XtraEditors.SimpleButton();
+            this.sib_退出 = new DevExpress.XtraEditors.SimpleButton();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            this.imageCollection1 = new DevExpress.Utils.ImageCollection();
+            this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.bar2 = new DevExpress.XtraBars.Bar();
@@ -106,44 +106,36 @@
             // popupControlContainer1
             // 
             this.popupControlContainer1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.popupControlContainer1.Controls.Add(this.simpleButton3);
-            this.popupControlContainer1.Controls.Add(this.simpleButton2);
-            this.popupControlContainer1.Controls.Add(this.simpleButton1);
+            this.popupControlContainer1.Controls.Add(this.sib_最小化);
+            this.popupControlContainer1.Controls.Add(this.sib_退出);
             this.popupControlContainer1.Location = new System.Drawing.Point(0, 20);
             this.popupControlContainer1.Name = "popupControlContainer1";
             this.popupControlContainer1.Ribbon = this.ribbon_菜单;
-            this.popupControlContainer1.Size = new System.Drawing.Size(114, 130);
+            this.popupControlContainer1.Size = new System.Drawing.Size(99, 91);
             this.popupControlContainer1.TabIndex = 0;
             this.popupControlContainer1.Visible = false;
             // 
-            // simpleButton3
+            // sib_最小化
             // 
-            this.simpleButton3.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
-            this.simpleButton3.Location = new System.Drawing.Point(3, 88);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(104, 33);
-            this.simpleButton3.TabIndex = 2;
-            this.simpleButton3.Text = "退出";
+            this.sib_最小化.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
+            this.sib_最小化.Image = global::Erp.Main.Properties.Resources.remove_32;
+            this.sib_最小化.Location = new System.Drawing.Point(3, 9);
+            this.sib_最小化.Name = "sib_最小化";
+            this.sib_最小化.Size = new System.Drawing.Size(92, 33);
+            this.sib_最小化.TabIndex = 1;
+            this.sib_最小化.Text = "最小化";
+            this.sib_最小化.Click += new System.EventHandler(this.sib_最小化_Click);
             // 
-            // simpleButton2
+            // sib_退出
             // 
-            this.simpleButton2.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
-            this.simpleButton2.Location = new System.Drawing.Point(4, 49);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(103, 33);
-            this.simpleButton2.TabIndex = 1;
-            this.simpleButton2.Text = "退出";
-            // 
-            // simpleButton1
-            // 
-            this.simpleButton1.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
-            this.simpleButton1.Image = global::Erp.Main.Properties.Resources.close_32;
-            this.simpleButton1.Location = new System.Drawing.Point(3, 9);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(104, 33);
-            this.simpleButton1.TabIndex = 0;
-            this.simpleButton1.Text = "退出";
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.sib_退出.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
+            this.sib_退出.Image = global::Erp.Main.Properties.Resources.close_32;
+            this.sib_退出.Location = new System.Drawing.Point(3, 48);
+            this.sib_退出.Name = "sib_退出";
+            this.sib_退出.Size = new System.Drawing.Size(93, 33);
+            this.sib_退出.TabIndex = 0;
+            this.sib_退出.Text = "退   出";
+            this.sib_退出.Click += new System.EventHandler(this.sib_退出_Click);
             // 
             // barSubItem1
             // 
@@ -157,7 +149,6 @@
             this.barButtonItem1.Id = 2;
             this.barButtonItem1.LargeImageIndex = 0;
             this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick_1);
             // 
             // barButtonItem2
             // 
@@ -165,7 +156,6 @@
             this.barButtonItem2.Id = 3;
             this.barButtonItem2.LargeImageIndex = 2;
             this.barButtonItem2.Name = "barButtonItem2";
-            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 
             // imageCollection1
             // 
@@ -319,6 +309,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ribbon_菜单);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "F_主界面";
             this.Text = "F_主界面";
             this.Load += new System.EventHandler(this.F_主界面_Load);
@@ -354,10 +345,9 @@
         private DevExpress.XtraTab.XtraTabPage 首页;
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraBars.PopupControlContainer popupControlContainer1;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton sib_退出;
         private DevExpress.XtraBars.BarButtonItem barButtonItem12;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton sib_最小化;
         private DevExpress.XtraBars.BarButtonItem barButtonItem14;
         private DevExpress.XtraBars.BarButtonItem barButtonItem15;
         private DevExpress.XtraBars.BarButtonItem barButtonItem16;
