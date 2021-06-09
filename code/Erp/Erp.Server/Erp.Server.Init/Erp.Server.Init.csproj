@@ -46,16 +46,10 @@
     <Compile Include="C_Server.cs" />
     <Compile Include="C_系统参数.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="业务\C_基础业务.cs" />
-    <Compile Include="业务\C_通用业务.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
-      <Project>{0f7c4903-ae7f-447e-954b-62fe2a820c31}</Project>
-      <Name>Erp.Pro.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Erp.Server.WebAPI\Erp.Server.WebAPI.csproj">
-      <Project>{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}</Project>
+      <Project>{652b8ba1-3b75-44de-a64f-43cd1c7a4615}</Project>
       <Name>Erp.Server.WebAPI</Name>
     </ProjectReference>
   </ItemGroup>

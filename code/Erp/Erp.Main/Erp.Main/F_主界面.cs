@@ -43,7 +43,6 @@ namespace Erp.Main
             if (outParam.p0.ToString() == "1")
             {
                 DataTable dt_菜单 = outParam.p2 as DataTable;
-                //JObject ob = Server.Init.TypeConvert.DataTableToJObject(dt_菜单);
                 C_菜单加载.Init(xttc_主界面, ribbon_菜单, dt_菜单);
             }
             else

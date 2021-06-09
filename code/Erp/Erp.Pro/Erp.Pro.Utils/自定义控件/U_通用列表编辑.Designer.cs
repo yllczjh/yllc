@@ -143,6 +143,7 @@
             this.GridView.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.GridView.GridControl = this.GridControl;
             this.GridView.Name = "GridView";
+            this.GridView.OptionsBehavior.Editable = false;
             this.GridView.OptionsCustomization.AllowFilter = false;
             this.GridView.OptionsCustomization.AllowGroup = false;
             this.GridView.OptionsCustomization.AllowQuickHideColumns = false;
@@ -151,6 +152,7 @@
             this.GridView.OptionsView.ColumnAutoWidth = false;
             this.GridView.OptionsView.ShowGroupPanel = false;
             this.GridView.CustomDrawRowIndicator += new DevExpress.XtraGrid.Views.Grid.RowIndicatorCustomDrawEventHandler(this.GridView_CustomDrawRowIndicator);
+            this.GridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
             // 
             // popupMenu1
             // 

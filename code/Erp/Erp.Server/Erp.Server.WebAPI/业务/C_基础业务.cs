@@ -1,10 +1,11 @@
-﻿using Erp.Server.WebAPI;
+﻿using Erp.Pro.Utils;
+using Erp.Server.WebAPI;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
 using static Erp.Server.Init.C_系统参数;
 
-namespace Erp.Server.Init.业务
+namespace Erp.Server.WebAPI.业务
 {
     public class C_基础业务
     {
@@ -49,7 +50,7 @@ namespace Erp.Server.Init.业务
             try
             {
                 inObject = new JObject();
-                inObject.Add("sql", "select * from xt_mk where 系统ID='9999'");
+                inObject.Add("sql", $"select * from xt_mk where 系统ID='{C_实体信息.C_共享变量.系统ID}'");
                 outObject = HttpHelper.HTTP.HttpPost(inObject, "sys.execsql");
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {

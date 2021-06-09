@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Erp.Server.Init, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\Erp.Pro\Erp.Pro.Utils\DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -46,6 +50,8 @@
     <Compile Include="HttpHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConvert.cs" />
+    <Compile Include="业务\C_基础业务.cs" />
+    <Compile Include="业务\C_通用业务.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Erp.Pro\Erp.Pro.Utils\Erp.Pro.Utils.csproj">

@@ -50,8 +50,17 @@ namespace WebAPI.Tool
                             }
                             else
                             {
-                                Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
-                                return null;
+                                if(str_sql.IndexOf("exec ") == 0)
+                                {
+                                    if (str_参数名 != "user")
+                                    {
+                                        str_sql = str_sql.Replace("?" + str_参数名, "default");
+                                    }
+                                }else
+                                {
+                                    Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
+                                    return null;
+                                }
                             }
                         }
                         else
@@ -60,7 +69,7 @@ namespace WebAPI.Tool
                         }
                         if (str_参数名 == "user")
                         {
-                            str_参数值 = ((UserModel)HttpContext.Current.Session["UserModel"]).onlyid;
+                            str_参数值 = ((UserModel)HttpContext.Current.Session["UserModel"])?.onlyid;
                         }
                         if (null == str_参数值)
                         {
@@ -373,7 +382,7 @@ namespace WebAPI.Tool
                 return true;
             }
             string[] ss = s.Split('|');
-            foreach(string str in ss)
+            foreach (string str in ss)
             {
                 if (method.Contains(str))
                 {

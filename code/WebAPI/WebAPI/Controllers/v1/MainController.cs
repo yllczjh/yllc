@@ -40,12 +40,12 @@ namespace WebAPI.Controllers.v1
                         {
                             p.Remove("login");
                         }
-                        if (null != p["systemid"])
+                        if (null != p["appid"])
                         {
-                            p.Remove("systemid");
+                            p.Remove("appid");
                         }
                         p.Add("login", "1");
-                        p.Add("systemid", msg.appid);
+                        p.Add("appid", msg.appid);
                         result = DataHelper.Process(p, ref msg);
                         if (msg.errcode == 0)
                         {
@@ -109,7 +109,7 @@ namespace WebAPI.Controllers.v1
                     jo.Add("username", userModel.onlyid);
                     jo.Add("password", "1");//无意义 占位用
                     jo.Add("login", "0");//标识初始化信息，不验证用户名密码
-                    jo.Add("systemid", msg.appid);
+                    jo.Add("appid", msg.appid);
                     msg.method = userModel.loginmethod;//初始化 调用登录方法
                     result = DataHelper.Process(jo, ref msg);
                     if (null == result)
@@ -121,6 +121,11 @@ namespace WebAPI.Controllers.v1
                 }
                 else
                 {
+                    if (null != p["appid"])
+                    {
+                        p.Remove("appid");
+                    }
+                    p.Add("appid", msg.appid);
                     result = DataHelper.Process(p, ref msg);
                     if (ToolFunction.VerifyLogin(msg.method))
                     {

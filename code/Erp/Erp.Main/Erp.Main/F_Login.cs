@@ -88,6 +88,8 @@ namespace Erp.Main
                 FileHelper.SetConfigValue("上次登录用户", txt_用户.Text);
                 FileHelper.SetConfigValue("上次登录密码", txt_密码.Text);
                 FileHelper.SetConfigValue("记住密码", chk_记住密码.Checked.ToString());
+                C_实体信息.C_共享变量.系统ID = FileHelper.GetConfigValue("appid");
+                C_实体信息.C_共享变量.用户ID = txt_用户.Text;
                 this.DialogResult = DialogResult.OK;
             }
             else

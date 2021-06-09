@@ -4,7 +4,7 @@ using System;
 using System.Data;
 using System.Text;
 
-namespace Erp.Server.Init
+namespace Erp.Server.WebAPI
 {
     public class TypeConvert
     {

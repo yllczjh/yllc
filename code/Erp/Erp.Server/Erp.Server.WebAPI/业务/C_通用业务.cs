@@ -7,7 +7,7 @@ using System.Data;
 using System.Text;
 using static Erp.Server.Init.C_系统参数;
 
-namespace Erp.Server.Init.业务
+namespace Erp.Server.WebAPI.业务
 {
     public class C_通用业务
     {
@@ -121,34 +121,14 @@ namespace Erp.Server.Init.业务
             switch (inParam.p1.ToString())
             {
                 case "样式列表":
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append($"delete from xt_yslb where 用户ID='{inParam.p3}';");
-
-                    DataTable dt = inParam.p5 as DataTable;
-                    foreach (DataRow row in dt.Rows)
+                    DataRow row = inParam.p5 as DataRow;
+                    if (string.IsNullOrEmpty(row["rowid"]?.ToString()))
                     {
-                        StringBuilder sb1 = new StringBuilder();
-                        StringBuilder sb2 = new StringBuilder();
-                        sb1.Append("(");
-                        sb2.Append("(");
-                        foreach (DataColumn column in dt.Columns)
-                        {
-                            if (column.ColumnName.ToLower() != "rowid")
-                            {
-                                sb1.Append(column.ColumnName).Append(",");
-                                sb2.Append("'").Append(string.IsNullOrEmpty(row[column.ColumnName].ToString()) ? null : row[column.ColumnName]).Append("',");
-                            }
-                        }
-                        sb1.Remove(sb1.Length - 1, 1);
-                        sb2.Remove(sb2.Length - 1, 1);
-                        sb1.Append(")");
-                        sb2.Append(");");
-
-                        sb.Append("insert into xt_yslb ").Append(sb1).Append(" values ").Append(sb2);
+                        inObject.Add("sql", $"insert into xt_yslb(系统ID,用户ID,样式ID,字段名,显示名称,宽度,排序) values ('{row["系统ID"]}','{row["用户ID"]}','{row["样式ID"]}','{row["字段名"]}','{row["显示名称"]}','{row["宽度"]}','{row["排序"]}')");
+                    }else
+                    {
+                        inObject.Add("sql", $"update xt_yslb set 显示名称='{row["显示名称"]}',宽度='{row["宽度"]}',排序='{row["排序"]}'");
                     }
-
-                    inObject.Add("sql", sb.ToString());
                     break;
             }
         }

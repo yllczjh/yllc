@@ -30,13 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DevExpress.Data.v14.1\v4.0_14.1.4.0__b88d1754d700e49a\DevExpress.Data.v14.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="Erp.Pro.Utils">
-      <HintPath>..\Erp.Pro.Utils\obj\Debug\Erp.Pro.Utils.dll</HintPath>
-    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Erp.Server.Init, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
@@ -60,11 +63,11 @@
     <Compile Include="F_用户信息.Designer.cs">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </Compile>
-    <Compile Include="F_菜单编辑.cs">
+    <Compile Include="F_菜单维护.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="F_菜单编辑.Designer.cs">
-      <DependentUpon>F_菜单编辑.cs</DependentUpon>
+    <Compile Include="F_菜单维护.Designer.cs">
+      <DependentUpon>F_菜单维护.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -77,8 +80,8 @@
     <EmbeddedResource Include="F_用户信息.resx">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="F_菜单编辑.resx">
-      <DependentUpon>F_菜单编辑.cs</DependentUpon>
+    <EmbeddedResource Include="F_菜单维护.resx">
+      <DependentUpon>F_菜单维护.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -91,6 +94,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\doc_edit_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
+      <Project>{0f7c4903-ae7f-447e-954b-62fe2a820c31}</Project>
+      <Name>Erp.Pro.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

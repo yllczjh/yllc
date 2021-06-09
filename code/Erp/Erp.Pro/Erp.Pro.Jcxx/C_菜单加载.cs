@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraEditors;
 using DevExpress.XtraTab;
 using System.Data;
 using System.Drawing;
@@ -52,6 +53,7 @@ namespace Erp.Pro.Jcxx
                     buttonItem.LargeImageIndex = index;
 
                     buttonItem.Name = dr_二级["模块ID"].ToString();
+                    buttonItem.Tag = dr_二级["程序集名"].ToString() + "^" + dr_二级["窗口名"].ToString();
                     group.ItemLinks.Add(buttonItem);
                     page.Groups.Add(group);
                     buttonItem.ItemClick += new ItemClickEventHandler(buttonItem_Click);
@@ -61,21 +63,34 @@ namespace Erp.Pro.Jcxx
 
         public static void buttonItem_Click(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            string str_程序集名 = e.Item.Tag.ToString().Split('^')[0];
+            string str_窗口名 = e.Item.Tag.ToString().Split('^')[1];
+            if (string.IsNullOrEmpty(str_程序集名) || string.IsNullOrEmpty(str_窗口名))
+            {
+                XtraMessageBox.Show("未设置程序集名或窗口名", "提示");
+                return;
+            }
+
             foreach (XtraTabPage p in xttc_主界面.TabPages)
             {
-                if (p.Name == "Erp.Pro.Jcxx.F_用户信息")
+                if (p.Name == str_窗口名)
                 {
                     xttc_主界面.SelectedTabPage = p;
                     return;
                 }
             }
 
-            Form form = GetForm("Erp.Pro.Jcxx.dll", "Erp.Pro.Jcxx", "F_用户信息");
+            Form form = GetForm(str_程序集名, str_窗口名);
+            if (null == form)
+            {
+                XtraMessageBox.Show("未找到窗体" + str_窗口名, "提示");
+                return;
+            }
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             XtraTabPage page = new XtraTabPage();
-            page.Name = "Erp.Pro.Jcxx.F_用户信息";
-            page.Text = "F_用户信息";
+            page.Name = str_窗口名;
+            page.Text = e.Item.Caption;
             page.Controls.Add(form);
             form.Show();
             form.Dock = DockStyle.Fill;
@@ -83,15 +98,13 @@ namespace Erp.Pro.Jcxx
             xttc_主界面.SelectedTabPage = page;
         }
 
-        private static Form GetForm(string LibName, string NameSpace, string formName)
+        private static Form GetForm(string LibName, string formName)
         {
             try
             {
-                string allName;
                 string LibFilePath = Application.StartupPath + "\\" + LibName;
-                allName = NameSpace + '.' + formName;
                 Assembly FrmAss = Assembly.LoadFrom(LibFilePath);
-                Form form = FrmAss.CreateInstance(allName) as Form;
+                Form form = FrmAss.CreateInstance(formName) as Form;
                 return form;
             }
             catch

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using static Erp.Pro.Utils.C_实体信息;
 using static Erp.Server.Init.C_系统参数;
 using DevExpress.XtraEditors;
+using System.Drawing;
 
 namespace Erp.Pro.Utils.自定义控件
 {
@@ -229,7 +230,7 @@ namespace Erp.Pro.Utils.自定义控件
                                     BarButtonItem b = new BarButtonItem();
                                     b.Tag = column.FieldName;
                                     b.ItemClick += new ItemClickEventHandler(menu_显示隐藏列_ItemClick);
-                                    b.Caption = column.Caption;
+                                    b.Caption = string.IsNullOrEmpty(column.Caption) ? column.FieldName : column.Caption;
                                     barSubItem.Item.ItemLinks.Add(b);
                                 }
                             }
@@ -293,6 +294,26 @@ namespace Erp.Pro.Utils.自定义控件
             if (e.Info.IsRowIndicator && e.RowHandle > -1)
             {
                 e.Info.DisplayText = (e.RowHandle + 1).ToString();
+            }
+        }
+
+        private void GridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                DevExpress.XtraGrid.Views.Grid.ViewInfo.GridHitInfo hInfo = GridView.CalcHitInfo(new Point(e.X, e.Y));
+                if (e.Button == MouseButtons.Left && e.Clicks == 2)//判断是否左键双击
+                {
+                    //判断光标是否在行范围内
+                    if (hInfo.InRow)
+                    {
+                        btn_修改_Click(null, null);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //IM_IOT_ST.Tools.ExceptionHelper.ShowException(ex);
             }
         }
     }
