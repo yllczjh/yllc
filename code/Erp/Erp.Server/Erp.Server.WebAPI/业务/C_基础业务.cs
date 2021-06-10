@@ -22,22 +22,22 @@ namespace Erp.Server.WebAPI.业务
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {
                     DataTable dt = TypeConvert.JObjectToDataTable(outObject);
-                    outParam.p0 = "1";
-                    outParam.p1 = "成功!";
-                    outParam.p2 = dt;
+                    outParam.P_结果 = 1;
+                    outParam.P_结果描述 = "成功!";
+                    outParam.P_数据集 = dt;
                 }
                 else
                 {
-                    outParam.p0 = outObject.GetValue("errcode").ToString();
-                    outParam.p1 = outObject.GetValue("msgtext").ToString();
-                    outParam.p2 = null;
+                    outParam.P_结果 = int.Parse(outObject.GetValue("errcode").ToString());
+                    outParam.P_结果描述 = outObject.GetValue("msgtext").ToString();
+                    outParam.P_数据集 = null;
                 }
             }
             catch (Exception e)
             {
-                outParam.p0 = "0";
-                outParam.p1 = e.Message;
-                outParam.p2 = null;
+                outParam.P_结果 = 0;
+                outParam.P_结果描述 = e.Message;
+                outParam.P_数据集 = null;
             }
 
             return outParam;
@@ -54,22 +54,22 @@ namespace Erp.Server.WebAPI.业务
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {
                     DataTable dt = TypeConvert.JObjectToDataTable(outObject);
-                    outParam.p0 = "1";
-                    outParam.p1 = "成功!";
-                    outParam.p2 = dt;
+                    outParam.P_结果 = 1;
+                    outParam.P_结果描述 = "成功!";
+                    outParam.P_数据集 = dt;
                 }
                 else
                 {
-                    outParam.p0 = outObject.GetValue("errcode").ToString();
-                    outParam.p1 = outObject.GetValue("msgtext").ToString();
-                    outParam.p2 = null;
+                    outParam.P_结果 = int.Parse(outObject.GetValue("errcode").ToString());
+                    outParam.P_结果描述 = outObject.GetValue("msgtext").ToString();
+                    outParam.P_数据集 = null;
                 }
             }
             catch (Exception e)
             {
-                outParam.p0 = "0";
-                outParam.p1 = e.Message;
-                outParam.p2 = null;
+                outParam.P_结果 = 0;
+                outParam.P_结果描述 = e.Message;
+                outParam.P_数据集 = null;
             }
 
             return outParam;

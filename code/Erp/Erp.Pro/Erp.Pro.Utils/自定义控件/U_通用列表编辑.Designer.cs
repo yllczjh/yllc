@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btn_刷新 = new System.Windows.Forms.ToolStripButton();
             this.btn_新增 = new System.Windows.Forms.ToolStripButton();
@@ -37,11 +38,11 @@
             this.btn_删除 = new System.Windows.Forms.ToolStripButton();
             this.GridControl = new DevExpress.XtraGrid.GridControl();
             this.GridView = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.menu_修改列别名 = new DevExpress.XtraBars.BarButtonItem();
             this.menu_隐藏列 = new DevExpress.XtraBars.BarButtonItem();
             this.menu_显示隐藏列 = new DevExpress.XtraBars.BarSubItem();
-            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();

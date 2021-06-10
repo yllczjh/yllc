@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using Erp.Server.Helper;
 using System.Text;
+using Erp.Pro.Utils;
 
 namespace Erp.Server.WebAPI.业务
 {
@@ -21,7 +22,7 @@ namespace Erp.Server.WebAPI.业务
             try
             {
                 JObject inObject = new JObject();
-                switch (inParam.p2.ToString())
+                switch (inParam.P_方法名)
                 {
                     case "新增":
                         M_新增(inParam, ref inObject);
@@ -48,28 +49,28 @@ namespace Erp.Server.WebAPI.业务
                 if (outObject.GetValue("errcode").ToString() == "0")
                 {
                     DataTable dt = TypeConvert.JObjectToDataTable(outObject);
-                    outParam.p0 = "1";
-                    outParam.p1 = "成功!";
-                    outParam.p2 = dt;
+                    outParam.P_结果 = 1;
+                    outParam.P_结果描述 = "成功!";
+                    outParam.P_数据集 = dt;
                 }
                 else
                 {
-                    outParam.p0 = outObject.GetValue("errcode").ToString();
-                    outParam.p1 = outObject.GetValue("msgtext").ToString();
-                    outParam.p2 = null;
+                    outParam.P_结果 = int.Parse(outObject.GetValue("errcode").ToString());
+                    outParam.P_结果描述 = outObject.GetValue("msgtext").ToString();
+                    outParam.P_数据集 = null;
                 }
             }
             catch (MyException ex)
             {
-                outParam.p0 = "0";
-                outParam.p1 = ex.Message;
-                outParam.p2 = null;
+                outParam.P_结果 = 0;
+                outParam.P_结果描述 = ex.Message;
+                outParam.P_数据集 = null;
             }
             catch (Exception e)
             {
-                outParam.p0 = "0";
-                outParam.p1 = e.Message;
-                outParam.p2 = null;
+                outParam.P_结果 = 0;
+                outParam.P_结果描述 = e.Message;
+                outParam.P_数据集 = null;
             }
 
             return outParam;
@@ -77,8 +78,8 @@ namespace Erp.Server.WebAPI.业务
 
         private void M_新增(ServerHelper.Params inParam, ref JObject inObject)
         {
-            DataRow row = inParam.p3 as DataRow;
-            switch (inParam.p1.ToString())
+            DataRow row = inParam.P_数据行;
+            switch (inParam.P_页面名)
             {
                 case "用户信息":
                     if (row["用户ID"].ToString() == "1001")
@@ -91,8 +92,8 @@ namespace Erp.Server.WebAPI.业务
         }
         private void M_修改(ServerHelper.Params inParam, ref JObject inObject)
         {
-            DataRow row = inParam.p3 as DataRow;
-            switch (inParam.p1.ToString())
+            DataRow row = inParam.P_数据行;
+            switch (inParam.P_页面名)
             {
                 case "用户信息":
                     if (row["用户ID"].ToString() == "1001")
@@ -105,8 +106,8 @@ namespace Erp.Server.WebAPI.业务
         }
         private void M_删除(ServerHelper.Params inParam, ref JObject inObject)
         {
-            DataTable dt = inParam.p3 as DataTable;
-            switch (inParam.p1.ToString())
+            DataTable dt = inParam.P_数据集;
+            switch (inParam.P_页面名)
             {
                 case "用户信息":
                     inObject.Add("sql", $"delete from xt_yh where rowid in({M_获取主键IN(dt, "rowid")})");
@@ -115,29 +116,29 @@ namespace Erp.Server.WebAPI.业务
         }
         private void M_保存(ServerHelper.Params inParam, ref JObject inObject)
         {
-            switch (inParam.p1.ToString())
+            switch (inParam.P_页面名)
             {
                 case "样式列表":
-                    DataRow row = inParam.p5 as DataRow;
+                    DataRow row = inParam.P_数据行;
                     if (string.IsNullOrEmpty(row["rowid"]?.ToString()))
                     {
                         inObject.Add("sql", $"insert into xt_yslb(系统ID,用户ID,样式ID,字段名,显示名称,宽度,排序) values ('{row["系统ID"]}','{row["用户ID"]}','{row["样式ID"]}','{row["字段名"]}','{row["显示名称"]}','{row["宽度"]}','{row["排序"]}')");
                     }else
                     {
-                        inObject.Add("sql", $"update xt_yslb set 显示名称='{row["显示名称"]}',宽度='{row["宽度"]}',排序='{row["排序"]}'");
+                        inObject.Add("sql", $"update xt_yslb set 显示名称='{row["显示名称"]}',宽度='{row["宽度"]}',排序='{row["排序"]}' where rowid='{row["rowid"]}'");
                     }
                     break;
             }
         }
         private void M_初始化(ServerHelper.Params inParam, ref JObject inObject)
         {
-            switch (inParam.p1.ToString())
+            switch (inParam.P_页面名)
             {
                 case "用户信息":
                     inObject.Add("sql", $"select * from xt_yh");
                     break;
                 case "样式列表":
-                    inObject.Add("sql", $"select * from xt_yslb");
+                    inObject.Add("sql", $"select * from xt_yslb where 系统id='{C_实体信息.C_共享变量.系统ID}' and 用户id='{C_实体信息.C_共享变量.用户ID}'");
                     break;
             }
         }

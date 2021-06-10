@@ -49,7 +49,11 @@ namespace Erp.Pro.Utils.自定义控件
         public string P_页面名称
         {
             get { return _P_页面名称; }
-            set { _P_页面名称 = value; }
+            set
+            {
+                _P_页面名称 = value;
+                GridView.Tag = P_页面名称;
+            }
         }
 
         public U_通用列表编辑()
@@ -59,13 +63,13 @@ namespace Erp.Pro.Utils.自定义控件
         private void btn_刷新_Click(object sender, EventArgs e)
         {
             inParam.Clear();
-            inParam.p0 = E_模块名称.通用业务;
-            inParam.p1 = P_页面名称;
-            inParam.p2 = "初始化";
+            inParam.P_模块名 = E_模块名称.通用业务;
+            inParam.P_页面名 = P_页面名称;
+            inParam.P_方法名 = "初始化";
             outParam = C_Server.Call(inParam);
-            if (outParam.p0.ToString() == "1")
+            if (outParam.P_结果 == 1)
             {
-                dt_数据源 = outParam.p2 as DataTable;
+                dt_数据源 = outParam.P_数据集;
                 dt_数据源.Columns.Add("选择", typeof(bool)).SetOrdinal(0);
                 foreach (DataRow row in dt_数据源.Rows)
                 {
@@ -76,7 +80,7 @@ namespace Erp.Pro.Utils.自定义控件
             }
             else
             {
-                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.P_结果描述, "提示");
             }
         }
 
@@ -86,6 +90,11 @@ namespace Erp.Pro.Utils.自定义控件
 
             P_操作类型 = "新增";
             P_焦点行 = 0;
+            if (null == P_控件参数)
+            {
+                XtraMessageBox.Show("未设置编辑界面控件参数,请联系开发人员", "提示");
+                return;
+            }
             F_通用编辑页面 f_编辑 = new F_通用编辑页面(this);
             f_编辑.StartPosition = FormStartPosition.CenterParent;
             f_编辑.ShowDialog();
@@ -100,6 +109,11 @@ namespace Erp.Pro.Utils.自定义控件
 
             P_操作类型 = "修改";
             P_焦点行 = GridView.GetFocusedDataSourceRowIndex();
+            if (null == P_控件参数)
+            {
+                XtraMessageBox.Show("未设置编辑界面控件参数,请联系开发人员", "提示");
+                return;
+            }
             F_通用编辑页面 f_编辑 = new F_通用编辑页面(this);
             f_编辑.StartPosition = FormStartPosition.CenterParent;
             f_编辑.ShowDialog();
@@ -130,13 +144,13 @@ namespace Erp.Pro.Utils.自定义控件
 
             if (DialogResult.Yes == XtraMessageBox.Show("是否要删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
-                inParam.p0 = E_模块名称.通用业务;
-                inParam.p1 = P_页面名称;
-                inParam.p2 = "删除";
-                inParam.p3 = dt_删除行;
+                inParam.P_模块名 = E_模块名称.通用业务;
+                inParam.P_页面名 = P_页面名称;
+                inParam.P_方法名 = "删除";
+                inParam.P_数据集 = dt_删除行;
                 outParam = C_Server.Call(inParam);
 
-                if (outParam.p0.ToString() == "1")
+                if (outParam.P_结果 == 1)
                 {
                     XtraMessageBox.Show("删除成功!", "提示");
                     if (dt_删除行.Rows.Count <= 0)
@@ -160,7 +174,7 @@ namespace Erp.Pro.Utils.自定义控件
                 }
                 else
                 {
-                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.P_结果描述, "提示");
                 }
             }
         }
@@ -207,6 +221,17 @@ namespace Erp.Pro.Utils.自定义控件
             btn_刷新_Click(null, null);
         }
 
+        public void M_加载列表数据(DataTable dt)
+        {
+            dt_数据源 = dt.Copy();
+            dt_数据源.Columns.Add("选择", typeof(bool)).SetOrdinal(0);
+            foreach (DataRow row in dt_数据源.Rows)
+            {
+                row["选择"] = false;
+            }
+            GridControl.DataSource = dt_数据源;
+            C_样式设置.Init(GridView);
+        }
         #region 右键菜单
         GridHitInfo info;
         private void GridControl_MouseUp(object sender, MouseEventArgs e)

@@ -61,7 +61,6 @@ namespace Erp.Pro.Utils
         /// <param name="i_显示图片">节点图片下标</param>
         public static void M_树形助手(DataTable dt_数据集, TreeView list_树, string str_根节点名称, string str_根节点编码, string str_字段名称, string str_字段编码, string str_字段上级编码)
         {
-
             TreeNode tln_节点 = list_树.Nodes.Add(str_根节点编码, str_根节点名称);
 
             foreach (DataRow row_行集 in dt_数据集.Rows)
@@ -71,8 +70,6 @@ namespace Erp.Pro.Utils
                     C_通用方法.M_创建子节点(list_树, tln_节点, dt_数据集, row_行集[str_字段名称].ToString(), row_行集[str_字段编码].ToString(), row_行集[str_字段上级编码].ToString(), str_字段名称, str_字段编码, str_字段上级编码);
                 }
             }
-
-
         }
 
         /// <summary>

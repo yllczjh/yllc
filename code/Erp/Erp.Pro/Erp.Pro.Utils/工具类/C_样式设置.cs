@@ -26,7 +26,7 @@ namespace Erp.Pro.Utils.工具类
 
             if (null != C_实体信息.C_共享数据集.P_样式列表 && C_实体信息.C_共享数据集.P_样式列表.Rows.Count > 0)
             {
-                C_实体信息.C_共享数据集.P_样式列表.DefaultView.RowFilter = "样式ID='" + "用户信息" + "'";
+                C_实体信息.C_共享数据集.P_样式列表.DefaultView.RowFilter = "样式ID='" + gridView.Tag + "'";
                 DataTable dt_样式列表 = C_实体信息.C_共享数据集.P_样式列表.DefaultView.ToTable();
                 if (null != dt_样式列表 && dt_样式列表.Rows.Count > 0)
                 {
@@ -75,21 +75,19 @@ namespace Erp.Pro.Utils.工具类
         public static bool Save(GridView gridView, string str_页面名称)
         {
             inParam.Clear();
-            inParam.p0 = E_模块名称.通用业务;
-            inParam.p1 = "样式列表";
-            inParam.p2 = "保存";
-            inParam.p3 = C_实体信息.C_共享变量.用户ID;
-            inParam.p4 = str_页面名称;
-            inParam.p5 = GetDataTable(gridView, str_页面名称).Rows[0];
+            inParam.P_模块名 = E_模块名称.通用业务;
+            inParam.P_页面名 = "样式列表";
+            inParam.P_方法名 = "保存";
+            inParam.P_数据行 = GetDataTable(gridView, str_页面名称).Rows[0];
             outParam = C_Server.Call(inParam);
-            if (outParam.p0.ToString() == "1")
+            if (outParam.P_结果 == 1)
             {
-                C_实体信息.C_共享数据集.P_样式列表 = outParam.p2 as DataTable;
+                Load();
                 return true;
             }
             else
             {
-                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.P_结果描述, "提示");
                 return false;
             }
         }
@@ -99,18 +97,17 @@ namespace Erp.Pro.Utils.工具类
         private static void Load()
         {
             inParam.Clear();
-            inParam.p0 = E_模块名称.通用业务;
-            inParam.p1 = "样式列表";
-            inParam.p2 = "初始化";
-            inParam.p3 = C_实体信息.C_共享变量.用户ID;
+            inParam.P_模块名 = E_模块名称.通用业务;
+            inParam.P_页面名 = "样式列表";
+            inParam.P_方法名 = "初始化";
             outParam = C_Server.Call(inParam);
-            if (outParam.p0.ToString() == "1")
+            if (outParam.P_结果 == 1)
             {
-                C_实体信息.C_共享数据集.P_样式列表 = outParam.p2 as DataTable;
+                C_实体信息.C_共享数据集.P_样式列表 = outParam.P_数据集 as DataTable;
             }
             else
             {
-                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.P_结果描述, "提示");
             }
         }
 

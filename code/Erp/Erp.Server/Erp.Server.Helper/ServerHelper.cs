@@ -1,4 +1,6 @@
-﻿namespace Erp.Server.Helper
+﻿using System.Data;
+
+namespace Erp.Server.Helper
 {
     public class ServerHelper
     {
@@ -10,30 +12,26 @@
 
         public class Params
         {
-            public object p0 { get; set; }
-            public object p1 { get; set; }
-            public object p2 { get; set; }
-            public object p3 { get; set; }
-            public object p4 { get; set; }
-            public object p5 { get; set; }
-            public object p6 { get; set; }
-            public object p7 { get; set; }
-            public object p8 { get; set; }
-            public object p9 { get; set; }
-            public object p10 { get; set; }
+            public E_模块名称 P_模块名 { get; set; }
+            public string P_页面名 { get; set; }
+            public string P_方法名 { get; set; }
+            public string P_功能名 { get; set; }
+            public DataTable P_数据集 { get; set; }
+            public DataRow P_数据行 { get; set; }
+
+            public int P_结果 { get; set; }
+            public string P_结果描述 { get; set; }
+
             public void Clear()
             {
-                p0 = null;
-                p1 = null;
-                p2 = null;
-                p3 = null;
-                p4 = null;
-                p5 = null;
-                p6 = null;
-                p7 = null;
-                p8 = null;
-                p9 = null;
-                p10 = null;
+                P_页面名 = string.Empty;
+                P_方法名 = string.Empty;
+                P_功能名 = string.Empty;
+                P_数据集 = null;
+                P_数据行 = null;
+
+                P_结果 = 0;
+                P_结果描述 = string.Empty;
             }
         }
     }

@@ -14,6 +14,7 @@ namespace Erp.Pro.Utils
         public class C_共享数据集
         {
             public static DataTable P_样式列表 { get; set; }
+            public static DataTable P_菜单信息 { get; set; }
         }
 
 
@@ -49,6 +50,7 @@ namespace Erp.Pro.Utils
             public bool 是否必填 { get; set; }
             public bool 是否填充 { get; set; }
             public bool 值唯一 { get; set; }
+            public bool 只读 { get; set; }
             public object 默认值 { get; set; }
 
             public C_控件参数()
@@ -57,6 +59,7 @@ namespace Erp.Pro.Utils
                 是否必填 = false;
                 是否填充 = false;
                 值唯一 = false;
+                只读 = false;
             }
         }
 

@@ -9,7 +9,7 @@ namespace Erp.Server.Init
         public static ServerHelper.Params Call(ServerHelper.Params param)
         {
             ServerHelper.Params outParam = new ServerHelper.Params();
-            E_模块名称 e_模块名称 = (E_模块名称)param.p0;
+            E_模块名称 e_模块名称 = (E_模块名称)param.P_模块名;
             switch (e_模块名称)
             {
                 case E_模块名称.基础业务:
@@ -29,11 +29,11 @@ namespace Erp.Server.Init
         {
             C_基础业务 c_基础业务 = new C_基础业务();
             ServerHelper.Params outParam = new ServerHelper.Params();
-            string str_功能 = param.p1?.ToString();
+            string str_功能 = param.P_功能名;
             if (string.IsNullOrEmpty(str_功能))
             {
-                outParam.p0 = "0";
-                outParam.p1 = "找不到方法!";
+                outParam.P_结果 = 0;
+                outParam.P_结果描述 = "找不到方法!";
                 return outParam;
             }
             switch (str_功能)
@@ -45,8 +45,8 @@ namespace Erp.Server.Init
                     outParam = c_基础业务.M_菜单信息_初始化(param);
                     break;
                 default:
-                    outParam.p0 = "0";
-                    outParam.p1 = "找不到方法!";
+                    outParam.P_结果 = 0;
+                    outParam.P_结果描述 = "找不到方法!";
                     break;
             }
             return outParam;
@@ -56,13 +56,13 @@ namespace Erp.Server.Init
         {
             C_通用业务 c_通用列表编辑 = new C_通用业务();
             ServerHelper.Params outParam = new ServerHelper.Params();
-            string str_功能 = param.p1?.ToString();
-            if (string.IsNullOrEmpty(str_功能))
-            {
-                outParam.p0 = "0";
-                outParam.p1 = "找不到方法!";
-                return outParam;
-            }
+            //string str_功能 = param.p1?.ToString();
+            //if (string.IsNullOrEmpty(str_功能))
+            //{
+            //    outParam.P_返回结果 = 0;
+            //    outParam.P_返回描述 = "找不到方法!";
+            //    return outParam;
+            //}
             outParam = c_通用列表编辑.M_通用列表编辑(param);
             return outParam;
         }

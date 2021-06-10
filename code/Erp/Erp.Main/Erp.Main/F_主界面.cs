@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using Erp.Pro.Jcxx;
+using Erp.Pro.Utils;
 using Erp.Server.Helper;
 using Erp.Server.Init;
 using System;
@@ -36,17 +37,18 @@ namespace Erp.Main
             this.MaximizedBounds = Screen.PrimaryScreen.WorkingArea; //设置最大化的大小为工作区域
             this.WindowState = FormWindowState.Maximized;
 
-            inParam.p0 = E_模块名称.基础业务;
-            inParam.p1 = "菜单信息_初始化";
+            inParam.P_模块名 = E_模块名称.基础业务;
+            inParam.P_功能名 = "菜单信息_初始化";
             outParam = C_Server.Call(inParam);
-            if (outParam.p0.ToString() == "1")
+            if (outParam.P_结果 == 1)
             {
-                DataTable dt_菜单 = outParam.p2 as DataTable;
+                DataTable dt_菜单 = outParam.P_数据集;
                 C_菜单加载.Init(xttc_主界面, ribbon_菜单, dt_菜单);
+                C_实体信息.C_共享数据集.P_菜单信息 = dt_菜单;
             }
             else
             {
-                XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                XtraMessageBox.Show(outParam.P_结果描述, "提示");
             }
         }
 

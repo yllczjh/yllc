@@ -48,6 +48,7 @@ namespace Erp.Pro.Utils.公共窗体
 
         public void 显示页面()
         {
+            
             int x = 0;
             int y = 0;
             cm_绑定管理 = (CurrencyManager)this.BindingContext[dt_数据源];
@@ -63,13 +64,14 @@ namespace Erp.Pro.Utils.公共窗体
             int label_width = M_获取Label_Width(控件参数);
             this.Width = 200 * i_每行显示列数;
             Label l = new Label();
+
             for (int i = 0; i < 控件参数.Length; i++)
             {
                 C_控件参数 entity = 控件参数[i];
 
                 if (entity.是否显示)
                 {
-                    M_获取位置(i, ref x, ref y);
+                    M_获取位置(ref x, ref y);
                     l = new Label();
                     l.Text = entity.显示名称;
                     l.TextAlign = ContentAlignment.MiddleRight;
@@ -93,6 +95,7 @@ namespace Erp.Pro.Utils.公共窗体
                             (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值;
                         }
                         textBox.DataBindings.Add("Text", dt_数据源, entity.数据名称);
+                        textBox.Enabled = !entity.只读;
                         textBox.Show();
                         break;
 
@@ -107,6 +110,7 @@ namespace Erp.Pro.Utils.公共窗体
                             (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值;
                         }
                         textEdit.DataBindings.Add("Text", dt_数据源, entity.数据名称);
+                        textEdit.Enabled = !entity.只读;
                         textEdit.Show();
                         break;
 
@@ -118,6 +122,7 @@ namespace Erp.Pro.Utils.公共窗体
                         lookUpEdit.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         C_通用方法.M_绑定控件(lookUpEdit, entity.数据源);
                         lookUpEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
+                        lookUpEdit.Enabled = !entity.只读;
                         lookUpEdit.Show();
                         break;
 
@@ -130,6 +135,7 @@ namespace Erp.Pro.Utils.公共窗体
                         C_通用方法.M_绑定控件(comboBoxEdit, entity.数据源);
                         comboBoxEdit.DataBindings.Add("EditValue", dt_数据源, entity.数据名称);
                         comboBoxEdit.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
+                        comboBoxEdit.Enabled = !entity.只读;
                         comboBoxEdit.Show();
                         break;
 
@@ -144,6 +150,7 @@ namespace Erp.Pro.Utils.公共窗体
                             (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值 ?? "1900-01-01";
                         }
                         dateTimePicker.DataBindings.Add("Text", dt_数据源, entity.数据名称);
+                        dateTimePicker.Enabled = !entity.只读;
                         dateTimePicker.Show();
                         break;
 
@@ -160,31 +167,34 @@ namespace Erp.Pro.Utils.公共窗体
                         }
 
                         checkEdit.DataBindings.Add("Checked", dt_数据源, entity.数据名称);
+                        checkEdit.Enabled = !entity.只读;
                         checkEdit.Show();
                         break;
                 }
-
-                if (entity.是否填充)
+                if (entity.是否显示)
                 {
-                    i_行号 += 1;
-                    i_列号 = 1;
-                }
-                else
-                {
-                    if (i_列号 < i_每行显示列数)
+                    if (entity.是否填充)
                     {
-                        i_列号 += 1;
+                        i_行号 += 1;
+                        i_列号 = 1;
                     }
                     else
                     {
-                        i_列号 = 1;
-                        i_行号 += 1;
+                        if (i_列号 < i_每行显示列数)
+                        {
+                            i_列号 += 1;
+                        }
+                        else
+                        {
+                            i_列号 = 1;
+                            i_行号 += 1;
+                        }
                     }
                 }
             }
         }
 
-        private void M_获取位置(int i, ref int x, ref int y)
+        private void M_获取位置(ref int x, ref int y)
         {
             x = (i_列号 - 1) * 200;
             y = i_行号 * 25 + 10;
@@ -218,13 +228,13 @@ namespace Erp.Pro.Utils.公共窗体
             if (str_操作类型 == "新增")
             {
                 inParam.Clear();
-                inParam.p0 = E_模块名称.通用业务;
-                inParam.p1 = f_父窗体.P_页面名称;
-                inParam.p2 = "新增";
-                inParam.p3 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
+                inParam.P_模块名 = E_模块名称.通用业务;
+                inParam.P_页面名 = f_父窗体.P_页面名称;
+                inParam.P_方法名 = "新增";
+                inParam.P_数据行 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
 
-                if (outParam.p0.ToString() == "1")
+                if (outParam.P_结果 == 1)
                 {
                     if (DialogResult.Yes == XtraMessageBox.Show("添加成功......", "是否继续添加?", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
@@ -243,27 +253,27 @@ namespace Erp.Pro.Utils.公共窗体
                 }
                 else
                 {
-                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.P_结果描述, "提示");
                     return;
                 }
             }
             else
             {
                 inParam.Clear();
-                inParam.p0 = E_模块名称.通用业务;
-                inParam.p1 = f_父窗体.P_页面名称;
-                inParam.p2 = "修改";
-                inParam.p3 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
+                inParam.P_模块名 = E_模块名称.通用业务;
+                inParam.P_页面名 = f_父窗体.P_页面名称;
+                inParam.P_方法名 = "修改";
+                inParam.P_数据行 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
 
-                if (outParam.p0.ToString() == "1")
+                if (outParam.P_结果 == 1)
                 {
                     XtraMessageBox.Show("修改成功", "提示");
                     cm_绑定管理.ResumeBinding();
                 }
                 else
                 {
-                    XtraMessageBox.Show(outParam.p1.ToString(), "提示");
+                    XtraMessageBox.Show(outParam.P_结果描述, "提示");
                     return;
                 }
 
