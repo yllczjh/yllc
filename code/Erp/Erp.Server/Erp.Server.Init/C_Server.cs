@@ -1,14 +1,14 @@
-﻿
+﻿using Erp.Server.Helper;
 using Erp.Server.WebAPI.业务;
-using static Erp.Server.Init.C_系统参数;
+using static Erp.Server.Helper.ServerHelper;
 
 namespace Erp.Server.Init
 {
     public class C_Server
     {
-        public static ServerParams Call(ServerParams param)
+        public static ServerHelper.Params Call(ServerHelper.Params param)
         {
-            ServerParams outParam = new ServerParams();
+            ServerHelper.Params outParam = new ServerHelper.Params();
             E_模块名称 e_模块名称 = (E_模块名称)param.p0;
             switch (e_模块名称)
             {
@@ -25,10 +25,10 @@ namespace Erp.Server.Init
         }
 
 
-        private static ServerParams Call_基础业务(ServerParams param)
+        private static ServerHelper.Params Call_基础业务(ServerHelper.Params param)
         {
             C_基础业务 c_基础业务 = new C_基础业务();
-            ServerParams outParam = new ServerParams();
+            ServerHelper.Params outParam = new ServerHelper.Params();
             string str_功能 = param.p1?.ToString();
             if (string.IsNullOrEmpty(str_功能))
             {
@@ -52,10 +52,10 @@ namespace Erp.Server.Init
             return outParam;
         }
 
-        private static ServerParams Call_通用列表编辑(ServerParams param)
+        private static ServerHelper.Params Call_通用列表编辑(ServerHelper.Params param)
         {
             C_通用业务 c_通用列表编辑 = new C_通用业务();
-            ServerParams outParam = new ServerParams();
+            ServerHelper.Params outParam = new ServerHelper.Params();
             string str_功能 = param.p1?.ToString();
             if (string.IsNullOrEmpty(str_功能))
             {

@@ -96,6 +96,10 @@
     <None Include="Resources\doc_edit_32.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Helper\Erp.Server.Helper.csproj">
+      <Project>{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}</Project>
+      <Name>Erp.Server.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Erp.Pro.Utils\Erp.Pro.Utils.csproj">
       <Project>{0f7c4903-ae7f-447e-954b-62fe2a820c31}</Project>
       <Name>Erp.Pro.Utils</Name>

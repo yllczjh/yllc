@@ -178,6 +178,10 @@
       <Project>{0F7C4903-AE7F-447E-954B-62FE2A820C31}</Project>
       <Name>Erp.Pro.Utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Helper\Erp.Server.Helper.csproj">
+      <Project>{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}</Project>
+      <Name>Erp.Server.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Erp.Server\Erp.Server.Init\Erp.Server.Init.csproj">
       <Project>{82E4B82D-0F25-428E-9A30-B2475B80A10F}</Project>
       <Name>Erp.Server.Init</Name>

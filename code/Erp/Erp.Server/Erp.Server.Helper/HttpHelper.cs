@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-namespace Erp.Server.WebAPI
+namespace Erp.Server.Helper
 {
     public class HttpHelper
     {

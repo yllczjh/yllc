@@ -1,20 +1,13 @@
-﻿using DevExpress.XtraBars;
-using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraEditors;
-using Erp.Pro.Utils;
-using Erp.Server.Init;
+﻿using DevExpress.XtraEditors;
+using Erp.Server.Helper;
 using System;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Pro.Jcxx
 {
     public partial class F_菜单维护 : XtraForm
     {
-        ServerParams inParam = new ServerParams();
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params inParam = new ServerHelper.Params();
+        ServerHelper.Params outParam = new ServerHelper.Params();
 
         public F_菜单维护()
         {

@@ -44,10 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C_Server.cs" />
-    <Compile Include="C_系统参数.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Erp.Server.Helper\Erp.Server.Helper.csproj">
+      <Project>{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}</Project>
+      <Name>Erp.Server.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Erp.Server.WebAPI\Erp.Server.WebAPI.csproj">
       <Project>{652b8ba1-3b75-44de-a64f-43cd1c7a4615}</Project>
       <Name>Erp.Server.WebAPI</Name>

@@ -1,6 +1,6 @@
-﻿namespace Erp.Server.Init
+﻿namespace Erp.Server.Helper
 {
-    public class C_系统参数
+    public class ServerHelper
     {
         public enum E_模块名称
         {
@@ -8,7 +8,7 @@
             通用业务
         }
 
-        public class ServerParams
+        public class Params
         {
             public object p0 { get; set; }
             public object p1 { get; set; }
@@ -35,7 +35,6 @@
                 p9 = null;
                 p10 = null;
             }
-
         }
     }
 }

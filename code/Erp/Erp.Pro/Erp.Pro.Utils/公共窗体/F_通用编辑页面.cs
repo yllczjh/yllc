@@ -1,20 +1,21 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using Erp.Pro.Utils.自定义控件;
-using Erp.Server.Init;
 using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using static Erp.Server.Init.C_系统参数;
 using static Erp.Pro.Utils.C_实体信息;
+using Erp.Server.Helper;
+using static Erp.Server.Helper.ServerHelper;
+using Erp.Server.Init;
 
 namespace Erp.Pro.Utils.公共窗体
 {
     public partial class F_通用编辑页面 : XtraForm
     {
-        ServerParams inParam = new ServerParams();
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params inParam = new ServerHelper.Params();
+        ServerHelper.Params outParam = new ServerHelper.Params();
         CurrencyManager cm_绑定管理;
 
         private U_通用列表编辑 f_父窗体;

@@ -1,19 +1,18 @@
 ﻿using DevExpress.XtraEditors;
-using DevExpress.XtraTab;
 using Erp.Pro.Jcxx;
+using Erp.Server.Helper;
 using Erp.Server.Init;
 using System;
 using System.Data;
-using System.Reflection;
 using System.Windows.Forms;
-using static Erp.Server.Init.C_系统参数;
+using static Erp.Server.Helper.ServerHelper;
 
 namespace Erp.Main
 {
     public partial class F_主界面 : XtraForm
     {
-        ServerParams inParam = new ServerParams();
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params inParam = new ServerHelper.Params();
+        ServerHelper.Params outParam = new ServerHelper.Params();
 
         
         public F_主界面()

@@ -3,23 +3,24 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Erp.Pro.Utils.工具类;
 using Erp.Pro.Utils.公共窗体;
-using Erp.Server.Init;
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using static Erp.Pro.Utils.C_实体信息;
-using static Erp.Server.Init.C_系统参数;
 using DevExpress.XtraEditors;
 using System.Drawing;
+using static Erp.Server.Helper.ServerHelper;
+using Erp.Server.Helper;
+using Erp.Server.Init;
 
 namespace Erp.Pro.Utils.自定义控件
 {
     public partial class U_通用列表编辑 : UserControl
     {
-        ServerParams inParam = new ServerParams();
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params inParam = new ServerHelper.Params();
+        ServerHelper.Params outParam = new ServerHelper.Params();
 
         public string P_操作类型;
         public int P_焦点行 = 0;

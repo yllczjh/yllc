@@ -1,24 +1,21 @@
-﻿using Erp.Pro.Utils.工具类;
-using Erp.Pro.Utils;
-using Erp.Server.WebAPI;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
+using Erp.Server.Helper;
 using System.Text;
-using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Server.WebAPI.业务
 {
     public class C_通用业务
     {
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params outParam = new ServerHelper.Params();
 
         //inParam.p0 = E_模块名称.通用列表编辑;
         //inParam.p1 = f_父窗体.P_页面名称;
         //inParam.p2 = "修改";
         //inParam.p3 = f_父窗体.GridControl.DataSource;
         //inParam.p4 = i_数据源行号;
-        public ServerParams M_通用列表编辑(ServerParams inParam)
+        public ServerHelper.Params M_通用列表编辑(ServerHelper.Params inParam)
         {
             outParam.Clear();
             try
@@ -78,7 +75,7 @@ namespace Erp.Server.WebAPI.业务
             return outParam;
         }
 
-        private void M_新增(ServerParams inParam, ref JObject inObject)
+        private void M_新增(ServerHelper.Params inParam, ref JObject inObject)
         {
             DataRow row = inParam.p3 as DataRow;
             switch (inParam.p1.ToString())
@@ -92,7 +89,7 @@ namespace Erp.Server.WebAPI.业务
                     break;
             }
         }
-        private void M_修改(ServerParams inParam, ref JObject inObject)
+        private void M_修改(ServerHelper.Params inParam, ref JObject inObject)
         {
             DataRow row = inParam.p3 as DataRow;
             switch (inParam.p1.ToString())
@@ -106,17 +103,17 @@ namespace Erp.Server.WebAPI.业务
                     break;
             }
         }
-        private void M_删除(ServerParams inParam, ref JObject inObject)
+        private void M_删除(ServerHelper.Params inParam, ref JObject inObject)
         {
             DataTable dt = inParam.p3 as DataTable;
             switch (inParam.p1.ToString())
             {
                 case "用户信息":
-                    inObject.Add("sql", $"delete from xt_yh where rowid in({C_通用方法.M_获取主键IN(dt, "rowid")})");
+                    inObject.Add("sql", $"delete from xt_yh where rowid in({M_获取主键IN(dt, "rowid")})");
                     break;
             }
         }
-        private void M_保存(ServerParams inParam, ref JObject inObject)
+        private void M_保存(ServerHelper.Params inParam, ref JObject inObject)
         {
             switch (inParam.p1.ToString())
             {
@@ -132,7 +129,7 @@ namespace Erp.Server.WebAPI.业务
                     break;
             }
         }
-        private void M_初始化(ServerParams inParam, ref JObject inObject)
+        private void M_初始化(ServerHelper.Params inParam, ref JObject inObject)
         {
             switch (inParam.p1.ToString())
             {
@@ -143,6 +140,22 @@ namespace Erp.Server.WebAPI.业务
                     inObject.Add("sql", $"select * from xt_yslb");
                     break;
             }
+        }
+        /// <summary>
+        /// 根据主键拼接sql in字符串
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="str_主键"></param>
+        /// <returns></returns>
+        public string M_获取主键IN(DataTable dt, string str_主键)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DataRow row in dt.Rows)
+            {
+                sb.Append("'").Append(row[str_主键]).Append("',");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
     }
 }

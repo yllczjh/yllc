@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Erp.Pro.Utils.工具类
+namespace Erp.Server.Helper
 {
     public class MyException : Exception
     {

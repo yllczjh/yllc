@@ -42,10 +42,6 @@
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="Erp.Server.Init, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Erp.Dll\Erp.Server.Init.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -91,7 +87,6 @@
     </Compile>
     <Compile Include="工具类\C_文件导出.cs" />
     <Compile Include="工具类\FileHelper.cs" />
-    <Compile Include="工具类\MyException.cs" />
     <Compile Include="工具类\C_样式设置.cs" />
     <Compile Include="自定义控件\U_通用列表编辑.cs">
       <SubType>UserControl</SubType>
@@ -145,6 +140,16 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files %28x86%29\DotNetBar for Windows Forms\DevComponents.DotNetBar2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Helper\Erp.Server.Helper.csproj">
+      <Project>{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}</Project>
+      <Name>Erp.Server.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Erp.Server\Erp.Server.Init\Erp.Server.Init.csproj">
+      <Project>{82e4b82d-0f25-428e-9a30-b2475b80a10f}</Project>
+      <Name>Erp.Server.Init</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,18 +1,17 @@
 ﻿using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraPrinting.Native;
+using Erp.Server.Helper;
 using Erp.Server.Init;
 using System.Data;
-using System.Windows.Forms;
-using static Erp.Server.Init.C_系统参数;
+using static Erp.Server.Helper.ServerHelper;
 
 namespace Erp.Pro.Utils.工具类
 {
     public class C_样式设置
     {
-        static ServerParams inParam = new ServerParams();
-        static ServerParams outParam = new ServerParams();
+        static ServerHelper.Params inParam = new ServerHelper.Params();
+        static ServerHelper.Params outParam = new ServerHelper.Params();
 
         /// <summary>
         /// 初始化样式

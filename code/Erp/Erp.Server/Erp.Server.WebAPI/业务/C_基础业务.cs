@@ -1,18 +1,17 @@
 ﻿using Erp.Pro.Utils;
-using Erp.Server.WebAPI;
+using Erp.Server.Helper;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
-using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Server.WebAPI.业务
 {
     public class C_基础业务
     {
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params outParam = new ServerHelper.Params();
         JObject inObject = new JObject();
         JObject outObject = new JObject();
-        public ServerParams M_用户信息_初始化(ServerParams param)
+        public ServerHelper.Params M_用户信息_初始化(ServerHelper.Params param)
         {
             outParam.Clear();
             try
@@ -44,7 +43,7 @@ namespace Erp.Server.WebAPI.业务
             return outParam;
         }
 
-        public ServerParams M_菜单信息_初始化(ServerParams param)
+        public ServerHelper.Params M_菜单信息_初始化(ServerHelper.Params param)
         {
             outParam.Clear();
             try

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Pro.Utils", "..\Erp.Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Server.WebAPI", "..\Erp.Server\Erp.Server.WebAPI\Erp.Server.WebAPI.csproj", "{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erp.Server.Helper", "..\Erp.Server\Erp.Server.Helper\Erp.Server.Helper.csproj", "{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{652B8BA1-3B75-44DE-A64F-43CD1C7A4615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8522CFA2-2A6B-49FC-9D3C-B39A98790E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{82E4B82D-0F25-428E-9A30-B2475B80A10F} = {5E569675-7276-4370-A0C6-92884BCAF7F4}
 		{0F7C4903-AE7F-447E-954B-62FE2A820C31} = {D727BC88-6AAA-4D85-AB7E-4DD478CAF29B}
 		{652B8BA1-3B75-44DE-A64F-43CD1C7A4615} = {5E569675-7276-4370-A0C6-92884BCAF7F4}
+		{8522CFA2-2A6B-49FC-9D3C-B39A98790E83} = {5E569675-7276-4370-A0C6-92884BCAF7F4}
 	EndGlobalSection
 EndGlobal

@@ -2,6 +2,7 @@
 using Erp.Pro.Utils;
 using Erp.Pro.Utils.公告窗体;
 using Erp.Pro.Utils.工具类;
+using Erp.Server.Helper;
 using Erp.Server.WebAPI;
 using Newtonsoft.Json.Linq;
 using System.Drawing;

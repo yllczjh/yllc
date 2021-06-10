@@ -1,19 +1,17 @@
 ﻿
 using Erp.Pro.Utils;
-using Erp.Server.Init;
+using Erp.Server.Helper;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Windows.Forms;
 using static Erp.Pro.Utils.C_实体信息;
-using static Erp.Server.Init.C_系统参数;
 
 namespace Erp.Pro.Jcxx
 {
     public partial class F_用户信息 : Form
     {
-        ServerParams inParam = new ServerParams();
-        ServerParams outParam = new ServerParams();
+        ServerHelper.Params inParam = new ServerHelper.Params();
+        ServerHelper.Params outParam = new ServerHelper.Params();
 
         public F_用户信息()
         {
