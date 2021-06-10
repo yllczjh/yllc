@@ -25,6 +25,8 @@ namespace Erp.Pro.Utils.公共窗体
         private string str_操作类型 = "新增";
         private C_控件参数[] 控件参数;
 
+        public bool P_结果 = false;
+
         int i_行号 = 1;
         int i_列号 = 1;
         public F_通用编辑页面()
@@ -48,7 +50,6 @@ namespace Erp.Pro.Utils.公共窗体
 
         public void 显示页面()
         {
-            
             int x = 0;
             int y = 0;
             cm_绑定管理 = (CurrencyManager)this.BindingContext[dt_数据源];
@@ -56,6 +57,10 @@ namespace Erp.Pro.Utils.公共窗体
             {
                 cm_绑定管理.AddNew();
                 i_数据源行号 = cm_绑定管理.Position;
+                if((cm_绑定管理.List[i_数据源行号] as DataRowView).Row.Table.Columns.Contains("选择"))
+                {
+                    (cm_绑定管理.List[i_数据源行号] as DataRowView).Row["选择"] = false;
+                }
             }
             else
             {
@@ -250,6 +255,7 @@ namespace Erp.Pro.Utils.公共窗体
                         cm_绑定管理.EndCurrentEdit();
                         this.Close();
                     }
+                    P_结果 = true;
                 }
                 else
                 {
@@ -270,13 +276,13 @@ namespace Erp.Pro.Utils.公共窗体
                 {
                     XtraMessageBox.Show("修改成功", "提示");
                     cm_绑定管理.ResumeBinding();
+                    P_结果 = true;
                 }
                 else
                 {
                     XtraMessageBox.Show(outParam.P_结果描述, "提示");
                     return;
                 }
-
                 this.Close();
             }
         }
@@ -364,19 +370,37 @@ namespace Erp.Pro.Utils.公共窗体
             for (int i = 0; i < 控件参数.Length; i++)
             {
                 C_控件参数 entity = 控件参数[i];
-                if (entity.是否必填)
-                {
+                //if (entity.是否必填)
+                //{
                     Control[] array = this.Controls.Find(entity.数据名称, false);
                     if (array.Length <= 0) continue;
                     switch (entity.控件类型)
                     {
                         case E_控件类型.Win_Text:
                             TextBox textBox = (TextBox)array[0];
-                            textBox.Text = entity.默认值?.ToString();
+                            if (entity.自增)
+                            {
+                                int a;
+                                int.TryParse(textBox.Text,out a);
+                                textBox.Text = (a + 1).ToString();
+                            }
+                            else
+                            {
+                                textBox.Text = entity.默认值?.ToString();
+                            }
                             break;
                         case E_控件类型.Dev_Text:
                             TextEdit textEdit = (TextEdit)array[0];
-                            textEdit.Text = entity.默认值?.ToString();
+                            if (entity.自增)
+                            {
+                                int a;
+                                int.TryParse(textEdit.Text, out a);
+                                textEdit.Text = (a + 1).ToString();
+                            }
+                            else
+                            {
+                                textEdit.Text = entity.默认值?.ToString();
+                            }
                             break;
                         case E_控件类型.Dev_LookUpEdit:
                             LookUpEdit lookUpEdit = (LookUpEdit)array[0];
@@ -384,11 +408,11 @@ namespace Erp.Pro.Utils.公共窗体
                             break;
                         case E_控件类型.Dev_CheckEdit:
                             CheckEdit checkEdit = (CheckEdit)array[0];
-                            bool b = entity.默认值.GetType() == typeof(bool) ? bool.Parse(entity.默认值.ToString()) : false;
-                            checkEdit.Checked = b; ;
+                            bool b = entity.默认值?.GetType() == typeof(bool) ? bool.Parse(entity.默认值.ToString()) : false;
+                            checkEdit.Checked = b;
                             break;
                     }
-                }
+                //}
             }
         }
     }

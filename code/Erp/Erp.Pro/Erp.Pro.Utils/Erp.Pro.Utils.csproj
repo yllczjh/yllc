@@ -61,6 +61,7 @@
     <Compile Include="C_实体信息.cs" />
     <Compile Include="C_枚举类.cs" />
     <Compile Include="C_通用方法.cs" />
+    <Compile Include="MyEventArgs.cs" />
     <Compile Include="公共窗体\F_修改列别名.cs">
       <SubType>Form</SubType>
     </Compile>

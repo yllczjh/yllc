@@ -144,7 +144,6 @@
             this.GridView.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.GridView.GridControl = this.GridControl;
             this.GridView.Name = "GridView";
-            this.GridView.OptionsBehavior.Editable = false;
             this.GridView.OptionsCustomization.AllowFilter = false;
             this.GridView.OptionsCustomization.AllowGroup = false;
             this.GridView.OptionsCustomization.AllowQuickHideColumns = false;

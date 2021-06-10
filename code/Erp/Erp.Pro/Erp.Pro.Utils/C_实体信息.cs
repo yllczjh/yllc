@@ -52,6 +52,8 @@ namespace Erp.Pro.Utils
             public bool 值唯一 { get; set; }
             public bool 只读 { get; set; }
             public object 默认值 { get; set; }
+            //用于排序列
+            public bool 自增 { get; set; }
 
             public C_控件参数()
             {
@@ -60,6 +62,7 @@ namespace Erp.Pro.Utils
                 是否填充 = false;
                 值唯一 = false;
                 只读 = false;
+                自增 = false;
             }
         }
 

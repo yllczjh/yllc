@@ -1,9 +1,9 @@
 ﻿using DevExpress.XtraEditors;
 using System.Data;
 using System.Text;
-using System.Configuration;
 using static Erp.Pro.Utils.C_实体信息;
 using System.Windows.Forms;
+using System;
 
 namespace Erp.Pro.Utils
 {
@@ -18,7 +18,6 @@ namespace Erp.Pro.Utils
 
             lue_绑定控件.Properties.DisplayMember = c_数据源.DisplayMember;
             lue_绑定控件.Properties.ValueMember = c_数据源.ValueMember;
-            //lue_绑定控件.ItemIndex = 0;
         }
 
         public static void M_绑定控件(ComboBoxEdit com_绑定控件, C_数据源 c_数据源)
@@ -94,6 +93,28 @@ namespace Erp.Pro.Utils
                     }
                 }
             }
+        }
+
+        /// <summary>  
+        /// 根据GUID获取16位的唯一字符串  
+        /// </summary>  
+        /// <param name=\"guid\"></param>  
+        /// <returns></returns>  
+        public static string GuidTo16String()
+        {
+            long i = 1;
+            foreach (byte b in Guid.NewGuid().ToByteArray())
+                i *= ((int)b + 1);
+            return string.Format("{0:x}", i - DateTime.Now.Ticks);
+        }
+        /// <summary>  
+        /// 根据GUID获取19位的唯一数字序列  
+        /// </summary>  
+        /// <returns></returns>  
+        public static long GuidToLongID()
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            return BitConverter.ToInt64(buffer, 0);
         }
     }
 }

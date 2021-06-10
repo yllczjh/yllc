@@ -69,11 +69,13 @@
             this.u_菜单信息维护.Name = "u_菜单信息维护";
             this.u_菜单信息维护.P_控件参数 = null;
             this.u_菜单信息维护.P_每行显示列数 = 2;
+            this.u_菜单信息维护.P_过滤条件 = null;
             this.u_菜单信息维护.P_页面名称 = null;
             this.u_菜单信息维护.Size = new System.Drawing.Size(784, 394);
             this.u_菜单信息维护.TabIndex = 3;
             this.u_菜单信息维护.新增处理 += new System.EventHandler(this.u_菜单信息维护_新增处理);
             this.u_菜单信息维护.修改处理 += new System.EventHandler(this.u_菜单信息维护_修改处理);
+            this.u_菜单信息维护.刷新处理 += new System.EventHandler(this.u_菜单信息维护_刷新处理);
             // 
             // F_菜单维护
             // 

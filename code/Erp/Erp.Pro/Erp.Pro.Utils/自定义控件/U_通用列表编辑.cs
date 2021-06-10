@@ -56,9 +56,22 @@ namespace Erp.Pro.Utils.自定义控件
             }
         }
 
+        public string _P_过滤条件;
+        [Browsable(false)]
+        [Description("页面名称(通过[页面名称_按钮显示名]来定义服务名)"), Category("#通用列表自定义属性")]
+        public string P_过滤条件
+        {
+            get { return _P_过滤条件; }
+            set
+            {
+                _P_过滤条件 = value;
+            }
+        }
+
         public U_通用列表编辑()
         {
             InitializeComponent();
+            this.GridView.IndicatorWidth = 40;
         }
         private void btn_刷新_Click(object sender, EventArgs e)
         {
@@ -75,6 +88,11 @@ namespace Erp.Pro.Utils.自定义控件
                 {
                     row["选择"] = false;
                 }
+                OnAction_刷新(null, null, dt_数据源);
+
+                dt_数据源.DefaultView.RowFilter = P_过滤条件;
+                dt_数据源 = dt_数据源.DefaultView.ToTable();
+
                 GridControl.DataSource = dt_数据源;
                 C_样式设置.Init(GridView);
             }
@@ -99,8 +117,11 @@ namespace Erp.Pro.Utils.自定义控件
             f_编辑.StartPosition = FormStartPosition.CenterParent;
             f_编辑.ShowDialog();
             f_编辑.Dispose();
-            M_加载列表数据();
-            GridView.FocusedRowHandle = P_焦点行;
+            if (f_编辑.P_结果)
+            {
+                M_加载列表数据();
+                GridView.FocusedRowHandle = P_焦点行;
+            }
         }
 
         private void btn_修改_Click(object sender, EventArgs e)
@@ -118,8 +139,11 @@ namespace Erp.Pro.Utils.自定义控件
             f_编辑.StartPosition = FormStartPosition.CenterParent;
             f_编辑.ShowDialog();
             f_编辑.Dispose();
-            M_加载列表数据();
-            GridView.FocusedRowHandle = P_焦点行;
+            if (f_编辑.P_结果)
+            {
+                M_加载列表数据();
+                GridView.FocusedRowHandle = P_焦点行;
+            }
         }
 
         private void btn_删除_Click(object sender, EventArgs e)
@@ -153,23 +177,22 @@ namespace Erp.Pro.Utils.自定义控件
                 if (outParam.P_结果 == 1)
                 {
                     XtraMessageBox.Show("删除成功!", "提示");
-                    if (dt_删除行.Rows.Count <= 0)
-                    {
-                        GridView.DeleteSelectedRows();
-                    }
-                    else
-                    {
-                        for (int i = GridView.RowCount - 1; i > 0; i--)
-                        {
-                            DataRow dr = GridView.GetDataRow(i);
-                            if (dr["选择"].ToString() == "True")
-                            {
-                                GridView.DeleteRow(i);
-                            }
-                        }
-                    }
-
-                    //M_加载列表数据();
+                    M_加载列表数据();
+                    //if (dt_删除行.Rows.Count <= 0)
+                    //{
+                    //    GridView.DeleteSelectedRows();
+                    //}
+                    //else
+                    //{
+                    //    for (int i = GridView.RowCount - 1; i > 0; i--)
+                    //    {
+                    //        DataRow dr = GridView.GetDataRow(i);
+                    //        if (dr["选择"].ToString() == "True")
+                    //        {
+                    //            GridView.DeleteRow(i);
+                    //        }
+                    //    }
+                    //}
                     GridView.FocusedRowHandle = P_焦点行;
                 }
                 else
@@ -194,6 +217,16 @@ namespace Erp.Pro.Utils.自定义控件
             if (修改处理 != null)
             {
                 修改处理(sender, e);
+            }
+        }
+        [Description("列表刷新后返回最新的数据集")]
+        public event EventHandler 刷新处理;
+        protected void OnAction_刷新(object sender, EventArgs e, DataTable dt)
+        {
+            if (刷新处理 != null)
+            {
+                var args = new MyEventArgs(dt);
+                刷新处理(sender, args);
             }
         }
 
@@ -224,11 +257,15 @@ namespace Erp.Pro.Utils.自定义控件
         public void M_加载列表数据(DataTable dt)
         {
             dt_数据源 = dt.Copy();
-            dt_数据源.Columns.Add("选择", typeof(bool)).SetOrdinal(0);
-            foreach (DataRow row in dt_数据源.Rows)
+            if (!dt_数据源.Columns.Contains("选择"))
             {
-                row["选择"] = false;
+                dt_数据源.Columns.Add("选择", typeof(bool)).SetOrdinal(0);
+                foreach (DataRow row in dt_数据源.Rows)
+                {
+                    row["选择"] = false;
+                }
             }
+
             GridControl.DataSource = dt_数据源;
             C_样式设置.Init(GridView);
         }
@@ -327,7 +364,7 @@ namespace Erp.Pro.Utils.自定义控件
         {
             try
             {
-                DevExpress.XtraGrid.Views.Grid.ViewInfo.GridHitInfo hInfo = GridView.CalcHitInfo(new Point(e.X, e.Y));
+                GridHitInfo hInfo = GridView.CalcHitInfo(new Point(e.X, e.Y));
                 if (e.Button == MouseButtons.Left && e.Clicks == 2)//判断是否左键双击
                 {
                     //判断光标是否在行范围内
@@ -339,7 +376,6 @@ namespace Erp.Pro.Utils.自定义控件
             }
             catch (Exception)
             {
-                //IM_IOT_ST.Tools.ExceptionHelper.ShowException(ex);
             }
         }
     }

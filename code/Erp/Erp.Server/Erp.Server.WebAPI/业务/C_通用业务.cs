@@ -88,6 +88,9 @@ namespace Erp.Server.WebAPI.业务
                     }
                     inObject.Add("sql", $"insert into xt_yh(用户ID,密码,性别,出生日期,手机号码,现住址,头像地址,禁用) values ('{row["用户ID"]}','{row["密码"]}','{row["性别"]}','{row["出生日期"]}','{row["手机号码"]}','{row["现住址"]}','{row["头像地址"]}','{row["禁用"]}')");
                     break;
+                case "菜单维护":
+                    inObject.Add("sql", $"insert into xt_mk(系统ID,模块ID,上级ID,模块名,命令,参数,图标,排序,添加时间,禁用,程序集名,窗口名) values ('{row["系统ID"]}','{row["模块ID"]}','{row["上级ID"]}','{row["模块名"]}','{row["命令"]}','{row["参数"]}','{row["图标"]}','{row["排序"]}',getdate(),'{row["禁用"]}','{row["程序集名"]}','{row["窗口名"]}')");
+                    break;
             }
         }
         private void M_修改(ServerHelper.Params inParam, ref JObject inObject)
@@ -111,6 +114,9 @@ namespace Erp.Server.WebAPI.业务
             {
                 case "用户信息":
                     inObject.Add("sql", $"delete from xt_yh where rowid in({M_获取主键IN(dt, "rowid")})");
+                    break;
+                case "菜单维护":
+                    inObject.Add("sql", $"delete from xt_mk where rowid in({M_获取主键IN(dt, "rowid")})");
                     break;
             }
         }
@@ -139,6 +145,9 @@ namespace Erp.Server.WebAPI.业务
                     break;
                 case "样式列表":
                     inObject.Add("sql", $"select * from xt_yslb where 系统id='{C_实体信息.C_共享变量.系统ID}' and 用户id='{C_实体信息.C_共享变量.用户ID}'");
+                    break;
+                case "菜单维护":
+                    inObject.Add("sql", $"select * from xt_mk where 系统id='{C_实体信息.C_共享变量.系统ID}'");
                     break;
             }
         }
