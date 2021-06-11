@@ -9,6 +9,7 @@ namespace Erp.Pro.Utils
 {
     public class C_通用方法
     {
+        #region 控件绑定
         public static void M_绑定控件(LookUpEdit lue_绑定控件, C_数据源 c_数据源)
         {
             DataTable dt_新数据字典 = c_数据源.DataSource.DefaultView.ToTable(true, new string[] { c_数据源.ValueMember, c_数据源.DisplayMember });
@@ -28,22 +29,6 @@ namespace Erp.Pro.Utils
             {
                 com_绑定控件.Properties.Items.Add(str);
             }
-        }
-        /// <summary>
-        /// 根据主键拼接sql in字符串
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <param name="str_主键"></param>
-        /// <returns></returns>
-        public static string M_获取主键IN(DataTable dt, string str_主键)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (DataRow row in dt.Rows)
-            {
-                sb.Append("'").Append(row[str_主键]).Append("',");
-            }
-            sb.Remove(sb.Length - 1, 1);
-            return sb.ToString();
         }
 
         /// <summary>
@@ -94,6 +79,7 @@ namespace Erp.Pro.Utils
                 }
             }
         }
+        #endregion
 
         /// <summary>  
         /// 根据GUID获取16位的唯一字符串  

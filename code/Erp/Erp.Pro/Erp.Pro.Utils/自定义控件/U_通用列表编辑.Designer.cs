@@ -36,6 +36,7 @@
             this.btn_导出 = new System.Windows.Forms.ToolStripButton();
             this.btn_保存样式 = new System.Windows.Forms.ToolStripButton();
             this.btn_删除 = new System.Windows.Forms.ToolStripButton();
+            this.btn_页面信息维护 = new System.Windows.Forms.ToolStripButton();
             this.GridControl = new DevExpress.XtraGrid.GridControl();
             this.GridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
@@ -64,7 +65,8 @@
             this.btn_修改,
             this.btn_导出,
             this.btn_保存样式,
-            this.btn_删除});
+            this.btn_删除,
+            this.btn_页面信息维护});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(594, 25);
@@ -125,6 +127,15 @@
             this.btn_删除.Text = "删除";
             this.btn_删除.Click += new System.EventHandler(this.btn_删除_Click);
             // 
+            // btn_页面信息维护
+            // 
+            this.btn_页面信息维护.Image = global::Erp.Pro.Utils.Properties.Resources.doc_edit_32;
+            this.btn_页面信息维护.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_页面信息维护.Name = "btn_页面信息维护";
+            this.btn_页面信息维护.Size = new System.Drawing.Size(100, 22);
+            this.btn_页面信息维护.Text = "页面信息维护";
+            this.btn_页面信息维护.Click += new System.EventHandler(this.btn_页面信息维护_Click);
+            // 
             // GridControl
             // 
             this.GridControl.Cursor = System.Windows.Forms.Cursors.Default;
@@ -147,7 +158,6 @@
             this.GridView.OptionsCustomization.AllowFilter = false;
             this.GridView.OptionsCustomization.AllowGroup = false;
             this.GridView.OptionsCustomization.AllowQuickHideColumns = false;
-            this.GridView.OptionsCustomization.AllowSort = false;
             this.GridView.OptionsMenu.EnableColumnMenu = false;
             this.GridView.OptionsView.ColumnAutoWidth = false;
             this.GridView.OptionsView.ShowGroupPanel = false;
@@ -284,5 +294,6 @@
         private System.Windows.Forms.ToolStripButton btn_保存样式;
         private DevExpress.XtraBars.BarListItem barListItem1;
         private DevExpress.XtraBars.BarSubItem menu_显示隐藏列;
+        private System.Windows.Forms.ToolStripButton btn_页面信息维护;
     }
 }

@@ -45,6 +45,10 @@
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Erp.Dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -62,11 +66,18 @@
     <Compile Include="C_枚举类.cs" />
     <Compile Include="C_通用方法.cs" />
     <Compile Include="MyEventArgs.cs" />
+    <Compile Include="公共窗体\C_公共列表.cs" />
     <Compile Include="公共窗体\F_修改列别名.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="公共窗体\F_修改列别名.Designer.cs">
       <DependentUpon>F_修改列别名.cs</DependentUpon>
+    </Compile>
+    <Compile Include="公共窗体\F_公共列表.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="公共窗体\F_公共列表.Designer.cs">
+      <DependentUpon>F_公共列表.cs</DependentUpon>
     </Compile>
     <Compile Include="公共窗体\F_通用编辑页面.cs">
       <SubType>Form</SubType>
@@ -79,6 +90,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="公共窗体\F_页面信息维护.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="公共窗体\F_页面信息维护.Designer.cs">
+      <DependentUpon>F_页面信息维护.cs</DependentUpon>
     </Compile>
     <Compile Include="公共窗体\SimpleWaitBox.cs">
       <SubType>Form</SubType>
@@ -100,6 +117,9 @@
     <EmbeddedResource Include="公共窗体\F_修改列别名.resx">
       <DependentUpon>F_修改列别名.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="公共窗体\F_公共列表.resx">
+      <DependentUpon>F_公共列表.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="公共窗体\F_通用编辑页面.resx">
       <DependentUpon>F_通用编辑页面.cs</DependentUpon>
     </EmbeddedResource>
@@ -107,6 +127,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="公共窗体\F_页面信息维护.resx">
+      <DependentUpon>F_页面信息维护.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="公共窗体\SimpleWaitBox.resx">
       <DependentUpon>SimpleWaitBox.cs</DependentUpon>
@@ -151,6 +174,12 @@
       <Project>{82e4b82d-0f25-428e-9a30-b2475b80a10f}</Project>
       <Name>Erp.Server.Init</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\duan_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

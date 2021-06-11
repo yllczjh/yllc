@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using DevExpress.XtraEditors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Erp.Pro.Utils.工具类
 {
@@ -15,15 +17,12 @@ namespace Erp.Pro.Utils.工具类
         private const string DELIMITER_BACKSLASH = @"\";
         private const string str_反斜杠 = @"/";
         private const string str_默认配置文件名 = "Erp.Main.exe.config";
-        private const string str_EMPI_文件 = @"F:\realtimeConfig.properties";
 
         ////声明读写INI文件的API函数 
         [DllImport("kernel32")]
 
         private static extern long WritePrivateProfileString(string section, string
             key, string val, string filePath);
-
-        //		Public Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As Any, ByVal lpString As Any, ByVal lpFileName As String) As Long
 
         [DllImport("kernel32")]
 
@@ -267,146 +266,8 @@ namespace Erp.Pro.Utils.工具类
             }
             xDoc.Save(GetAppConfigFile());
         }
-        #region 获取Config中配置的IP地址
-        //public static List<ListItem> GetConfigWebUrlList()
-        //{
-        //    return GetConfigWebUrlList("WebUrl.xml");
-        //}
-
-        //public static List<ListItem> GetConfigWebUrlList(string str_配置文件名)
-        //{
-        //    List<ListItem> lst_WebUrl = new List<ListItem>();
-        //    try
-        //    {
-        //        XmlDocument xDoc = new XmlDocument();
-        //        xDoc.Load(GetAppConfigFile(str_配置文件名));
-        //        XmlNode xNode;
-        //        xNode = xDoc.SelectSingleNode("//WebUrl");
-        //        if (xNode != null)
-        //        {
-        //            foreach (XmlNode xchild_Node in xNode.ChildNodes)
-        //            {
-        //                ListItem item_node = new ListItem(
-        //                    Get_AttributeValue(xchild_Node, "AilsName"),
-        //                    Get_AttributeValue(xchild_Node, "text"),
-        //                    Get_AttributeValue(xchild_Node, "value"),
-        //                    "");
-        //                lst_WebUrl.Add(item_node);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //    }
-        //    return lst_WebUrl;
-        //}
-
-        //public static string GetConfigWebUrl(string str_AilsName)
-        //{
-        //    return GetConfigWebUrl("WebUrl.xml", str_AilsName);
-        //}
-
-        //public static string GetConfigWebUrl(string str_配置文件名, string str_AilsName)
-        //{
-        //    try
-        //    {
-        //        XmlDocument xDoc = new XmlDocument();
-        //        xDoc.Load(GetAppConfigFile(str_配置文件名));
-        //        XmlNode xNode;
-        //        xNode = xDoc.SelectSingleNode("//WebUrl");
-        //        if (xNode != null)
-        //        {
-        //            foreach (XmlNode xchild_Node in xNode.ChildNodes)
-        //            {
-        //                if (Get_AttributeValue(xchild_Node, "AilsName") == str_AilsName)
-        //                    return Get_AttributeValue(xchild_Node, "value");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //    }
-        //    return "";
-        //}
-
-        //private static string Get_AttributeValue(XmlNode x_Node, string str_属性名)
-        //{
-        //    string str_属性值 = "";
-        //    if (x_Node.Attributes[str_属性名] != null)
-        //        str_属性值 = x_Node.Attributes[str_属性名].InnerText;
-        //    return str_属性值;
-        //}
-        #endregion
 
         #endregion
-
-        /// <summary>
-        /// 更新门诊EMPI配置文件内容
-        /// </summary>
-        public static void SaveEMPIConfigFile_门诊()
-        {
-            SaveEMPIConfigFile("1");
-        }
-        /// <summary>
-        /// 更新住院EMPI配置文件内容
-        /// </summary>
-        public static void SaveEMPIConfigFile_住院()
-        {
-            SaveEMPIConfigFile("2");
-        }
-        /// <summary>
-        /// 更新健康档案EMPI配置文件内容
-        /// </summary>
-        public static void SaveEMPIConfigFile_健康档案()
-        {
-            SaveEMPIConfigFile("3");
-        }
-        /// <summary>
-        /// 更新EMPI配置文件内容
-        /// </summary>
-        /// <param name="str_EmpiType"></param>
-        public static void SaveEMPIConfigFile(string str_EmpiType)
-        {
-            if (!File.Exists(str_EMPI_文件))
-                return;
-
-            FileStream stream = null;
-            try
-            {
-                string str_Content = "";
-                using (StreamReader sr = new StreamReader(str_EMPI_文件, Encoding.GetEncoding("GB2312")))
-                {
-                    str_Content = sr.ReadToEnd();
-                    switch (str_EmpiType)
-                    {
-                        case "1"://门诊
-                            str_Content = str_Content.Replace("outpatientFlag=0", "outpatientFlag=1");
-                            break;
-                        case "2"://住院
-                            str_Content = str_Content.Replace("inhospatientFlag=0", "inhospatientFlag=1");
-                            break;
-                        case "3"://健康档案
-                            str_Content = str_Content.Replace("pubhealthBasicInfoFlag=0", "pubhealthBasicInfoFlag=1");
-                            break;
-                    }
-                }
-                if (!string.IsNullOrEmpty(str_Content))
-                {
-                    stream = new FileStream(str_EMPI_文件, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-                    StreamWriter m_streamWriter = new StreamWriter(stream);
-                    m_streamWriter.BaseStream.Seek(0, System.IO.SeekOrigin.End);
-                    m_streamWriter.WriteLine(str_Content);
-                    m_streamWriter.Flush();
-                    m_streamWriter.Close();
-                    stream.Close();
-                }
-            }
-            catch
-            {
-                if (stream != null)
-                    stream.Close();
-            }
-        }
 
         /// <summary>
         /// 将字符串转换为byte数组
@@ -489,5 +350,53 @@ namespace Erp.Pro.Utils.工具类
         {
             return File.Exists(FullName);
         }
+
+        #region Json操作
+        /// <summary>
+        /// 创建json文件
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="json"></param>
+        public static void CreatNewJson(string Name, string json)
+        {
+            try
+            {
+                string path = System.IO.Directory.GetCurrentDirectory() + @"\menus\" + Name;
+                FileStream fsvbs = new FileStream(path, FileMode.Create, FileAccess.Write);
+                fsvbs.Close();
+                StreamWriter runBat = new StreamWriter(path);
+                runBat.Write(json);
+                runBat.Close();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        /// 读取JSON文件
+        /// </summary>
+        /// <param name="Name">JSON文件名</param>
+        /// <returns>JSON文件中的value值</returns>
+        public static JObject Readjson(string Name)
+        {
+            string jsonfile = System.IO.Directory.GetCurrentDirectory() + @"\menus\" + Name;//JSON文件路径
+            if (ExistsFile(jsonfile))
+            {
+                using (System.IO.StreamReader file = System.IO.File.OpenText(jsonfile))
+                {
+                    using (JsonTextReader reader = new JsonTextReader(file))
+                    {
+                        JObject o = (JObject)JToken.ReadFrom(reader);
+                        return o;
+                    }
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }

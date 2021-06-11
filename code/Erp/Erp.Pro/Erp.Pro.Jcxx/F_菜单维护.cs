@@ -1,9 +1,11 @@
 ﻿using DevExpress.XtraEditors;
 using Erp.Pro.Utils;
+using Erp.Pro.Utils.公共窗体;
 using Erp.Server.Helper;
 using System;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 using static Erp.Pro.Utils.C_实体信息;
 
 namespace Erp.Pro.Jcxx
@@ -116,6 +118,15 @@ namespace Erp.Pro.Jcxx
                 }
             }
             P_选择节点 = P_选择节点1;
+        }
+
+        private void u_菜单信息维护_页面信息维护(object sender, EventArgs e)
+        {
+            DataRow dr_焦点行 = u_菜单信息维护.GridView.GetDataRow(u_菜单信息维护.GridView.FocusedRowHandle);
+            F_页面信息维护 f = new F_页面信息维护(dr_焦点行["模块id"].ToString(), dr_焦点行["模块名"].ToString());
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog();
+            f.Dispose();
         }
     }
 }

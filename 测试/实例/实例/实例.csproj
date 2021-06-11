@@ -65,6 +65,7 @@
     <Compile Include="Await.Designer.cs">
       <DependentUpon>Await.cs</DependentUpon>
     </Compile>
+    <Compile Include="C_公共类.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

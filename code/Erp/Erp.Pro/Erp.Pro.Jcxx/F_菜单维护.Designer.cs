@@ -76,6 +76,7 @@
             this.u_菜单信息维护.新增处理 += new System.EventHandler(this.u_菜单信息维护_新增处理);
             this.u_菜单信息维护.修改处理 += new System.EventHandler(this.u_菜单信息维护_修改处理);
             this.u_菜单信息维护.刷新处理 += new System.EventHandler(this.u_菜单信息维护_刷新处理);
+            this.u_菜单信息维护.页面信息维护 += new System.EventHandler(this.u_菜单信息维护_页面信息维护);
             // 
             // F_菜单维护
             // 

@@ -22,6 +22,12 @@ namespace Erp.Server.Helper
             public int P_结果 { get; set; }
             public string P_结果描述 { get; set; }
 
+            public string P1 { get; set; }
+            public string P2 { get; set; }
+            public string P3 { get; set; }
+            public string P4 { get; set; }
+            public string P5 { get; set; }
+
             public void Clear()
             {
                 P_页面名 = string.Empty;
@@ -32,6 +38,12 @@ namespace Erp.Server.Helper
 
                 P_结果 = 0;
                 P_结果描述 = string.Empty;
+
+                P1= string.Empty;
+                P2 = string.Empty;
+                P3 = string.Empty;
+                P4 = string.Empty;
+                P5 = string.Empty;
             }
         }
     }

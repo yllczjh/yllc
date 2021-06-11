@@ -378,5 +378,18 @@ namespace Erp.Pro.Utils.自定义控件
             {
             }
         }
+
+        private void btn_页面信息维护_Click(object sender, EventArgs e)
+        {
+            OnAction_页面信息维护(null,null);
+        }
+        public event EventHandler 页面信息维护;
+        protected void OnAction_页面信息维护(object sender, EventArgs e)
+        {
+            if (页面信息维护 != null)
+            {
+                页面信息维护(sender, e);
+            }
+        }
     }
 }
