@@ -54,7 +54,7 @@ namespace Erp.Server.Init
 
         private static ServerHelper.Params Call_通用列表编辑(ServerHelper.Params param)
         {
-            C_通用业务 c_通用列表编辑 = new C_通用业务();
+            C_通用业务 c_通用业务 = new C_通用业务();
             ServerHelper.Params outParam = new ServerHelper.Params();
             //string str_功能 = param.p1?.ToString();
             //if (string.IsNullOrEmpty(str_功能))
@@ -63,7 +63,7 @@ namespace Erp.Server.Init
             //    outParam.P_返回描述 = "找不到方法!";
             //    return outParam;
             //}
-            outParam = c_通用列表编辑.M_通用列表编辑(param);
+            outParam = c_通用业务.M_通用列表编辑(param);
             return outParam;
         }
     }

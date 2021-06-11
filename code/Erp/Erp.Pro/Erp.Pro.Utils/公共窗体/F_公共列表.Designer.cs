@@ -89,6 +89,7 @@
             this.btn_刷新.Name = "btn_刷新";
             this.btn_刷新.Size = new System.Drawing.Size(52, 22);
             this.btn_刷新.Text = "刷新";
+            this.btn_刷新.Click += new System.EventHandler(this.btn_刷新_Click);
             // 
             // btn_新增
             // 
@@ -97,6 +98,7 @@
             this.btn_新增.Name = "btn_新增";
             this.btn_新增.Size = new System.Drawing.Size(52, 22);
             this.btn_新增.Text = "新增";
+            this.btn_新增.Click += new System.EventHandler(this.btn_新增_Click);
             // 
             // btn_修改
             // 
@@ -105,6 +107,7 @@
             this.btn_修改.Name = "btn_修改";
             this.btn_修改.Size = new System.Drawing.Size(52, 22);
             this.btn_修改.Text = "修改";
+            this.btn_修改.Click += new System.EventHandler(this.btn_修改_Click);
             // 
             // btn_导出
             // 
@@ -113,6 +116,7 @@
             this.btn_导出.Name = "btn_导出";
             this.btn_导出.Size = new System.Drawing.Size(52, 22);
             this.btn_导出.Text = "导出";
+            this.btn_导出.Click += new System.EventHandler(this.btn_导出_Click);
             // 
             // btn_保存样式
             // 
@@ -121,6 +125,7 @@
             this.btn_保存样式.Name = "btn_保存样式";
             this.btn_保存样式.Size = new System.Drawing.Size(76, 22);
             this.btn_保存样式.Text = "保存样式";
+            this.btn_保存样式.Click += new System.EventHandler(this.btn_保存样式_Click);
             // 
             // btn_删除
             // 
@@ -129,6 +134,7 @@
             this.btn_删除.Name = "btn_删除";
             this.btn_删除.Size = new System.Drawing.Size(52, 22);
             this.btn_删除.Text = "删除";
+            this.btn_删除.Click += new System.EventHandler(this.btn_删除_Click);
             // 
             // F_公共列表
             // 
@@ -139,6 +145,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "F_公共列表";
             this.Text = "F_公共列表";
+            this.Load += new System.EventHandler(this.F_公共列表_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GridControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);

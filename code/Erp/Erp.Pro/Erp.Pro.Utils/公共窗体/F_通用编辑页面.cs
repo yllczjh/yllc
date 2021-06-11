@@ -18,12 +18,15 @@ namespace Erp.Pro.Utils.公共窗体
         ServerHelper.Params outParam = new ServerHelper.Params();
         CurrencyManager cm_绑定管理;
 
-        private U_通用列表编辑 f_父窗体;
+        private U_通用列表编辑 f_父窗体0;
+        private F_公共列表 f_父窗体1;
         private DataTable dt_数据源;
         private int i_数据源行号 = 0;
         private int i_每行显示列数 = 3;
         private string str_操作类型 = "新增";
         private C_控件参数[] 控件参数;
+        private string str_页面名称;
+        private int i_窗体 = 0;//
 
         public bool P_结果 = false;
 
@@ -37,13 +40,28 @@ namespace Erp.Pro.Utils.公共窗体
         public F_通用编辑页面(U_通用列表编辑 f_父窗体)
         {
             InitializeComponent();
-
-            this.f_父窗体 = f_父窗体;
+            i_窗体 = 0;
+            this.f_父窗体0 = f_父窗体;
             this.str_操作类型 = f_父窗体.P_操作类型;
             this.dt_数据源 = f_父窗体.GridControl.DataSource as DataTable;
             this.i_每行显示列数 = f_父窗体.P_每行显示列数;
             this.i_数据源行号 = f_父窗体.P_焦点行;
             this.控件参数 = f_父窗体.P_控件参数;
+
+            显示页面();
+        }
+
+        public F_通用编辑页面(F_公共列表 f_父窗体)
+        {
+            InitializeComponent();
+            i_窗体 = 1;
+            this.f_父窗体1 = f_父窗体;
+            this.str_操作类型 = f_父窗体.P_操作类型;
+            this.dt_数据源 = f_父窗体.GridControl.DataSource as DataTable;
+            this.i_每行显示列数 = f_父窗体.P_每行显示列数;
+            this.i_数据源行号 = f_父窗体.P_焦点行;
+            this.控件参数 = f_父窗体.P_控件参数;
+            this.str_页面名称 = f_父窗体.P_页面名称;
 
             显示页面();
         }
@@ -57,7 +75,7 @@ namespace Erp.Pro.Utils.公共窗体
             {
                 cm_绑定管理.AddNew();
                 i_数据源行号 = cm_绑定管理.Position;
-                if((cm_绑定管理.List[i_数据源行号] as DataRowView).Row.Table.Columns.Contains("选择"))
+                if ((cm_绑定管理.List[i_数据源行号] as DataRowView).Row.Table.Columns.Contains("选择"))
                 {
                     (cm_绑定管理.List[i_数据源行号] as DataRowView).Row["选择"] = false;
                 }
@@ -234,7 +252,7 @@ namespace Erp.Pro.Utils.公共窗体
             {
                 inParam.Clear();
                 inParam.P_模块名 = E_模块名称.通用业务;
-                inParam.P_页面名 = f_父窗体.P_页面名称;
+                inParam.P_页面名 = str_页面名称;
                 inParam.P_方法名 = "新增";
                 inParam.P_数据行 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
@@ -247,7 +265,15 @@ namespace Erp.Pro.Utils.公共窗体
                         cm_绑定管理.ResumeBinding();
                         cm_绑定管理.AddNew();
                         i_数据源行号 = cm_绑定管理.Position;
-                        f_父窗体.P_焦点行 = cm_绑定管理.Position;
+                        if (i_窗体 == 0)
+                        {
+                            f_父窗体0.P_焦点行 = cm_绑定管理.Position;
+                        }
+                        else
+                        {
+                            f_父窗体1.P_焦点行 = cm_绑定管理.Position;
+                        }
+
                         M_初始化();
                     }
                     else
@@ -267,7 +293,7 @@ namespace Erp.Pro.Utils.公共窗体
             {
                 inParam.Clear();
                 inParam.P_模块名 = E_模块名称.通用业务;
-                inParam.P_页面名 = f_父窗体.P_页面名称;
+                inParam.P_页面名 = str_页面名称;
                 inParam.P_方法名 = "修改";
                 inParam.P_数据行 = (cm_绑定管理.List[i_数据源行号] as DataRowView).Row;
                 outParam = C_Server.Call(inParam);
@@ -303,7 +329,7 @@ namespace Erp.Pro.Utils.公共窗体
 
         private void F_通用编辑页面_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(f_父窗体.P_页面名称))
+            if (string.IsNullOrEmpty(str_页面名称))
             {
                 XtraMessageBox.Show("未设置编辑界面名称,请联系开发人员");
                 cm_绑定管理.CancelCurrentEdit();
@@ -372,46 +398,46 @@ namespace Erp.Pro.Utils.公共窗体
                 C_控件参数 entity = 控件参数[i];
                 //if (entity.是否必填)
                 //{
-                    Control[] array = this.Controls.Find(entity.数据名称, false);
-                    if (array.Length <= 0) continue;
-                    switch (entity.控件类型)
-                    {
-                        case E_控件类型.Win_Text:
-                            TextBox textBox = (TextBox)array[0];
-                            if (entity.自增)
-                            {
-                                int a;
-                                int.TryParse(textBox.Text,out a);
-                                textBox.Text = (a + 1).ToString();
-                            }
-                            else
-                            {
-                                textBox.Text = entity.默认值?.ToString();
-                            }
-                            break;
-                        case E_控件类型.Dev_Text:
-                            TextEdit textEdit = (TextEdit)array[0];
-                            if (entity.自增)
-                            {
-                                int a;
-                                int.TryParse(textEdit.Text, out a);
-                                textEdit.Text = (a + 1).ToString();
-                            }
-                            else
-                            {
-                                textEdit.Text = entity.默认值?.ToString();
-                            }
-                            break;
-                        case E_控件类型.Dev_LookUpEdit:
-                            LookUpEdit lookUpEdit = (LookUpEdit)array[0];
-                            //lookUpEdit.Text = entity.默认值?.ToString();
-                            break;
-                        case E_控件类型.Dev_CheckEdit:
-                            CheckEdit checkEdit = (CheckEdit)array[0];
-                            bool b = entity.默认值?.GetType() == typeof(bool) ? bool.Parse(entity.默认值.ToString()) : false;
-                            checkEdit.Checked = b;
-                            break;
-                    }
+                Control[] array = this.Controls.Find(entity.数据名称, false);
+                if (array.Length <= 0) continue;
+                switch (entity.控件类型)
+                {
+                    case E_控件类型.Win_Text:
+                        TextBox textBox = (TextBox)array[0];
+                        if (entity.自增)
+                        {
+                            int a;
+                            int.TryParse(textBox.Text, out a);
+                            textBox.Text = (a + 1).ToString();
+                        }
+                        else
+                        {
+                            textBox.Text = entity.默认值?.ToString();
+                        }
+                        break;
+                    case E_控件类型.Dev_Text:
+                        TextEdit textEdit = (TextEdit)array[0];
+                        if (entity.自增)
+                        {
+                            int a;
+                            int.TryParse(textEdit.Text, out a);
+                            textEdit.Text = (a + 1).ToString();
+                        }
+                        else
+                        {
+                            textEdit.Text = entity.默认值?.ToString();
+                        }
+                        break;
+                    case E_控件类型.Dev_LookUpEdit:
+                        LookUpEdit lookUpEdit = (LookUpEdit)array[0];
+                        //lookUpEdit.Text = entity.默认值?.ToString();
+                        break;
+                    case E_控件类型.Dev_CheckEdit:
+                        CheckEdit checkEdit = (CheckEdit)array[0];
+                        bool b = entity.默认值?.GetType() == typeof(bool) ? bool.Parse(entity.默认值.ToString()) : false;
+                        checkEdit.Checked = b;
+                        break;
+                }
                 //}
             }
         }

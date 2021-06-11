@@ -47,7 +47,7 @@ namespace Erp.Pro.Utils.公共窗体
                 dt_数据源.Columns.Add("只读", typeof(bool));
                 dt_数据源.Columns.Add("默认值", typeof(string));
                 dt_数据源.Columns.Add("自增", typeof(bool));
-                dt_数据源.Columns.Add("必填", typeof(bool));
+                dt_数据源.Columns.Add("是否必填", typeof(bool));
                 foreach (DataRow row in dt_数据源.Rows)
                 {
                     row["是否显示"] = true;
@@ -55,7 +55,7 @@ namespace Erp.Pro.Utils.公共窗体
                     row["值唯一"] = false;
                     row["只读"] = false;
                     row["自增"] = false;
-                    row["必填"] = Convert.ToBoolean(row["必填1"]);
+                    row["是否必填"] = Convert.ToBoolean(row["必填1"]);
                 }
                 dt_数据源.Columns.Remove("必填1");
 
@@ -71,6 +71,9 @@ namespace Erp.Pro.Utils.公共窗体
         {
             JObject j = new JObject();
             j.Add("tablename",txt_数据表.Text);
+            j.Add("columesnum", num_每行显示列数.Text);
+            j.Add("filter", txt_过滤条件.Text);
+
             DataTable dt = GridControl.DataSource as DataTable;
             string json = JsonConvert.SerializeObject(dt);
             j.Add("dataset", json);
@@ -85,22 +88,29 @@ namespace Erp.Pro.Utils.公共窗体
         private void btn_下移_Click(object sender, EventArgs e)
         {
 
+
         }
-
-
 
         private void F_页面信息维护_Load(object sender, EventArgs e)
         {
-            JObject o =FileHelper.Readjson(txt_模块id.Text + "1.json");
-            DataTable dt = new DataTable();
-            dt = JsonConvert.DeserializeObject<DataTable>(o["dataset"].ToString());
-            GridControl.DataSource = dt;
-
+            //设置控件类型数据源
             Array temp = Enum.GetValues(typeof(E_控件类型));
             for (int i = 0; i < temp.Length; i++)
             {
                 string info = temp.GetValue(i).ToString();
                 rep_com_控件类型.Items.Add(info);
+            }
+
+            JObject o =FileHelper.Readjson(txt_模块id.Text + ".json");
+            if (null != o)
+            {
+                txt_数据表.Text = o["tablename"]?.ToString();
+                num_每行显示列数.Text = o["columesnum"]?.ToString();
+                txt_过滤条件.Text = o["filter"]?.ToString();
+
+                DataTable dt = new DataTable();
+                dt = JsonConvert.DeserializeObject<DataTable>(o["dataset"].ToString());
+                GridControl.DataSource = dt;
             }
         }
     }

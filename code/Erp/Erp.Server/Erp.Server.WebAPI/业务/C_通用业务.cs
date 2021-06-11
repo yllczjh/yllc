@@ -106,7 +106,7 @@ namespace Erp.Server.WebAPI.业务
                     inObject.Add("sql", $"update xt_yh set 密码='{row["密码"]}',性别='{row["性别"]}',出生日期='{row["出生日期"]}',手机号码='{row["手机号码"]}',现住址='{row["现住址"]}',头像地址='{row["头像地址"]}',禁用='{row["禁用"]}' where rowid='{row["rowid"]}'");
                     break;
                 case "菜单维护":
-                    inObject.Add("sql", $"update xt_mk set 模块名='{row["模块名"]}' where rowid='{row["rowid"]}'");
+                    inObject.Add("sql", $"update xt_mk set 模块名='{row["模块名"]}',命令='{row["命令"]}',参数='{row["参数"]}',图标='{row["图标"]}',程序集名='{row["程序集名"]}',窗口名='{row["窗口名"]}' where rowid='{row["rowid"]}'");
                     break;
             }
         }
@@ -153,9 +153,12 @@ namespace Erp.Server.WebAPI.业务
                     inObject.Add("sql", $"select * from xt_mk where 系统id='{C_实体信息.C_共享变量.系统ID}'");
                     break;
                 case "页面信息维护":
-                    inObject.Add("sql", $"select column_name as 字段名,data_type as 类型,character_maximum_length as 长度,(case when is_nullable='NO' then 'True' else 'False' end) as 必填1 from information_schema.columns where table_name = 'xt_yh'");
+                    inObject.Add("sql", $"select column_name as 字段名,data_type as 类型,character_maximum_length as 长度,(case when is_nullable='NO' then 'True' else 'False' end) as 必填1 from information_schema.columns where table_name = '{inParam.P1}'");
                     break;
-                    
+                case "公共列表":
+                    inObject.Add("sql", $"select * from {inParam.P1}");
+                    break;
+
             }
         }
         /// <summary>

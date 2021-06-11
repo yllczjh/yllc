@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.num_每行显示列数 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txt_过滤条件 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_数据表 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,7 +49,7 @@
             this.rep_com_控件类型 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.是否显示 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-            this.必填 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.是否必填 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.是否填充 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.值唯一 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.只读 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -61,6 +63,7 @@
             this.btn_下移 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_每行显示列数)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridControl)).BeginInit();
@@ -72,7 +75,9 @@
             // 
             // groupControl2
             // 
-            this.groupControl2.Controls.Add(this.textBox1);
+            this.groupControl2.Controls.Add(this.num_每行显示列数);
+            this.groupControl2.Controls.Add(this.label5);
+            this.groupControl2.Controls.Add(this.txt_过滤条件);
             this.groupControl2.Controls.Add(this.label4);
             this.groupControl2.Controls.Add(this.txt_数据表);
             this.groupControl2.Controls.Add(this.label3);
@@ -83,16 +88,48 @@
             this.groupControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1153, 102);
+            this.groupControl2.Size = new System.Drawing.Size(1153, 121);
             this.groupControl2.TabIndex = 12;
-            this.groupControl2.Text = "groupControl2";
+            this.groupControl2.Text = "基础设置";
             // 
-            // textBox1
+            // num_每行显示列数
             // 
-            this.textBox1.Location = new System.Drawing.Point(339, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(391, 22);
-            this.textBox1.TabIndex = 24;
+            this.num_每行显示列数.Location = new System.Drawing.Point(140, 91);
+            this.num_每行显示列数.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.num_每行显示列数.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.num_每行显示列数.Name = "num_每行显示列数";
+            this.num_每行显示列数.ReadOnly = true;
+            this.num_每行显示列数.Size = new System.Drawing.Size(82, 22);
+            this.num_每行显示列数.TabIndex = 27;
+            this.num_每行显示列数.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(15, 93);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(119, 14);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "编辑页每行显示列数:";
+            // 
+            // txt_过滤条件
+            // 
+            this.txt_过滤条件.Location = new System.Drawing.Point(339, 64);
+            this.txt_过滤条件.Name = "txt_过滤条件";
+            this.txt_过滤条件.Size = new System.Drawing.Size(391, 22);
+            this.txt_过滤条件.TabIndex = 24;
             // 
             // label4
             // 
@@ -158,9 +195,9 @@
             this.groupControl1.Controls.Add(this.GridControl);
             this.groupControl1.Controls.Add(this.toolStrip1);
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupControl1.Location = new System.Drawing.Point(0, 102);
+            this.groupControl1.Location = new System.Drawing.Point(0, 121);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1153, 456);
+            this.groupControl1.Size = new System.Drawing.Size(1153, 437);
             this.groupControl1.TabIndex = 13;
             this.groupControl1.Text = "设置列表编辑界面";
             // 
@@ -174,7 +211,7 @@
             this.GridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.rep_com_控件类型,
             this.repositoryItemCheckEdit1});
-            this.GridControl.Size = new System.Drawing.Size(1149, 407);
+            this.GridControl.Size = new System.Drawing.Size(1149, 388);
             this.GridControl.TabIndex = 13;
             this.GridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GridView});
@@ -189,7 +226,7 @@
             this.长度,
             this.控件类型,
             this.是否显示,
-            this.必填,
+            this.是否必填,
             this.是否填充,
             this.值唯一,
             this.只读,
@@ -268,15 +305,15 @@
             this.repositoryItemCheckEdit1.Caption = "Check";
             this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             // 
-            // 必填
+            // 是否必填
             // 
-            this.必填.Caption = "必填";
-            this.必填.ColumnEdit = this.repositoryItemCheckEdit1;
-            this.必填.FieldName = "必填";
-            this.必填.Name = "必填";
-            this.必填.Visible = true;
-            this.必填.VisibleIndex = 6;
-            this.必填.Width = 50;
+            this.是否必填.Caption = "是否必填";
+            this.是否必填.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.是否必填.FieldName = "是否必填";
+            this.是否必填.Name = "是否必填";
+            this.是否必填.Visible = true;
+            this.是否必填.VisibleIndex = 6;
+            this.是否必填.Width = 59;
             // 
             // 是否填充
             // 
@@ -396,6 +433,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             this.groupControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_每行显示列数)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.groupControl1.PerformLayout();
@@ -411,7 +449,7 @@
 
         #endregion
         private DevExpress.XtraEditors.GroupControl groupControl2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_过滤条件;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txt_数据表;
         private System.Windows.Forms.Label label3;
@@ -429,7 +467,7 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox rep_com_控件类型;
         private DevExpress.XtraGrid.Columns.GridColumn 是否显示;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
-        private DevExpress.XtraGrid.Columns.GridColumn 必填;
+        private DevExpress.XtraGrid.Columns.GridColumn 是否必填;
         private DevExpress.XtraGrid.Columns.GridColumn 是否填充;
         private DevExpress.XtraGrid.Columns.GridColumn 值唯一;
         private DevExpress.XtraGrid.Columns.GridColumn 只读;
@@ -441,5 +479,7 @@
         private System.Windows.Forms.ToolStripButton btn_上移;
         private System.Windows.Forms.ToolStripButton btn_下移;
         private System.Windows.Forms.ToolStripButton btn_加载;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown num_每行显示列数;
     }
 }
