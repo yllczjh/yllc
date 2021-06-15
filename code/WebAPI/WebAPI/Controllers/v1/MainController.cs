@@ -74,7 +74,7 @@ namespace WebAPI.Controllers.v1
                         {
                             userModel = new UserModel();
                         }
-                        userModel.onlyid = msg.appid;
+                        userModel.onlyid = p["username"]?.ToString();
                         userModel.loginmethod = msg.method;
                         token = new TokenModel(msg);
                         userModel.token = token;

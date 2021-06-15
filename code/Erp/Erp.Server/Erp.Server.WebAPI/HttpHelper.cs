@@ -72,19 +72,19 @@ namespace Erp.Server.WebAPI
 
             HttpResponseMessage response = client.PostAsync(C_实体信息.C_共享变量.ServicesAddress, httpContent).Result;
 
-            string statusCode = response.StatusCode.ToString();
-            if (response.IsSuccessStatusCode)
+            //string statusCode = response.StatusCode.ToString();
+            //if (response.IsSuccessStatusCode)
+            //{
+            string result = response.Content.ReadAsStringAsync().Result;
+            JObject ob = (JObject)JsonConvert.DeserializeObject(result);
+            if (null != ob.GetValue("token"))
             {
-                string result = response.Content.ReadAsStringAsync().Result;
-                JObject ob = (JObject)JsonConvert.DeserializeObject(result);
-                if (null != ob.GetValue("token"))
-                {
-                    JObject t = (JObject)ob.GetValue("token");
-                    accessToken = t.GetValue("accessToken").ToString();
-                }
-                return ob;
+                JObject t = (JObject)ob.GetValue("token");
+                accessToken = t.GetValue("accessToken").ToString();
             }
-            return null;
+            return ob;
+            //}
+            //return null;
         }
     }
 }

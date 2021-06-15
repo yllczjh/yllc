@@ -88,12 +88,24 @@ namespace Erp.Pro.Utils.自定义控件
                 {
                     row["选择"] = false;
                 }
+
                 OnAction_刷新(null, null, dt_数据源);
 
                 dt_数据源.DefaultView.RowFilter = P_过滤条件;
                 dt_数据源 = dt_数据源.DefaultView.ToTable();
 
                 GridControl.DataSource = dt_数据源;
+                foreach (GridColumn column in GridView.Columns)
+                {
+                    if (column.FieldName == "选择")
+                    {
+                        column.OptionsColumn.ReadOnly = false;
+                    }
+                    else
+                    {
+                        column.OptionsColumn.ReadOnly = true;
+                    }
+                }
                 C_样式设置.Init(GridView);
             }
             else
@@ -178,21 +190,7 @@ namespace Erp.Pro.Utils.自定义控件
                 {
                     XtraMessageBox.Show("删除成功!", "提示");
                     M_加载列表数据();
-                    //if (dt_删除行.Rows.Count <= 0)
-                    //{
-                    //    GridView.DeleteSelectedRows();
-                    //}
-                    //else
-                    //{
-                    //    for (int i = GridView.RowCount - 1; i > 0; i--)
-                    //    {
-                    //        DataRow dr = GridView.GetDataRow(i);
-                    //        if (dr["选择"].ToString() == "True")
-                    //        {
-                    //            GridView.DeleteRow(i);
-                    //        }
-                    //    }
-                    //}
+
                     GridView.FocusedRowHandle = P_焦点行;
                 }
                 else
@@ -267,6 +265,17 @@ namespace Erp.Pro.Utils.自定义控件
             }
 
             GridControl.DataSource = dt_数据源;
+            foreach (GridColumn column in GridView.Columns)
+            {
+                if (column.FieldName == "选择")
+                {
+                    column.OptionsColumn.ReadOnly = false;
+                }
+                else
+                {
+                    column.OptionsColumn.ReadOnly = true;
+                }
+            }
             C_样式设置.Init(GridView);
         }
         #region 右键菜单
@@ -381,7 +390,7 @@ namespace Erp.Pro.Utils.自定义控件
 
         private void btn_页面信息维护_Click(object sender, EventArgs e)
         {
-            OnAction_页面信息维护(null,null);
+            OnAction_页面信息维护(null, null);
         }
         public event EventHandler 页面信息维护;
         protected void OnAction_页面信息维护(object sender, EventArgs e)

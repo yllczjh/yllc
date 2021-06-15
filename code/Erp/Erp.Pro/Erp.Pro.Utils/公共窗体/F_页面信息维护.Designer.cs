@@ -47,8 +47,10 @@
             this.长度 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.控件类型 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.rep_com_控件类型 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.显示名称 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.是否显示 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
+            this.是否主键 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.是否必填 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.是否填充 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.值唯一 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -225,7 +227,9 @@
             this.类型,
             this.长度,
             this.控件类型,
+            this.显示名称,
             this.是否显示,
+            this.是否主键,
             this.是否必填,
             this.是否填充,
             this.值唯一,
@@ -289,6 +293,15 @@
             this.rep_com_控件类型.Name = "rep_com_控件类型";
             this.rep_com_控件类型.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
+            // 显示名称
+            // 
+            this.显示名称.Caption = "显示名称";
+            this.显示名称.FieldName = "显示名称";
+            this.显示名称.Name = "显示名称";
+            this.显示名称.Visible = true;
+            this.显示名称.VisibleIndex = 4;
+            this.显示名称.Width = 124;
+            // 
             // 是否显示
             // 
             this.是否显示.Caption = "是否显示";
@@ -296,7 +309,7 @@
             this.是否显示.FieldName = "是否显示";
             this.是否显示.Name = "是否显示";
             this.是否显示.Visible = true;
-            this.是否显示.VisibleIndex = 4;
+            this.是否显示.VisibleIndex = 5;
             this.是否显示.Width = 60;
             // 
             // repositoryItemCheckEdit1
@@ -305,6 +318,16 @@
             this.repositoryItemCheckEdit1.Caption = "Check";
             this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             // 
+            // 是否主键
+            // 
+            this.是否主键.Caption = "是否主键";
+            this.是否主键.ColumnEdit = this.repositoryItemCheckEdit1;
+            this.是否主键.FieldName = "是否主键";
+            this.是否主键.Name = "是否主键";
+            this.是否主键.Visible = true;
+            this.是否主键.VisibleIndex = 6;
+            this.是否主键.Width = 60;
+            // 
             // 是否必填
             // 
             this.是否必填.Caption = "是否必填";
@@ -312,7 +335,7 @@
             this.是否必填.FieldName = "是否必填";
             this.是否必填.Name = "是否必填";
             this.是否必填.Visible = true;
-            this.是否必填.VisibleIndex = 6;
+            this.是否必填.VisibleIndex = 7;
             this.是否必填.Width = 59;
             // 
             // 是否填充
@@ -322,7 +345,7 @@
             this.是否填充.FieldName = "是否填充";
             this.是否填充.Name = "是否填充";
             this.是否填充.Visible = true;
-            this.是否填充.VisibleIndex = 7;
+            this.是否填充.VisibleIndex = 8;
             this.是否填充.Width = 60;
             // 
             // 值唯一
@@ -332,7 +355,7 @@
             this.值唯一.FieldName = "值唯一";
             this.值唯一.Name = "值唯一";
             this.值唯一.Visible = true;
-            this.值唯一.VisibleIndex = 8;
+            this.值唯一.VisibleIndex = 9;
             this.值唯一.Width = 55;
             // 
             // 只读
@@ -342,7 +365,7 @@
             this.只读.FieldName = "只读";
             this.只读.Name = "只读";
             this.只读.Visible = true;
-            this.只读.VisibleIndex = 5;
+            this.只读.VisibleIndex = 10;
             this.只读.Width = 50;
             // 
             // 自增
@@ -352,7 +375,7 @@
             this.自增.FieldName = "自增";
             this.自增.Name = "自增";
             this.自增.Visible = true;
-            this.自增.VisibleIndex = 9;
+            this.自增.VisibleIndex = 11;
             this.自增.Width = 50;
             // 
             // 默认值
@@ -361,7 +384,7 @@
             this.默认值.FieldName = "默认值";
             this.默认值.Name = "默认值";
             this.默认值.Visible = true;
-            this.默认值.VisibleIndex = 10;
+            this.默认值.VisibleIndex = 12;
             this.默认值.Width = 150;
             // 
             // 数据源
@@ -369,7 +392,7 @@
             this.数据源.Caption = "数据源";
             this.数据源.Name = "数据源";
             this.数据源.Visible = true;
-            this.数据源.VisibleIndex = 11;
+            this.数据源.VisibleIndex = 13;
             // 
             // toolStrip1
             // 
@@ -481,5 +504,7 @@
         private System.Windows.Forms.ToolStripButton btn_加载;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown num_每行显示列数;
+        private DevExpress.XtraGrid.Columns.GridColumn 显示名称;
+        private DevExpress.XtraGrid.Columns.GridColumn 是否主键;
     }
 }

@@ -24,10 +24,12 @@ namespace Erp.Pro.Utils
         public static void M_绑定控件(ComboBoxEdit com_绑定控件, C_数据源 c_数据源)
         {
             com_绑定控件.Properties.Items.Clear();
-
-            foreach (string str in c_数据源.list)
+            if (null != c_数据源?.list)
             {
-                com_绑定控件.Properties.Items.Add(str);
+                foreach (string str in c_数据源.list)
+                {
+                    com_绑定控件.Properties.Items.Add(str);
+                }
             }
         }
 

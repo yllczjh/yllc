@@ -85,7 +85,7 @@ namespace Erp.Pro.Utils.公共窗体
                 cm_绑定管理.Position = i_数据源行号;
             }
             int label_width = M_获取Label_Width(控件参数);
-            this.Width = 200 * i_每行显示列数;
+            this.Width = 200 * i_每行显示列数 + 20;
             Label l = new Label();
 
             for (int i = 0; i < 控件参数.Length; i++)
@@ -170,7 +170,7 @@ namespace Erp.Pro.Utils.公共窗体
                         dateTimePicker.Width = entity.是否填充 ? 120 + (i_每行显示列数 - i_列号) * 200 : 120;
                         if (str_操作类型 == "新增")
                         {
-                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值 ?? "1900-01-01";
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = (null == entity.默认值 || entity.默认值 is System.DBNull) ? "1900-01-01" : entity.默认值;
                         }
                         dateTimePicker.DataBindings.Add("Text", dt_数据源, entity.数据名称);
                         dateTimePicker.Enabled = !entity.只读;
@@ -186,7 +186,7 @@ namespace Erp.Pro.Utils.公共窗体
                         checkEdit.Text = "";
                         if (str_操作类型 == "新增")
                         {
-                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = entity.默认值 ?? false;
+                            (cm_绑定管理.List[i_数据源行号] as DataRowView).Row[entity.数据名称] = (null == entity.默认值 || entity.默认值 is System.DBNull) ? false : entity.默认值;
                         }
 
                         checkEdit.DataBindings.Add("Checked", dt_数据源, entity.数据名称);

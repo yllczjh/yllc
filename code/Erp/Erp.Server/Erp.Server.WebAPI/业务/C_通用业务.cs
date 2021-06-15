@@ -121,6 +121,9 @@ namespace Erp.Server.WebAPI.业务
                 case "菜单维护":
                     inObject.Add("sql", $"delete from xt_mk where rowid in({M_获取主键IN(dt, "rowid")})");
                     break;
+                case "公共列表":
+                    inObject.Add("sql", $"delete from {inParam.P1} where rowid in({M_获取主键IN(dt, "rowid")})");
+                    break;
             }
         }
         private void M_保存(ServerHelper.Params inParam, ref JObject inObject)
@@ -132,7 +135,8 @@ namespace Erp.Server.WebAPI.业务
                     if (string.IsNullOrEmpty(row["rowid"]?.ToString()))
                     {
                         inObject.Add("sql", $"insert into xt_yslb(系统ID,用户ID,样式ID,字段名,显示名称,宽度,排序) values ('{row["系统ID"]}','{row["用户ID"]}','{row["样式ID"]}','{row["字段名"]}','{row["显示名称"]}','{row["宽度"]}','{row["排序"]}')");
-                    }else
+                    }
+                    else
                     {
                         inObject.Add("sql", $"update xt_yslb set 显示名称='{row["显示名称"]}',宽度='{row["宽度"]}',排序='{row["排序"]}' where rowid='{row["rowid"]}'");
                     }
@@ -153,12 +157,18 @@ namespace Erp.Server.WebAPI.业务
                     inObject.Add("sql", $"select * from xt_mk where 系统id='{C_实体信息.C_共享变量.系统ID}'");
                     break;
                 case "页面信息维护":
-                    inObject.Add("sql", $"select column_name as 字段名,data_type as 类型,character_maximum_length as 长度,(case when is_nullable='NO' then 'True' else 'False' end) as 必填1 from information_schema.columns where table_name = '{inParam.P1}'");
+                    inObject.Add("sql", $@"select column_name as 字段名,data_type as 类型,character_maximum_length as 长度,(case when is_nullable='NO' then convert(bit,'true') else convert(bit,'false') end) as 是否必填,
+                                            CASE WHEN EXISTS ( SELECT 1 FROM  INFORMATION_SCHEMA.KEY_COLUMN_USAGE c WHERE  c.TABLE_NAME= t.table_name and c.column_name=t.column_name ) THEN convert(bit,'true') ELSE convert(bit,'false') END AS 是否主键  
+                                            from information_schema.columns t where t.table_name = '{inParam.P1}'");
                     break;
                 case "公共列表":
-                    inObject.Add("sql", $"select * from {inParam.P1}");
+                    string sql = $"select * from {inParam.P1}";
+                    if (!string.IsNullOrEmpty(inParam.P2))
+                    {
+                        sql = sql + " where " + inParam.P2;
+                    }
+                    inObject.Add("sql", sql);
                     break;
-
             }
         }
         /// <summary>
