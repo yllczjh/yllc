@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -58,6 +60,14 @@ namespace WebAPI.Controllers.v1
             );
 
             return Json(dic, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+        }
+        public static JToken JsonValue(JObject p, string name)
+        {
+            if (null == p)
+            {
+                return null;
+            }
+            return p.GetValue(name, StringComparison.InvariantCultureIgnoreCase);
         }
         public IHttpActionResult RedirectWX()
         {

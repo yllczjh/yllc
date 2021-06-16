@@ -1,4 +1,6 @@
 ﻿using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Erp.Pro.Utils.工具类;
 using Erp.Server.Helper;
 using Erp.Server.Init;
@@ -6,6 +8,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
 using static Erp.Server.Helper.ServerHelper;
 
 namespace Erp.Pro.Utils.公共窗体
@@ -161,6 +165,33 @@ namespace Erp.Pro.Utils.公共窗体
             }
             GridView.FocusedRowHandle = i_行号;
             GridView.SelectRow(i_行号);
+        }
+
+        private void GridView_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            //GridView gridView = (GridView)sender;
+            //if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            //{
+            //    GridHitInfo hitInfo = gridView.CalcHitInfo(e.Location);
+            //    if (hitInfo.InRowCell )
+            //    {
+            //        //&& hitInfo.Column == this.gridColumn
+            //        //MessageBox.Show("Click " + hitInfo.RowHandle);
+            //    }
+            //}
+
+
+           
+            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            {
+                GridHitInfo hInfo = GridView.CalcHitInfo(e.Location);
+                //判断光标是否在行范围内
+                if (hInfo.InRowCell)
+                {
+                    //btn_修改_Click(null, null);
+                }
+            }
+
         }
     }
 }

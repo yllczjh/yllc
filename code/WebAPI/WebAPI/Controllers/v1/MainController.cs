@@ -29,6 +29,10 @@ namespace WebAPI.Controllers.v1
             Dictionary<string, object> result;
             UserModel userModel;
             TokenModel token;
+            if (null == p)
+            {
+                p = new JObject();
+            }
             try
             {
                 if (msg.method.Contains("login"))

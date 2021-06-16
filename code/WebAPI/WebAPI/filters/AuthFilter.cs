@@ -185,7 +185,7 @@ namespace WebAPI.filters
                     goto 退出;
                 }
 
-                if ((DateTime.Now - dt_请求时间).TotalMinutes > 5)
+                if ((DateTime.Now - dt_请求时间).TotalMinutes > 5 && Config.YanZheng == "1")
                 {
                     Code.Result(ref msg, 编码.消息头错误, "请求消息已超时");
                     goto 退出;

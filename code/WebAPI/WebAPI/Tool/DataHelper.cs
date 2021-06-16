@@ -82,7 +82,7 @@ namespace WebAPI.Tool
                             {
                                 //包含query节点则有点读取query节点下的参数
                                 dic_query = arr_query[i] as JObject;
-                                parameters_主 = ToolFunction.GetParameter(str_sql, dic_query, param, ref msg);
+                                parameters_主 = ToolFunction.GetParameter(ref str_sql, dic_query, param, ref msg);
                                 if (msg.errcode != 0)
                                 {
                                     return null;
@@ -100,7 +100,7 @@ namespace WebAPI.Tool
                             else
                             {
                                 //不包含query节点则读取主节点的参数
-                                parameters_主 = ToolFunction.GetParameter(str_sql, param, null, ref msg);
+                                parameters_主 = ToolFunction.GetParameter(ref str_sql, param, null, ref msg);
                                 if (msg.errcode != 0)
                                 {
                                     return null;

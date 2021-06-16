@@ -18,7 +18,7 @@ namespace WebAPI.Tool
     public class ToolFunction
     {
         #region 数据处理相关
-        public static SqlParameter[] GetParameter(string str_sql, JObject p, JObject p1, ref MessageModel msg)
+        public static SqlParameter[] GetParameter(ref string str_sql, JObject p, JObject p1, ref MessageModel msg)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace WebAPI.Tool
                 }
                 if (list_SQL参数.Count > 0)
                 {
-                    SqlParameter[] parameters = new SqlParameter[list_SQL参数.Count];
+                    List<SqlParameter> parameters = new List<SqlParameter>();
                     for (int i = 0; i < list_SQL参数.Count; i++)
                     {
                         string str_参数名 = list_SQL参数[i].ToString();
@@ -50,8 +50,16 @@ namespace WebAPI.Tool
                             }
                             else
                             {
-                                Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
-                                return null;
+                                if (str_sql.TrimStart().IndexOf("exec ", StringComparison.OrdinalIgnoreCase) == 0 && str_参数名 != "user")
+                                {
+                                    str_sql = str_sql.Replace("?" + str_参数名, "default");
+                                    continue;
+                                }
+                                else
+                                {
+                                    Code.Result(ref msg, 编码.参数错误, "SQL中参数[" + str_参数名 + "]不存在!");
+                                    return null;
+                                }
                             }
                         }
                         else
@@ -64,14 +72,14 @@ namespace WebAPI.Tool
                         }
                         if (null == str_参数值)
                         {
-                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value);
+                            parameters.Add(new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value));
                         }
                         else
                         {
-                            parameters[i] = new SqlParameter(str_参数名.Replace("?", "@"), str_参数值.ToString());
+                            parameters.Add(new SqlParameter(str_参数名.Replace("?", "@"), str_参数值?.ToString()));
                         }
                     }
-                    return parameters;
+                    return parameters.ToArray();
                 }
                 else
                 {
@@ -170,10 +178,7 @@ namespace WebAPI.Tool
                 string str_主更新语言 = row["主更新语言"].ToString();
                 if (null != param["dataset"])
                 {
-                    out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
-                    out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
-                    out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
-                    out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
+
                     if (null != param["datacount"])
                     {
                         out_dic.Add("datacount", param["datacount"]);
@@ -191,7 +196,7 @@ namespace WebAPI.Tool
                     {
                         Dictionary<string, object> out_主记录参数对象 = new Dictionary<string, object>();
                         JObject in_主记录对象 = in_主记录集合[i] as JObject;
-                        out_主记录参数对象.Add("dataparam", GetParameter(str_主插入语言, in_主记录对象, null, ref msg));
+                        out_主记录参数对象.Add("dataparam", GetParameter(ref str_主插入语言, in_主记录对象, null, ref msg));
                         if (msg.errcode != 0)
                         {
                             return null;
@@ -199,7 +204,7 @@ namespace WebAPI.Tool
 
                         if (!string.IsNullOrEmpty(str_主更新语言))
                         {
-                            out_主记录参数对象.Add("updateparam", GetParameter(str_主更新语言, in_主记录对象, null, ref msg));
+                            out_主记录参数对象.Add("updateparam", GetParameter(ref str_主更新语言, in_主记录对象, null, ref msg));
                             if (msg.errcode != 0)
                             {
                                 return null;
@@ -225,7 +230,7 @@ namespace WebAPI.Tool
                                 for (int j = 0; j < in_明细记录集合.Count; j++)
                                 {
                                     JObject in_明细记录对象 = in_明细记录集合[j] as JObject;
-                                    out_明细参数集合.Add(GetParameter(str_明细插入语言, in_明细记录对象, in_主记录对象, ref msg));
+                                    out_明细参数集合.Add(GetParameter(ref str_明细插入语言, in_明细记录对象, in_主记录对象, ref msg));
                                     if (msg.errcode != 0)
                                     {
                                         return null;
@@ -245,13 +250,18 @@ namespace WebAPI.Tool
 
                     if (!string.IsNullOrEmpty(str_完成语言))
                     {
-                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(str_完成语言, param, null, ref msg);
+                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(ref str_完成语言, param, null, ref msg);
                         if (msg.errcode != 0)
                         {
                             return null;
                         }
                         out_dic.Add("finishparam", parameters_主);
                     }
+
+                    out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
+                    out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
+                    out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
+                    out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
                 }
                 else
                 {

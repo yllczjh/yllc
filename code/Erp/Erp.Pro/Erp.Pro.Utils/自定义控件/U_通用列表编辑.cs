@@ -373,7 +373,7 @@ namespace Erp.Pro.Utils.自定义控件
         {
             try
             {
-                GridHitInfo hInfo = GridView.CalcHitInfo(new Point(e.X, e.Y));
+                GridHitInfo hInfo = GridView.CalcHitInfo(e.Location);
                 if (e.Button == MouseButtons.Left && e.Clicks == 2)//判断是否左键双击
                 {
                     //判断光标是否在行范围内

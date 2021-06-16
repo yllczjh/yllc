@@ -58,6 +58,7 @@
             this.自增 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.默认值 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.数据源 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btn_加载 = new System.Windows.Forms.ToolStripButton();
             this.btn_保存 = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +73,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rep_com_控件类型)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,7 +92,7 @@
             this.groupControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupControl2.Location = new System.Drawing.Point(0, 0);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1153, 121);
+            this.groupControl2.Size = new System.Drawing.Size(1202, 121);
             this.groupControl2.TabIndex = 12;
             this.groupControl2.Text = "基础设置";
             // 
@@ -199,7 +201,7 @@
             this.groupControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupControl1.Location = new System.Drawing.Point(0, 121);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1153, 437);
+            this.groupControl1.Size = new System.Drawing.Size(1202, 437);
             this.groupControl1.TabIndex = 13;
             this.groupControl1.Text = "设置列表编辑界面";
             // 
@@ -212,8 +214,9 @@
             this.GridControl.Name = "GridControl";
             this.GridControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.rep_com_控件类型,
-            this.repositoryItemCheckEdit1});
-            this.GridControl.Size = new System.Drawing.Size(1149, 388);
+            this.repositoryItemCheckEdit1,
+            this.repositoryItemHyperLinkEdit1});
+            this.GridControl.Size = new System.Drawing.Size(1198, 388);
             this.GridControl.TabIndex = 13;
             this.GridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GridView});
@@ -246,6 +249,7 @@
             this.GridView.OptionsMenu.EnableColumnMenu = false;
             this.GridView.OptionsView.ColumnAutoWidth = false;
             this.GridView.OptionsView.ShowGroupPanel = false;
+            this.GridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseUp);
             // 
             // 字段名
             // 
@@ -390,9 +394,16 @@
             // 数据源
             // 
             this.数据源.Caption = "数据源";
+            this.数据源.ColumnEdit = this.repositoryItemHyperLinkEdit1;
             this.数据源.Name = "数据源";
             this.数据源.Visible = true;
             this.数据源.VisibleIndex = 13;
+            // 
+            // repositoryItemHyperLinkEdit1
+            // 
+            this.repositoryItemHyperLinkEdit1.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit1.Caption = "设置数据源";
+            this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
             // 
             // toolStrip1
             // 
@@ -403,7 +414,7 @@
             this.btn_下移});
             this.toolStrip1.Location = new System.Drawing.Point(2, 22);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1149, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1198, 25);
             this.toolStrip1.TabIndex = 12;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -447,7 +458,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1153, 558);
+            this.ClientSize = new System.Drawing.Size(1202, 558);
             this.Controls.Add(this.groupControl1);
             this.Controls.Add(this.groupControl2);
             this.Name = "F_页面信息维护";
@@ -464,6 +475,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rep_com_控件类型)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -506,5 +518,6 @@
         private System.Windows.Forms.NumericUpDown num_每行显示列数;
         private DevExpress.XtraGrid.Columns.GridColumn 显示名称;
         private DevExpress.XtraGrid.Columns.GridColumn 是否主键;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
     }
 }
