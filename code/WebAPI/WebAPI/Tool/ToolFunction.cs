@@ -179,15 +179,15 @@ namespace WebAPI.Tool
                 if (null != param["dataset"])
                 {
 
-                    if (null != param["datacount"])
-                    {
-                        out_dic.Add("datacount", param["datacount"]);
-                    }
-                    else
-                    {
-                        Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
-                        return null;
-                    }
+                    //if (null != param["datacount"])
+                    //{
+                    //    out_dic.Add("datacount", param["datacount"]);
+                    //}
+                    //else
+                    //{
+                    //    Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
+                    //    return null;
+                    //}
 
 
                     JArray in_主记录集合 = param["dataset"] as JArray;
@@ -214,15 +214,15 @@ namespace WebAPI.Tool
 
                         if (null != in_主记录对象["datadetail"])
                         {
-                            if (null != in_主记录对象["rowcount"])
-                            {
-                                out_主记录参数对象.Add("rowcount", in_主记录对象["rowcount"]);
-                            }
-                            else
-                            {
-                                Code.Result(ref msg, 编码.参数错误, "入参缺少rowcount节点");
-                                return null;
-                            }
+                            //if (null != in_主记录对象["rowcount"])
+                            //{
+                            //    out_主记录参数对象.Add("rowcount", in_主记录对象["rowcount"]);
+                            //}
+                            //else
+                            //{
+                            //    Code.Result(ref msg, 编码.参数错误, "入参缺少rowcount节点");
+                            //    return null;
+                            //}
                             if (!string.IsNullOrEmpty(str_明细插入语言))
                             {
                                 JArray in_明细记录集合 = in_主记录对象["datadetail"] as JArray;
