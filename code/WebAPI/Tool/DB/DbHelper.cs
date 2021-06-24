@@ -313,6 +313,7 @@ namespace Tool.DB
         /// <returns></returns>
         public DataTable GetDataTable(string sql, CommandType CommandType, params DbParameter[] param)
         {
+            BeginTransaction();
             if (IsBeginTransaction)
             {
                 try
@@ -329,17 +330,19 @@ namespace Tool.DB
                         da.SelectCommand = Cmd;
                         DataTable dt = new DataTable();
                         da.Fill(dt);
+                        //执行完成后提交事务
+                        CommitTransaction();
                         return dt;
                     }
                 }
-                catch
+                catch(Exception e1)
                 {
                     try
                     {
                         RollbackTransaction();
                         throw;
                     }
-                    catch
+                    catch (Exception e2)
                     {
                         throw;
                     }

@@ -36,15 +36,22 @@
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar2, Version=14.1.0.36, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v14.1.Drawing, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPdfViewer.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\code\oldhis\his\QiLian.BaseLibrary\Third\Other.DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="O2S.Components.PDFRender4NET">
+      <HintPath>C:\Users\syyyh\Downloads\O2S.Components.PDFRender4NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -90,6 +97,12 @@
     <Compile Include="F_心电图显示.Designer.cs">
       <DependentUpon>F_心电图显示.cs</DependentUpon>
     </Compile>
+    <Compile Include="F_心电图显示新.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_心电图显示新.Designer.cs">
+      <DependentUpon>F_心电图显示新.cs</DependentUpon>
+    </Compile>
     <Compile Include="F_自定义控件.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="F_心电图显示.resx">
       <DependentUpon>F_心电图显示.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_心电图显示新.resx">
+      <DependentUpon>F_心电图显示新.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="F_自定义控件.resx">
       <DependentUpon>F_自定义控件.cs</DependentUpon>

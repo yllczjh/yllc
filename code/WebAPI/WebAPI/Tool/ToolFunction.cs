@@ -196,7 +196,7 @@ namespace WebAPI.Tool
                     {
                         Dictionary<string, object> out_主记录参数对象 = new Dictionary<string, object>();
                         JObject in_主记录对象 = in_主记录集合[i] as JObject;
-                        out_主记录参数对象.Add("dataparam", GetParameter(ref str_主插入语言, in_主记录对象, null, ref msg));
+                        out_主记录参数对象.Add("dataparam", GetParameter(ref str_主插入语言, in_主记录对象, param, ref msg));
                         if (msg.errcode != 0)
                         {
                             return null;
