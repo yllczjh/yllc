@@ -50,7 +50,7 @@ namespace WebAPI.Tool
                             }
                             else
                             {
-                                if (str_sql.TrimStart().IndexOf("exec ", StringComparison.OrdinalIgnoreCase) == 0 && str_参数名 != "user")
+                                if (str_sql.TrimStart().IndexOf("exec ", StringComparison.OrdinalIgnoreCase) == 0)
                                 {
                                     str_sql = str_sql.Replace("?" + str_参数名, "default");
                                     continue;
@@ -66,10 +66,7 @@ namespace WebAPI.Tool
                         {
                             str_参数值 = JsonValue(p, str_参数名);
                         }
-                        if (str_参数名 == "user")
-                        {
-                            str_参数值 = ((UserModel)HttpContext.Current.Session["UserModel"])?.onlyid;
-                        }
+                       
                         if (null == str_参数值)
                         {
                             parameters.Add(new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value));

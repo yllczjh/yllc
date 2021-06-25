@@ -130,6 +130,11 @@ namespace WebAPI.Controllers.v1
                         p.Remove("appid");
                     }
                     p.Add("appid", msg.appid);
+                    if (null != p["user"])
+                    {
+                        p.Remove("user");
+                    }
+                    p.Add("user", ((UserModel)HttpContext.Current.Session["UserModel"])?.onlyid);
                     result = DataHelper.Process(p, ref msg);
                     if (ToolFunction.VerifyLogin(msg.method))
                     {
