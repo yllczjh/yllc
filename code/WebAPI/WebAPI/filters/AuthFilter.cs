@@ -243,7 +243,7 @@ namespace WebAPI.filters
                 req.token = GetValue("token", headers);
                 req.param = JsonConvert.SerializeObject(p);
 
-                Log.Error(actionName, JsonConvert.SerializeObject(req));
+                Log.Error(actionName, JsonConvert.SerializeObject(req)+",msg="+ msg.msgtext);
             }
             else
             {

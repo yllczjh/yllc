@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -51,7 +50,7 @@ namespace WebAPI.Controllers.v1
                 dic.Add("dataset", msg.dataset);
             }
             Encoding utf8 = Encoding.GetEncoding(65001);
-            byte[] temp = utf8.GetBytes("yyyy-MM-dd hh:mm:ss");
+            byte[] temp = utf8.GetBytes("yyyy-MM-dd HH:mm:ss");
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Converters.Add(
                 new Newtonsoft.Json.Converters.IsoDateTimeConverter()
                 {

@@ -88,16 +88,8 @@ pivot(max(数量)
    for status in('其他' as a1, '预约' AS a2)));
 ---------------------------------------------------------------------
 
-修改件数
+加合计
 
-
-
-daclare @money double
-select @money=sum(货物价值) from yw_dd_log d,yw_rwb r where d.订单id=r.订单id and r.批次id=?pcid
-if @money!=?monet
-begin
-raiserror('(1001)回款金额与实际金额不符!',16,255)
-end 
 
 
 
