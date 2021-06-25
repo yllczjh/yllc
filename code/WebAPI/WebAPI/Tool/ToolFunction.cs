@@ -176,98 +176,88 @@ namespace WebAPI.Tool
                 string str_主插入语言 = row["主插入语言"].ToString();
                 string str_明细插入语言 = row["明细插入语言"].ToString();
                 string str_主更新语言 = row["主更新语言"].ToString();
+                int i_记录数 = 1;
+                bool b_是否包含dataset节点 = false;
+                JArray in_主记录集合 = new JArray();
                 if (null != param["dataset"])
                 {
-
-                    //if (null != param["datacount"])
-                    //{
-                    //    out_dic.Add("datacount", param["datacount"]);
-                    //}
-                    //else
-                    //{
-                    //    Code.Result(ref msg, 编码.参数错误, "入参缺少datacount节点");
-                    //    return null;
-                    //}
-
-
-                    JArray in_主记录集合 = param["dataset"] as JArray;
-                    ArrayList out_主记录参数集合 = new ArrayList();
-                    for (int i = 0; i < in_主记录集合.Count; i++)
-                    {
-                        Dictionary<string, object> out_主记录参数对象 = new Dictionary<string, object>();
-                        JObject in_主记录对象 = in_主记录集合[i] as JObject;
-                        out_主记录参数对象.Add("dataparam", GetParameter(ref str_主插入语言, in_主记录对象, param, ref msg));
-                        if (msg.errcode != 0)
-                        {
-                            return null;
-                        }
-
-                        if (!string.IsNullOrEmpty(str_主更新语言))
-                        {
-                            out_主记录参数对象.Add("updateparam", GetParameter(ref str_主更新语言, in_主记录对象, null, ref msg));
-                            if (msg.errcode != 0)
-                            {
-                                return null;
-                            }
-                        }
-
-
-                        if (null != in_主记录对象["datadetail"])
-                        {
-                            //if (null != in_主记录对象["rowcount"])
-                            //{
-                            //    out_主记录参数对象.Add("rowcount", in_主记录对象["rowcount"]);
-                            //}
-                            //else
-                            //{
-                            //    Code.Result(ref msg, 编码.参数错误, "入参缺少rowcount节点");
-                            //    return null;
-                            //}
-                            if (!string.IsNullOrEmpty(str_明细插入语言))
-                            {
-                                JArray in_明细记录集合 = in_主记录对象["datadetail"] as JArray;
-                                ArrayList out_明细参数集合 = new ArrayList();
-                                for (int j = 0; j < in_明细记录集合.Count; j++)
-                                {
-                                    JObject in_明细记录对象 = in_明细记录集合[j] as JObject;
-                                    out_明细参数集合.Add(GetParameter(ref str_明细插入语言, in_明细记录对象, in_主记录对象, ref msg));
-                                    if (msg.errcode != 0)
-                                    {
-                                        return null;
-                                    }
-                                }
-                                out_主记录参数对象.Add("rowparam", out_明细参数集合);
-                            }
-                            else
-                            {
-                                Code.Result(ref msg, 编码.参数错误, "未设置明细插入语言");
-                                return null;
-                            }
-                        }
-                        out_主记录参数集合.Add(out_主记录参数对象);
-                    }
-                    out_dic.Add("dataparam", out_主记录参数集合);
-
-                    if (!string.IsNullOrEmpty(str_完成语言))
-                    {
-                        SqlParameter[] parameters_主 = ToolFunction.GetParameter(ref str_完成语言, param, null, ref msg);
-                        if (msg.errcode != 0)
-                        {
-                            return null;
-                        }
-                        out_dic.Add("finishparam", parameters_主);
-                    }
-
-                    out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
-                    out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
-                    out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
-                    out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
+                    b_是否包含dataset节点 = true;
+                    in_主记录集合 = param["dataset"] as JArray;
+                    i_记录数 = in_主记录集合.Count;
                 }
-                else
+                ArrayList out_主记录参数集合 = new ArrayList();
+                for (int i = 0; i < i_记录数; i++)
                 {
-                    Code.Result(ref msg, 编码.参数错误, "插入语言需在参数中配置[dataset]结点信息");
-                    return null;
+                    Dictionary<string, object> out_主记录参数对象 = new Dictionary<string, object>();
+                    JObject in_主记录对象 = new JObject();
+                    if (b_是否包含dataset节点)
+                    {
+                        in_主记录对象 = in_主记录集合[i] as JObject;
+                    }
+
+                    out_主记录参数对象.Add("dataparam", GetParameter(ref str_主插入语言, in_主记录对象, param, ref msg));
+                    if (msg.errcode != 0)
+                    {
+                        return null;
+                    }
+
+                    if (!string.IsNullOrEmpty(str_主更新语言))
+                    {
+                        out_主记录参数对象.Add("updateparam", GetParameter(ref str_主更新语言, in_主记录对象, param, ref msg));
+                        if (msg.errcode != 0)
+                        {
+                            return null;
+                        }
+                    }
+
+
+                    if (null != in_主记录对象["datadetail"])
+                    {
+                        if (!string.IsNullOrEmpty(str_明细插入语言))
+                        {
+                            JArray in_明细记录集合 = in_主记录对象["datadetail"] as JArray;
+                            ArrayList out_明细参数集合 = new ArrayList();
+                            for (int j = 0; j < in_明细记录集合.Count; j++)
+                            {
+                                JObject in_明细记录对象 = in_明细记录集合[j] as JObject;
+                                out_明细参数集合.Add(GetParameter(ref str_明细插入语言, in_明细记录对象, in_主记录对象, ref msg));
+                                if (msg.errcode != 0)
+                                {
+                                    return null;
+                                }
+                            }
+                            out_主记录参数对象.Add("rowparam", out_明细参数集合);
+                        }
+                        else
+                        {
+                            Code.Result(ref msg, 编码.参数错误, "未设置明细插入语言");
+                            return null;
+                        }
+                    }
+                    out_主记录参数集合.Add(out_主记录参数对象);
                 }
+                out_dic.Add("dataparam", out_主记录参数集合);
+
+                if (!string.IsNullOrEmpty(str_完成语言))
+                {
+                    SqlParameter[] parameters_主 = ToolFunction.GetParameter(ref str_完成语言, param, null, ref msg);
+                    if (msg.errcode != 0)
+                    {
+                        return null;
+                    }
+                    out_dic.Add("finishparam", parameters_主);
+                }
+
+                out_dic.Add("finishsql", str_完成语言.Replace("?", "@"));
+                out_dic.Add("updatesql", str_主更新语言.Replace("?", "@"));
+                out_dic.Add("datasql", str_主插入语言.Replace("?", "@"));
+                out_dic.Add("rowsql", str_明细插入语言.Replace("?", "@"));
+                //}
+                //else
+                //{
+                //    Code.Result(ref msg, 编码.参数错误, "插入语言需在参数中配置[dataset]结点信息");
+                //    return null;
+                //}
             }
             catch (Exception e)
             {

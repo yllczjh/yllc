@@ -313,7 +313,6 @@ namespace Tool.DB
         /// <returns></returns>
         public DataTable GetDataTable(string sql, CommandType CommandType, params DbParameter[] param)
         {
-            BeginTransaction();
             if (IsBeginTransaction)
             {
                 try
