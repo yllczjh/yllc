@@ -89,7 +89,28 @@ pivot(max(数量)
 ---------------------------------------------------------------------
 
 加合计
+declare @市内起始价 int=13,@市外起始价 int=15 ,@补助价 int =60,@每件价格 int =3
 
+select isnull(y.用户名,y.用户id) 用户名,y.用户id 当前负责人,a.日期,isnull(a.配送费,0) 配送费,case when (select count(1) from yw_dd_log t1 where t1.结束状态='送达' and t1.当前负责人=a.当前负责人 and CONVERT(varchar(100), t1.结束任务时间, 23)=a.日期 and t1.区 in('辽中','新民','康平','法库'))>0 then @补助价 else 0 end as 补助,isnull(a.件数,0) 件数
+from qlsys..xt_yh y left join
+(select tt.当前负责人,tt.日期,sum(tt.金额) 配送费,sum(tt.件数) 件数 from
+	(select t.当前负责人,CONVERT(varchar(100), t.结束任务时间, 23) 日期, t.区,t.件数,
+		case when t.区 in('辽中','新民','康平','法库') then @市外起始价+(t.件数-1)*@每件价格 else @市内起始价+(t.件数-1)*@每件价格 end 金额
+	from yw_dd_log t where t.结束状态='送达' and t.当前负责人=?user and t.结束任务时间 between ?kssj and ?jssj) tt
+group by tt.当前负责人,tt.日期) a on a.当前负责人=y.用户id where y.用户id=?user 
+
+
+
+declare @市内起始价 int=13,@市外起始价 int=15 ,@补助价 int =60,@每件价格 int =3
+
+select isnull(y.用户名,y.用户id) as 用户名, y.用户id 当前负责人,tt.日期,sum(tt.金额) 配送费,sum(tt.件数) 件数,case when (select count(1) from yw_dd_log t1 where t1.结束状态='送达' and t1.当前负责人=tt.当前负责人 and CONVERT(varchar(100), t1.结束任务时间, 23)=tt.日期 and t1.区 in('辽中','新民','康平','法库'))>0 then @补助价 else 0 end as 补助 
+from qlsys..xt_yh y left join
+
+	(select t.当前负责人,CONVERT(varchar(100), t.结束任务时间, 23) 日期, t.区,t.件数,
+		case when t.区 in('辽中','新民','康平','法库') then @市外起始价+(t.件数-1)*@每件价格 else @市内起始价+(t.件数-1)*@每件价格 end 金额
+	from yw_dd_log t where t.结束状态='送达' and t.当前负责人=?user and t.结束任务时间 between ?kssj and ?jssj) tt on y.用户id=tt.当前负责人 where y.用户id=?user
+	
+group by tt.日期,y.用户id,tt.当前负责人,y.用户名
 
 
 

@@ -63,6 +63,12 @@
     <Compile Include="F_用户信息.Designer.cs">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </Compile>
+    <Compile Include="F_系统设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_系统设置.Designer.cs">
+      <DependentUpon>F_系统设置.cs</DependentUpon>
+    </Compile>
     <Compile Include="F_菜单维护.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
   <ItemGroup>
     <EmbeddedResource Include="F_用户信息.resx">
       <DependentUpon>F_用户信息.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F_系统设置.resx">
+      <DependentUpon>F_系统设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="F_菜单维护.resx">
       <DependentUpon>F_菜单维护.cs</DependentUpon>
@@ -118,7 +127,11 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\doc_continuPrint1.png" />
+    <Content Include="Resources\doc_save_32.png" />
+    <Content Include="Resources\trash_32.png" />
     <Content Include="Resources\yd_exports.png" />
+    <Content Include="Resources\yd_refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
