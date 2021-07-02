@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Collections;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace Tool.DB
 {
@@ -40,7 +41,7 @@ namespace Tool.DB
         /// </summary>
         Oracle
     }
-  
+
     /// <summary>
     /// 数据库操作助手
     /// </summary>
@@ -334,7 +335,7 @@ namespace Tool.DB
                         return dt;
                     }
                 }
-                catch(Exception e1)
+                catch (Exception e1)
                 {
                     try
                     {
@@ -407,9 +408,9 @@ namespace Tool.DB
             }
         }
 
-        public void  ExecuteBatch(Dictionary<string, object> dic)
+        public void ExecuteBatch(Dictionary<string, object> dic)
         {
-             ExecuteBatch(dic, CommandType.Text);
+            ExecuteBatch(dic, CommandType.Text);
         }
         public void ExecuteBatch(Dictionary<string, object> dic, CommandType CommandType)
         {
@@ -460,6 +461,63 @@ namespace Tool.DB
                     Cmd.Parameters.Clear();
                     Cmd.Parameters.AddRange(p_完成参数);
                     Cmd.ExecuteNonQuery();
+                }
+
+                //执行完成后提交事务
+                CommitTransaction();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    RollbackTransaction();
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void ExecuteBatch_订单下发(JObject p)
+        {
+            BeginTransaction();
+            try
+            {
+                Cmd.CommandType = CommandType.Text;
+                Cmd.CommandText = "exec jk_rmkddxfa @user,@ddbh,@zdid,@khbm,@xdsj,@ddbz,@sfzxzf,@mxts";
+                Cmd.Parameters.Clear();
+                Cmd.Parameters.AddRange(new SqlParameter[8] { new SqlParameter("user", ""),
+                                                            new SqlParameter("ddbh", Tool.JsonValue(p, "outOrderCode").ToString()),
+                                                            new SqlParameter("zdid", Tool.JsonValue(p, "branchId").ToString()),
+                                                            new SqlParameter("khbm", Tool.JsonValue(p, "danwBh").ToString()),
+                                                            new SqlParameter("xdsj", Tool.JsonValue(p, "createTime").ToString()),
+                                                            new SqlParameter("ddbz", Tool.JsonValue(p, "note").ToString()),
+                                                            new SqlParameter("sfzxzf", Tool.JsonValue(p, "isOnlinePay").ToString()),
+                                                            new SqlParameter("mxts",((JArray)Tool.JsonValue(p, "orderDetail")).Count) });
+                Cmd.ExecuteNonQuery();
+
+                JArray orderDetail = (JArray)Tool.JsonValue(p, "orderDetail");
+
+                foreach (JObject jo in orderDetail)
+                {
+                    string packageQuantity = Tool.JsonValue(jo, "packageQuantity").ToString();//包装单位
+                    string specification = Tool.JsonValue(jo, "specification").ToString();//规格
+                    string prodNo = Tool.JsonValue(jo, "prodNo").ToString();//商品编码
+                    string quantity = Tool.JsonValue(jo, "quantity").ToString();//购买数量
+                    string price = Tool.JsonValue(jo, "price").ToString();//购买价格
+
+                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandText = "exec jk_rmkddxfb @user,@ddbh,@bzdw,@gg,@spbm,@gmsl,@gmjg";
+                    Cmd.Parameters.Clear();
+                    Cmd.Parameters.AddRange(new SqlParameter[7] { new SqlParameter("user", ""),
+                                                            new SqlParameter("ddbh", Tool.JsonValue(p, "outOrderCode").ToString()),
+                                                            new SqlParameter("bzdw", Tool.JsonValue(p, "packageQuantity").ToString()),
+                                                            new SqlParameter("gg", Tool.JsonValue(p, "specification").ToString()),
+                                                            new SqlParameter("spbm", Tool.JsonValue(p, "prodNo").ToString()),
+                                                            new SqlParameter("gmsl", Tool.JsonValue(p, "quantity").ToString()),
+                                                            new SqlParameter("gmjg", Tool.JsonValue(p, "price").ToString())});
                 }
 
                 //执行完成后提交事务
@@ -1147,5 +1205,17 @@ namespace Tool.DB
         //    return GetDataSet(sql, CommandType.Text, param);
         //}
         #endregion
+    }
+
+    public class Tool
+    {
+        public static JToken JsonValue(JObject p, string name)
+        {
+            if (null == p)
+            {
+                return null;
+            }
+            return p.GetValue(name, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

@@ -33,16 +33,13 @@ namespace Erp.Server.WebAPI
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static JObject DataTableToJObject(DataTable dt)
+        public static JArray DataTableToJArray(DataTable dt)
         {
             try
             {
                 string str = JsonConvert.SerializeObject(dt);
                 JArray Array = (JArray)JsonConvert.DeserializeObject(str);
-                JObject jo = new JObject();
-                jo.Add("datacount", dt.Rows.Count);
-                jo.Add("dataset", Array);
-                return jo;
+                return Array;
             }
             catch (Exception)
             {

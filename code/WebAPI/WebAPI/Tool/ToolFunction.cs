@@ -18,7 +18,7 @@ namespace WebAPI.Tool
     public class ToolFunction
     {
         #region 数据处理相关
-        public static SqlParameter[] GetParameter(ref string str_sql, JObject p, JObject p1, ref MessageModel msg)
+        public static SqlParameter[] GetParameter(ref string str_sql, JObject p, JObject p1, ref MessageModel msg, int ii = 0)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace WebAPI.Tool
                         {
                             str_参数值 = JsonValue(p, str_参数名);
                         }
-                       
+
                         if (null == str_参数值)
                         {
                             parameters.Add(new SqlParameter(str_参数名.Replace("?", "@"), DBNull.Value));
@@ -75,6 +75,12 @@ namespace WebAPI.Tool
                         {
                             parameters.Add(new SqlParameter(str_参数名.Replace("?", "@"), str_参数值?.ToString()));
                         }
+                    }
+                    //为了适配sys.execsql.update    ii=0 避免出现死循环   
+                    if (ii == 0 && parameters.Count == 1 && parameters[0].ParameterName=="sql" && parameters[0].Value.ToString().Contains("?"))
+                    {
+                        str_sql = parameters[0].Value.ToString();
+                        return GetParameter(ref str_sql, p, p1, ref msg, 1);
                     }
                     return parameters.ToArray();
                 }

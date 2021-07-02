@@ -4,11 +4,18 @@ using System.Text;
 using static Erp.Pro.Utils.C_实体信息;
 using System.Windows.Forms;
 using System;
+using Erp.Server.Helper;
+using static Erp.Server.Helper.ServerHelper;
+using Erp.Server.Init;
+using static Erp.Pro.Utils.C_实体信息.C_共享数据集;
 
 namespace Erp.Pro.Utils
 {
     public class C_通用方法
     {
+        static ServerHelper.Params inParam = new ServerHelper.Params();
+        static ServerHelper.Params outParam = new ServerHelper.Params();
+
         #region 控件绑定
         public static void M_绑定控件(LookUpEdit lue_绑定控件, C_数据源 c_数据源)
         {
@@ -103,6 +110,22 @@ namespace Erp.Pro.Utils
         {
             byte[] buffer = Guid.NewGuid().ToByteArray();
             return BitConverter.ToInt64(buffer, 0);
+        }
+
+        public static DataTable M_加载共享数据集(string str_表名)
+        {
+            inParam.P_模块名 = E_模块名称.通用业务;
+            inParam.P_功能名 = "M_加载共享数据集";
+            inParam.P1 = str_表名;
+            outParam = C_Server.Call(inParam);
+            if (outParam.P_结果 == 1)
+            {
+                return outParam.P_数据集;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

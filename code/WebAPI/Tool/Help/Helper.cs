@@ -29,6 +29,24 @@ namespace Tool.Help
             }
         }
         /// <summary>
+        /// 将DataTable转为插入用的JSON串
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static JArray DataTableToJArray(DataTable dt)
+        {
+            try
+            {
+                string str = JsonConvert.SerializeObject(dt);
+                JArray Array = (JArray)JsonConvert.DeserializeObject(str);
+                return Array;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        /// <summary>
         /// Dynamic转化为Dictionary
         /// </summary>
         /// <param name="param"></param>

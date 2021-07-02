@@ -11,39 +11,47 @@ namespace Erp.Server.WebAPI.业务
     {
         ServerHelper.Params outParam = new ServerHelper.Params();
 
-        //inParam.p0 = E_模块名称.通用列表编辑;
-        //inParam.p1 = f_父窗体.P_页面名称;
-        //inParam.p2 = "修改";
-        //inParam.p3 = f_父窗体.GridControl.DataSource;
-        //inParam.p4 = i_数据源行号;
-        public ServerHelper.Params M_通用列表编辑(ServerHelper.Params inParam)
+        public ServerHelper.Params Process(ServerHelper.Params inParam)
         {
             outParam.Clear();
             try
             {
                 JObject inObject = new JObject();
-                switch (inParam.P_方法名)
+                if (!string.IsNullOrEmpty(inParam.P_功能名))
                 {
-                    case "新增":
-                        M_新增(inParam, ref inObject);
-                        break;
-
-                    case "修改":
-                        M_修改(inParam, ref inObject);
-                        break;
-
-                    case "删除":
-                        M_删除(inParam, ref inObject);
-                        break;
-
-                    case "保存":
-                        M_保存(inParam, ref inObject);
-                        break;
-
-                    case "初始化":
-                        M_初始化(inParam, ref inObject);
-                        break;
+                    switch (inParam.P_功能名)
+                    {
+                        case "M_加载共享数据集":
+                            inObject.Add("sql", $"select * from " + inParam.P1 + "");
+                            break;
+                    }
                 }
+                else
+                {
+                    switch (inParam.P_方法名)
+                    {
+                        case "新增":
+                            M_新增(inParam, ref inObject);
+                            break;
+
+                        case "修改":
+                            M_修改(inParam, ref inObject);
+                            break;
+
+                        case "删除":
+                            M_删除(inParam, ref inObject);
+                            break;
+
+                        case "保存":
+                            M_保存(inParam, ref inObject);
+                            break;
+
+                        case "初始化":
+                            M_初始化(inParam, ref inObject);
+                            break;
+                    }
+                }
+
 
                 JObject outObject = HttpHelper.HTTP.HttpPost(inObject, "sys.execsql");
                 if (outObject.GetValue("errcode").ToString() == "0")

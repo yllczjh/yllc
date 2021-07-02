@@ -20,4 +20,10 @@ namespace Erp.Pro.Utils
         Dev_CheckEdit
     }
 
+    public enum E_权限类型
+    {
+        菜单分配人员,
+        人员分配菜单
+    }
+
 }

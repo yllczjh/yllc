@@ -29,27 +29,29 @@ namespace Erp.Server.Init
         {
             C_基础业务 c_基础业务 = new C_基础业务();
             ServerHelper.Params outParam = new ServerHelper.Params();
-            string str_功能 = param.P_功能名;
-            if (string.IsNullOrEmpty(str_功能))
-            {
-                outParam.P_结果 = 0;
-                outParam.P_结果描述 = "找不到方法!";
-                return outParam;
-            }
-            switch (str_功能)
-            {
-                case "用户信息_初始化":
-                    outParam = c_基础业务.M_用户信息_初始化(param);
-                    break;
-                case "菜单信息_初始化":
-                    outParam = c_基础业务.M_菜单信息_初始化(param);
-                    break;
-                default:
-                    outParam.P_结果 = 0;
-                    outParam.P_结果描述 = "找不到方法!";
-                    break;
-            }
+            outParam = c_基础业务.Process(param);
             return outParam;
+            //string str_功能 = param.P_功能名;
+            //if (string.IsNullOrEmpty(str_功能))
+            //{
+            //    outParam.P_结果 = 0;
+            //    outParam.P_结果描述 = "找不到方法!";
+            //    return outParam;
+            //}
+            //switch (str_功能)
+            //{
+            //    case "用户信息_初始化":
+            //        outParam = c_基础业务.M_用户信息_初始化(param);
+            //        break;
+            //    case "菜单信息_初始化":
+            //        outParam = c_基础业务.M_菜单信息_初始化(param);
+            //        break;
+            //    default:
+            //        outParam.P_结果 = 0;
+            //        outParam.P_结果描述 = "找不到方法!";
+            //        break;
+            //}
+            //return outParam;
         }
 
         private static ServerHelper.Params Call_通用列表编辑(ServerHelper.Params param)
@@ -63,7 +65,7 @@ namespace Erp.Server.Init
             //    outParam.P_返回描述 = "找不到方法!";
             //    return outParam;
             //}
-            outParam = c_通用业务.M_通用列表编辑(param);
+            outParam = c_通用业务.Process(param);
             return outParam;
         }
     }

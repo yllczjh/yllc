@@ -49,6 +49,16 @@ namespace Tool.Helper
             get { return GetAppSetting("yanzheng"); }
         }
 
+        public static string ClientId
+        {
+            get { return GetAppSetting("client_id"); }
+        }
+
+        public static string Secret
+        {
+            get { return GetAppSetting("secret"); }
+        }
+
         public static Dictionary<string, DateTime> dic = new Dictionary<string, DateTime>();
     }
 }

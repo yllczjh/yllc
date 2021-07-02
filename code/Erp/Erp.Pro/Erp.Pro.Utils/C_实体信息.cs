@@ -13,10 +13,48 @@ namespace Erp.Pro.Utils
         }
         public class C_共享数据集
         {
-            public static DataTable P_样式列表 { get; set; }
-            public static DataTable P_菜单信息 { get; set; }
-        }
+            private static DataTable _P_样式列表 = null;
+            private static DataTable _P_菜单信息 = null;
+            private static DataTable _P_用户信息 = null;
 
+            public static DataTable P_样式列表 { get; set; }
+            public static DataTable P_菜单信息
+            {
+                get
+                {
+                    if (null != _P_菜单信息)
+                    {
+                        return _P_菜单信息;
+                    }
+                    else
+                    {
+                        return C_通用方法.M_加载共享数据集("xt_mk");
+                    }
+                }
+                set
+                {
+                    _P_菜单信息 = value;
+                }
+            }
+            public static DataTable P_用户信息
+            {
+                get
+                {
+                    if (null != _P_用户信息)
+                    {
+                        return _P_用户信息;
+                    }
+                    else
+                    {
+                        return C_通用方法.M_加载共享数据集("xt_yh");
+                    }
+                }
+                set
+                {
+                    _P_用户信息 = value;
+                }
+            }
+        }
 
 
         #region 自定义控件相关
@@ -86,5 +124,4 @@ namespace Erp.Pro.Utils
         }
         #endregion
     }
-
 }

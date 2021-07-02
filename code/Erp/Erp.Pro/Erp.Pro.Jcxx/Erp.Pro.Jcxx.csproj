@@ -57,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C_菜单加载.cs" />
+    <Compile Include="F_权限分配.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="F_权限分配.Designer.cs">
+      <DependentUpon>F_权限分配.cs</DependentUpon>
+    </Compile>
     <Compile Include="F_用户信息.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="F_权限分配.resx">
+      <DependentUpon>F_权限分配.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="F_用户信息.resx">
       <DependentUpon>F_用户信息.cs</DependentUpon>
     </EmbeddedResource>
