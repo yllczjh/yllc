@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,7 +13,6 @@ using System.Web.Http.Filters;
 using Tool.Help;
 using Tool.Helper;
 using Tool.Model;
-using WebAPI.Models;
 using WebAPI.Tool;
 
 namespace WebAPI.filters
@@ -54,12 +52,28 @@ namespace WebAPI.filters
                     goto 退出;
                 }
 
-                string sign = ToolFunction.JsonValue(p, "sign").ToString();
-                string timestamp= ToolFunction.JsonValue(p, "timestamp").ToString();
-                string clientId = ToolFunction.JsonValue(p, "clientId").ToString();
-                if(clientId!= Config.ClientId)
+                string sign = ToolFunction.JsonValue(p, "sign")?.ToString();
+                string timestamp = ToolFunction.JsonValue(p, "timestamp")?.ToString();
+                string clientId = ToolFunction.JsonValue(p, "clientId")?.ToString();
+                if (null == sign)
                 {
-
+                    Code.Result(ref msg, 编码.参数错误, "参数中缺少sign，或sign值无效");
+                    goto 退出;
+                }
+                if (null == timestamp)
+                {
+                    Code.Result(ref msg, 编码.参数错误, "参数中缺少timestamp，或timestamp值无效");
+                    goto 退出;
+                }
+                if (null == clientId)
+                {
+                    Code.Result(ref msg, 编码.参数错误, "参数中缺少clientId，或clientId值无效");
+                    goto 退出;
+                }
+                if (clientId != Config.ClientId)
+                {
+                    Code.Result(ref msg, 编码.参数错误, "无效的clientId");
+                    goto 退出;
                 }
 
                 DateTime dt_请求时间 = DateTime.Now.AddDays(-1);
@@ -69,20 +83,21 @@ namespace WebAPI.filters
                 }
                 catch (Exception)
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "reqtime格式错误");
+                    Code.Result(ref msg, 编码.参数错误, "reqtime格式错误");
                     goto 退出;
                 }
 
                 if ((DateTime.Now - dt_请求时间).TotalMinutes > 2)
                 {
-                    Code.Result(ref msg, 编码.消息头错误, "请求消息已超时");
+                    Code.Result(ref msg, 编码.参数错误, "请求消息已超时");
                     goto 退出;
                 }
 
-                string sign1 = EnHelper.EncryptForMD5(clientId +Config.Secret+ timestamp);
-                if(sign!= sign1)
+                string sign1 = EnHelper.EncryptForMD5(clientId + Config.Secret + timestamp);
+                if (sign != sign1)
                 {
-
+                    Code.Result(ref msg, 编码.参数错误, "签名错误");
+                    goto 退出;
                 }
 
                 #endregion
@@ -98,29 +113,10 @@ namespace WebAPI.filters
             {
                 ResponseModel res = new ResponseModel(msg);
                 actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, res);
-                //HttpRequestHeaders headers = actionContext.Request.Headers;
-                //RequestModel req = new RequestModel();
-                //req.clienttype = GetValue("clienttype", headers);
-                //req.method = GetValue("method", headers);
-                //req.appid = GetValue("appid", headers);
-                //req.msgid = GetValue("msgid", headers);
-                //req.reqtime = GetValue("reqtime", headers);
-                //req.sign = GetValue("sign", headers);
-                //req.token = GetValue("token", headers);
-                //req.param = JsonConvert.SerializeObject(p);
+                RequestModel req = new RequestModel();
+                req.param = JsonConvert.SerializeObject(p);
 
-                //Log.Error(actionName, JsonConvert.SerializeObject(req)+",msg="+ msg.msgtext);
-            }
-        }
-        private string GetValue(string name, HttpRequestHeaders headers)
-        {
-            if (headers.Contains(name))
-            {
-                return headers.GetValues(name).First();
-            }
-            else
-            {
-                return "NOT_FOUND";
+                Log.Error(actionName, JsonConvert.SerializeObject(req) + ",msg=" + msg.msgtext);
             }
         }
     }

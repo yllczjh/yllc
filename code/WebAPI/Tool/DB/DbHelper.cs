@@ -335,14 +335,14 @@ namespace Tool.DB
                         return dt;
                     }
                 }
-                catch (Exception e1)
+                catch (Exception)
                 {
                     try
                     {
                         RollbackTransaction();
                         throw;
                     }
-                    catch (Exception e2)
+                    catch (Exception)
                     {
                         throw;
                     }
@@ -480,7 +480,7 @@ namespace Tool.DB
             }
         }
 
-        public void ExecuteBatch_订单下发(JObject p)
+        public DataTable ExecuteBatch_订单下发(JObject p)
         {
             BeginTransaction();
             try
@@ -520,8 +520,21 @@ namespace Tool.DB
                                                             new SqlParameter("gmjg", Tool.JsonValue(p, "price").ToString())});
                 }
 
-                //执行完成后提交事务
-                CommitTransaction();
+
+                Cmd.CommandType = CommandType.Text;
+                Cmd.CommandText = "exec jk_rmkddxffh @user,@ddbh";
+                Cmd.Parameters.Clear();
+                Cmd.Parameters.AddRange(new SqlParameter[2] { new SqlParameter("user", ""),
+                                                            new SqlParameter("ddbh", Tool.JsonValue(p, "outOrderCode").ToString())});
+                using (DbDataAdapter da = Factory.CreateDataAdapter())
+                {
+                    da.SelectCommand = Cmd;
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    //执行完成后提交事务
+                    CommitTransaction();
+                    return dt;
+                }
             }
             catch (Exception)
             {
