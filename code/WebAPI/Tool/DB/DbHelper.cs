@@ -513,11 +513,12 @@ namespace Tool.DB
                     Cmd.Parameters.Clear();
                     Cmd.Parameters.AddRange(new SqlParameter[7] { new SqlParameter("user", ""),
                                                             new SqlParameter("ddbh", Tool.JsonValue(p, "outOrderCode").ToString()),
-                                                            new SqlParameter("bzdw", Tool.JsonValue(p, "packageQuantity").ToString()),
-                                                            new SqlParameter("gg", Tool.JsonValue(p, "specification").ToString()),
-                                                            new SqlParameter("spbm", Tool.JsonValue(p, "prodNo").ToString()),
-                                                            new SqlParameter("gmsl", Tool.JsonValue(p, "quantity").ToString()),
-                                                            new SqlParameter("gmjg", Tool.JsonValue(p, "price").ToString())});
+                                                            new SqlParameter("bzdw", packageQuantity),
+                                                            new SqlParameter("gg", specification),
+                                                            new SqlParameter("spbm", prodNo),
+                                                            new SqlParameter("gmsl", quantity),
+                                                            new SqlParameter("gmjg", price)});
+                    Cmd.ExecuteNonQuery();
                 }
 
 

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -6,13 +7,12 @@ using System.Linq;
 using System.Web.Http;
 using Tool.DB;
 using Tool.Help;
-using Tool.Model;
 using WebAPI.filters;
 using WebAPI.Tool;
 
 namespace WebAPI.Controllers.v1
 {
-    [AuthLdFilter]
+    //[AuthLdFilter]
     //提供润美康对接⽂档  拉单系统
     public class LDController : ApiController
     {
@@ -22,23 +22,26 @@ namespace WebAPI.Controllers.v1
             JObject outObject = new JObject();
             try
             {
-
-
-                //MessageModel msg = this.Request.Properties["msg"] as MessageModel;
-                //if (msg.errcode != 0)
-                //{
-                //    outObject.Add("success", false);
-                //    outObject.Add("msg", msg.msgtext);
-                //    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
-                //}
-
-
                 string str_数据库连接串 = ConfigurationManager.ConnectionStrings["connectString_ld"].ConnectionString;
                 string str_数据库类型 = ConfigurationManager.ConnectionStrings["connectString_ld"].ProviderName;
 
-                string branchId = ToolFunction.JsonValue(p, "branchId").ToString();//站点id
-                string danwBh = ToolFunction.JsonValue(p, "danwBh").ToString();//客户编码
+                string branchId = ToolFunction.JsonValue(p, "branchId")?.ToString();//站点id
+                if (null == branchId)
+                {
+                    outObject.Add("success", false);
+                    outObject.Add("msg", "参数中缺少branchId节点");
+                    outObject.Add("data", new JArray());
+                    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+                }
+                string danwBh = ToolFunction.JsonValue(p, "danwBh")?.ToString();//客户编码
                 JArray prodNoList = (JArray)ToolFunction.JsonValue(p, "prodNoList");
+                if (null == prodNoList)
+                {
+                    outObject.Add("success", false);
+                    outObject.Add("msg", "参数中缺少prodNoList节点");
+                    outObject.Add("data", new JArray());
+                    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+                }
 
                 DataTable dt_结果 = null;
                 foreach (JObject jo in prodNoList)
@@ -47,7 +50,15 @@ namespace WebAPI.Controllers.v1
                     SqlParameter[] parameters = new SqlParameter[4];
                     parameters[0] = new SqlParameter("user", "");
                     parameters[1] = new SqlParameter("zdid", branchId);
-                    parameters[2] = new SqlParameter("khbm", danwBh);
+                    if (null == danwBh)
+                    {
+                        parameters[2] = new SqlParameter("khbm", DBNull.Value);
+                    }
+                    else
+                    {
+                        parameters[2] = new SqlParameter("khbm", danwBh);
+                    }
+
                     parameters[3] = new SqlParameter("spbm", prodNo);
                     DataTable dt = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable("exec jk_rmkcpxx @user,@zdid,@khbm,@spbm", parameters);
                     if (null == dt_结果)
@@ -72,20 +83,12 @@ namespace WebAPI.Controllers.v1
                 return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
             }
         }
-
+        [HttpPost]
         public IHttpActionResult setddxx(JObject p)
         {
             JObject outObject = new JObject();
             try
             {
-                //MessageModel msg = this.Request.Properties["msg"] as MessageModel;
-                //if (msg.errcode != 0)
-                //{
-                //    outObject.Add("success", false);
-                //    outObject.Add("msg", msg.msgtext);
-                //    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
-                //}
-
                 string str_数据库连接串 = ConfigurationManager.ConnectionStrings["connectString_ld"].ConnectionString;
                 string str_数据库类型 = ConfigurationManager.ConnectionStrings["connectString_ld"].ProviderName;
 
@@ -115,6 +118,57 @@ namespace WebAPI.Controllers.v1
                 outObject.Add("success", true);
                 outObject.Add("msg", "调用成功");
                 outObject.Add("data", j);
+                return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+            }
+            catch (System.Exception e)
+            {
+                outObject.Add("success", false);
+                outObject.Add("msg", e.Message);
+                outObject.Add("data", new JArray());
+                return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult getzffs(JObject p)
+        {
+            JObject outObject = new JObject();
+            try
+            {
+                string str_数据库连接串 = ConfigurationManager.ConnectionStrings["connectString_ld"].ConnectionString;
+                string str_数据库类型 = ConfigurationManager.ConnectionStrings["connectString_ld"].ProviderName;
+
+                string branchId = ToolFunction.JsonValue(p, "branchId")?.ToString();//站点id
+                if (null == branchId)
+                {
+                    outObject.Add("success", false);
+                    outObject.Add("msg", "参数中缺少branchId节点");
+                    outObject.Add("data", new JArray());
+                    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+                }
+                string danwBh = ToolFunction.JsonValue(p, "danwBh")?.ToString();//客户编码
+                if (null == danwBh)
+                {
+                    outObject.Add("success", false);
+                    outObject.Add("msg", "参数中缺少danwBh节点");
+                    outObject.Add("data", new JArray());
+                    return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
+                }
+
+                SqlParameter[] parameters = new SqlParameter[3];
+                parameters[0] = new SqlParameter("user", "");
+                parameters[1] = new SqlParameter("zdid", branchId);
+                parameters[2] = new SqlParameter("khbm", danwBh);
+
+                DataTable dt = DbHelper.Db(str_数据库类型, str_数据库连接串).GetDataTable("exec  jk_rmkzffs @user,@zdid,@khbm", parameters);
+
+                outObject.Add("success", true);
+                outObject.Add("msg", "调用成功");
+                JObject oo = new JObject();
+                oo.Add("isOnlinePay",dt.Rows[0]["isOnlinePay"].ToString());
+                oo.Add("isOfflinePay", dt.Rows[0]["isOfflinePay"].ToString());
+                
+                outObject.Add("data", oo);
                 return Json(outObject, GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings);
             }
             catch (System.Exception e)

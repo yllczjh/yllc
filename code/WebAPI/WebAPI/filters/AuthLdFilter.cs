@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -83,7 +82,7 @@ namespace WebAPI.filters
                 }
                 catch (Exception)
                 {
-                    Code.Result(ref msg, 编码.参数错误, "reqtime格式错误");
+                    Code.Result(ref msg, 编码.参数错误, "timestamp格式错误");
                     goto 退出;
                 }
 
@@ -93,7 +92,7 @@ namespace WebAPI.filters
                     goto 退出;
                 }
 
-                string sign1 = EnHelper.EncryptForMD5(clientId + Config.Secret + timestamp);
+                string sign1 = EnHelper.EncryptForMD5(clientId + Config.Secret + timestamp);//32位小写
                 if (sign != sign1)
                 {
                     Code.Result(ref msg, 编码.参数错误, "签名错误");
@@ -111,11 +110,14 @@ namespace WebAPI.filters
 
             退出: if (msg.errcode != 0)
             {
-                ResponseModel res = new ResponseModel(msg);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, res);
+                JObject outObject = new JObject();
+                outObject.Add("success", false);
+                outObject.Add("msg", msg.msgtext);
+                outObject.Add("data", new JArray());
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, outObject);
+
                 RequestModel req = new RequestModel();
                 req.param = JsonConvert.SerializeObject(p);
-
                 Log.Error(actionName, JsonConvert.SerializeObject(req) + ",msg=" + msg.msgtext);
             }
         }
