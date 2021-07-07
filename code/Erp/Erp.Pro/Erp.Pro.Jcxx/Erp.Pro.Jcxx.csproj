@@ -138,6 +138,8 @@
   <ItemGroup>
     <Content Include="Resources\doc_continuPrint1.png" />
     <Content Include="Resources\doc_save_32.png" />
+    <None Include="Resources\确定_32px.png" />
+    <None Include="Resources\quxiao_32px.png" />
     <Content Include="Resources\trash_32.png" />
     <Content Include="Resources\yd_exports.png" />
     <Content Include="Resources\yd_refresh.png" />

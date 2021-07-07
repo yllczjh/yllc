@@ -8,6 +8,7 @@ using Erp.Server.Helper;
 using static Erp.Server.Helper.ServerHelper;
 using Erp.Server.Init;
 using static Erp.Pro.Utils.C_实体信息.C_共享数据集;
+using System.Security.Cryptography;
 
 namespace Erp.Pro.Utils
 {
@@ -111,12 +112,42 @@ namespace Erp.Pro.Utils
             byte[] buffer = Guid.NewGuid().ToByteArray();
             return BitConverter.ToInt64(buffer, 0);
         }
+        public static string MD5_16D(string ConvertString) //16位大写
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            string t2 = BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(ConvertString)), 4, 8);
+            t2 = t2.Replace("-", "");
+            return t2;
+        }
+        public static string MD5_16X(string ConvertString) //16位小写
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            string t2 = BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(ConvertString)), 4, 8);
+            t2 = t2.Replace("-", "");
+            t2 = t2.ToLower();
+            return t2;
+        }
+        public string MD5_32D(string ConvertString) //32位大写
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            string t2 = BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(ConvertString)));
+            t2 = t2.Replace("-", "");
+            return t2;
+        }
+        public string MD5_32X(string ConvertString) //32位小写
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            string t2 = BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(ConvertString)));
+            t2 = t2.Replace("-", "");
+            return t2.ToLower();
+        }
 
         public static DataTable M_加载共享数据集(string str_表名)
         {
             inParam.P_模块名 = E_模块名称.通用业务;
             inParam.P_功能名 = "M_加载共享数据集";
             inParam.P1 = str_表名;
+            inParam.P2 = string.IsNullOrEmpty(C_实体信息.C_共享变量.当前系统ID) ? C_实体信息.C_共享变量.系统ID : C_实体信息.C_共享变量.当前系统ID;
             outParam = C_Server.Call(inParam);
             if (outParam.P_结果 == 1)
             {

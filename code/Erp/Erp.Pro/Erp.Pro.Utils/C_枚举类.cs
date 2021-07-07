@@ -23,7 +23,10 @@ namespace Erp.Pro.Utils
     public enum E_权限类型
     {
         菜单分配人员,
-        人员分配菜单
+        菜单分配角色,
+        人员分配菜单,
+        角色分配人员,
+        角色分配菜单
     }
 
 }

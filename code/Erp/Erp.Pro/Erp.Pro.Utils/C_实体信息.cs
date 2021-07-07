@@ -9,15 +9,37 @@ namespace Erp.Pro.Utils
         {
             public static string ServicesAddress { get; set; }
             public static string 系统ID { get; set; }
+            public static string 当前系统ID { get; set; }
             public static string 用户ID { get; set; }
         }
         public class C_共享数据集
         {
             private static DataTable _P_样式列表 = null;
+            private static DataTable _P_系统信息 = null;
             private static DataTable _P_菜单信息 = null;
             private static DataTable _P_用户信息 = null;
+            private static DataTable _P_角色信息 = null;
 
             public static DataTable P_样式列表 { get; set; }
+            public static DataTable P_系统信息
+            {
+                get
+                {
+                    if (null != _P_系统信息)
+                    {
+                        return _P_系统信息;
+                    }
+                    else
+                    {
+                        _P_系统信息 = C_通用方法.M_加载共享数据集("xt_xt");
+                        return _P_系统信息;
+                    }
+                }
+                set
+                {
+                    _P_系统信息 = value;
+                }
+            }
             public static DataTable P_菜单信息
             {
                 get
@@ -28,7 +50,8 @@ namespace Erp.Pro.Utils
                     }
                     else
                     {
-                        return C_通用方法.M_加载共享数据集("xt_mk");
+                        _P_菜单信息 = C_通用方法.M_加载共享数据集("xt_mk");
+                        return _P_菜单信息;
                     }
                 }
                 set
@@ -46,12 +69,41 @@ namespace Erp.Pro.Utils
                     }
                     else
                     {
-                        return C_通用方法.M_加载共享数据集("xt_yh");
+                        _P_用户信息 = C_通用方法.M_加载共享数据集("xt_yh");
+                        return _P_用户信息;
                     }
                 }
                 set
                 {
                     _P_用户信息 = value;
+                }
+            }
+            public static DataTable P_角色信息
+            {
+                get
+                {
+                    if (null != _P_角色信息)
+                    {
+                        return _P_角色信息;
+                    }
+                    else
+                    {
+                        _P_角色信息 = C_通用方法.M_加载共享数据集("xt_js");
+                        return _P_角色信息;
+                    }
+                }
+                set
+                {
+                    _P_角色信息 = value;
+                }
+            }
+            public static void M_刷新数据集(string str_表名)
+            {
+                switch (str_表名)
+                {
+                    case "P_菜单信息":
+                        _P_菜单信息 = C_通用方法.M_加载共享数据集("xt_mk");
+                        break;
                 }
             }
         }

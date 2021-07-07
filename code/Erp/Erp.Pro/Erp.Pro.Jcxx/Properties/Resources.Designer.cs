@@ -123,6 +123,16 @@ namespace Erp.Pro.Jcxx.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap quxiao_32px {
+            get {
+                object obj = ResourceManager.GetObject("quxiao_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap trash_32 {
             get {
                 object obj = ResourceManager.GetObject("trash_32", resourceCulture);
@@ -146,6 +156,16 @@ namespace Erp.Pro.Jcxx.Properties {
         internal static System.Drawing.Bitmap yd_refresh {
             get {
                 object obj = ResourceManager.GetObject("yd_refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 确定_32px {
+            get {
+                object obj = ResourceManager.GetObject("确定_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

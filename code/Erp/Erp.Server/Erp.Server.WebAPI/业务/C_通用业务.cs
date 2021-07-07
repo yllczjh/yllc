@@ -22,7 +22,20 @@ namespace Erp.Server.WebAPI.业务
                     switch (inParam.P_功能名)
                     {
                         case "M_加载共享数据集":
-                            inObject.Add("sql", $"select * from " + inParam.P1 + "");
+                            if (inParam.P1 == "xt_mk")
+                            {
+                                inObject.Add("sql", $@"select * from {inParam.P1} where 系统id='{inParam.P2}'");
+
+                            }
+                            else if (inParam.P1 == "xt_yh")
+                            {
+                                inObject.Add("sql", $"select * from " + inParam.P1 + "");
+                            }
+                            else
+                            {
+                                inObject.Add("sql", $"select * from " + inParam.P1 + "");
+                            }
+
                             break;
                     }
                 }
