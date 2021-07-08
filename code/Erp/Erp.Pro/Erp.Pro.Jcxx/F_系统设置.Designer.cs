@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject25 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject26 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject27 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject28 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject29 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject30 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.com_系统id = new System.Windows.Forms.ToolStripComboBox();
             this.btn_刷新 = new System.Windows.Forms.ToolStripButton();
@@ -71,10 +72,12 @@
             this.现住址 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.禁用_用户 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.用户权限分配 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.用户权限操作 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.编辑状态_用户 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.page_角色 = new DevExpress.XtraTab.XtraTabPage();
             this.grc_角色维护 = new DevExpress.XtraGrid.GridControl();
             this.grv_角色维护 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.系统id_角色 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.角色id = new DevExpress.XtraGrid.Columns.GridColumn();
             this.角色名 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.角色权限分配 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -85,7 +88,9 @@
             this.page_功能 = new DevExpress.XtraTab.XtraTabPage();
             this.grc_功能维护 = new DevExpress.XtraGrid.GridControl();
             this.grv_功能维护 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.系统id_角色 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.page_业务 = new DevExpress.XtraTab.XtraTabPage();
+            this.grc_业务维护 = new DevExpress.XtraGrid.GridControl();
+            this.grv_业务维护 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtra_系统设置)).BeginInit();
             this.xtra_系统设置.SuspendLayout();
@@ -97,6 +102,7 @@
             this.page_用户.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grc_用户维护)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_用户维护)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.用户权限操作)).BeginInit();
             this.page_角色.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grc_角色维护)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_角色维护)).BeginInit();
@@ -107,6 +113,9 @@
             this.page_功能.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grc_功能维护)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_功能维护)).BeginInit();
+            this.page_业务.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grc_业务维护)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grv_业务维护)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -119,7 +128,7 @@
             this.btn_保存});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1256, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1362, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -172,14 +181,15 @@
             this.xtra_系统设置.Location = new System.Drawing.Point(0, 25);
             this.xtra_系统设置.Name = "xtra_系统设置";
             this.xtra_系统设置.SelectedTabPage = this.page_菜单;
-            this.xtra_系统设置.Size = new System.Drawing.Size(1256, 436);
+            this.xtra_系统设置.Size = new System.Drawing.Size(1362, 436);
             this.xtra_系统设置.TabIndex = 4;
             this.xtra_系统设置.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.page_菜单,
             this.page_用户,
             this.page_角色,
             this.page_部门,
-            this.page_功能});
+            this.page_功能,
+            this.page_业务});
             this.xtra_系统设置.SelectedPageChanged += new DevExpress.XtraTab.TabPageChangedEventHandler(this.xtra_系统设置_SelectedPageChanged);
             // 
             // page_菜单
@@ -187,7 +197,7 @@
             this.page_菜单.Controls.Add(this.grc_菜单维护);
             this.page_菜单.Controls.Add(this.tree_菜单);
             this.page_菜单.Name = "page_菜单";
-            this.page_菜单.Size = new System.Drawing.Size(1250, 407);
+            this.page_菜单.Size = new System.Drawing.Size(1356, 407);
             this.page_菜单.Text = "菜单";
             // 
             // grc_菜单维护
@@ -200,7 +210,7 @@
             this.grc_菜单维护.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.菜单权限操作,
             this.repositoryItemHyperLinkEdit1});
-            this.grc_菜单维护.Size = new System.Drawing.Size(1017, 407);
+            this.grc_菜单维护.Size = new System.Drawing.Size(1123, 407);
             this.grc_菜单维护.TabIndex = 4;
             this.grc_菜单维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_菜单维护});
@@ -336,8 +346,8 @@
             // 
             this.菜单权限操作.AutoHeight = false;
             this.菜单权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject25, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "角色分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject26, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "角色分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
             this.菜单权限操作.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.菜单权限操作.Name = "菜单权限操作";
             this.菜单权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -359,8 +369,8 @@
             // 
             this.repositoryItemHyperLinkEdit1.AutoHeight = false;
             this.repositoryItemHyperLinkEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "111", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject27, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "222", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject28, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "111", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "222", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
             this.repositoryItemHyperLinkEdit1.Caption = "33";
             this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
             // 
@@ -377,7 +387,7 @@
             // 
             this.page_用户.Controls.Add(this.grc_用户维护);
             this.page_用户.Name = "page_用户";
-            this.page_用户.Size = new System.Drawing.Size(1250, 407);
+            this.page_用户.Size = new System.Drawing.Size(1356, 407);
             this.page_用户.Text = "用户";
             // 
             // grc_用户维护
@@ -387,7 +397,9 @@
             this.grc_用户维护.Location = new System.Drawing.Point(0, 0);
             this.grc_用户维护.MainView = this.grv_用户维护;
             this.grc_用户维护.Name = "grc_用户维护";
-            this.grc_用户维护.Size = new System.Drawing.Size(1250, 407);
+            this.grc_用户维护.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.用户权限操作});
+            this.grc_用户维护.Size = new System.Drawing.Size(1356, 407);
             this.grc_用户维护.TabIndex = 5;
             this.grc_用户维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_用户维护});
@@ -478,9 +490,19 @@
             // 用户权限分配
             // 
             this.用户权限分配.Caption = "权限操作";
+            this.用户权限分配.ColumnEdit = this.用户权限操作;
             this.用户权限分配.Name = "用户权限分配";
             this.用户权限分配.Visible = true;
             this.用户权限分配.VisibleIndex = 7;
+            // 
+            // 用户权限操作
+            // 
+            this.用户权限操作.AutoHeight = false;
+            this.用户权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, null, true)});
+            this.用户权限操作.Name = "用户权限操作";
+            this.用户权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+            this.用户权限操作.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.用户权限操作_ButtonClick);
             // 
             // 编辑状态_用户
             // 
@@ -492,7 +514,7 @@
             // 
             this.page_角色.Controls.Add(this.grc_角色维护);
             this.page_角色.Name = "page_角色";
-            this.page_角色.Size = new System.Drawing.Size(1250, 407);
+            this.page_角色.Size = new System.Drawing.Size(1356, 407);
             this.page_角色.Text = "角色";
             // 
             // grc_角色维护
@@ -504,7 +526,7 @@
             this.grc_角色维护.Name = "grc_角色维护";
             this.grc_角色维护.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.角色权限操作});
-            this.grc_角色维护.Size = new System.Drawing.Size(1250, 407);
+            this.grc_角色维护.Size = new System.Drawing.Size(1356, 407);
             this.grc_角色维护.TabIndex = 5;
             this.grc_角色维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_角色维护});
@@ -527,6 +549,14 @@
             this.grv_角色维护.OptionsView.ColumnAutoWidth = false;
             this.grv_角色维护.OptionsView.ShowGroupPanel = false;
             this.grv_角色维护.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grv_角色维护_CellValueChanged);
+            // 
+            // 系统id_角色
+            // 
+            this.系统id_角色.Caption = "系统id";
+            this.系统id_角色.FieldName = "系统id";
+            this.系统id_角色.Name = "系统id_角色";
+            this.系统id_角色.Visible = true;
+            this.系统id_角色.VisibleIndex = 0;
             // 
             // 角色id
             // 
@@ -559,8 +589,8 @@
             // 
             this.角色权限操作.AutoHeight = false;
             this.角色权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject29, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject30, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject7, "", null, null, true)});
             this.角色权限操作.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.角色权限操作.Name = "角色权限操作";
             this.角色权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -570,7 +600,7 @@
             // 
             this.page_部门.Controls.Add(this.grc_部门维护);
             this.page_部门.Name = "page_部门";
-            this.page_部门.Size = new System.Drawing.Size(1250, 407);
+            this.page_部门.Size = new System.Drawing.Size(1356, 407);
             this.page_部门.Text = "部门";
             // 
             // grc_部门维护
@@ -580,7 +610,7 @@
             this.grc_部门维护.Location = new System.Drawing.Point(0, 0);
             this.grc_部门维护.MainView = this.grv_部门维护;
             this.grc_部门维护.Name = "grc_部门维护";
-            this.grc_部门维护.Size = new System.Drawing.Size(1250, 407);
+            this.grc_部门维护.Size = new System.Drawing.Size(1356, 407);
             this.grc_部门维护.TabIndex = 5;
             this.grc_部门维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_部门维护});
@@ -602,7 +632,7 @@
             // 
             this.page_功能.Controls.Add(this.grc_功能维护);
             this.page_功能.Name = "page_功能";
-            this.page_功能.Size = new System.Drawing.Size(1250, 407);
+            this.page_功能.Size = new System.Drawing.Size(1356, 407);
             this.page_功能.Text = "功能";
             // 
             // grc_功能维护
@@ -612,7 +642,7 @@
             this.grc_功能维护.Location = new System.Drawing.Point(0, 0);
             this.grc_功能维护.MainView = this.grv_功能维护;
             this.grc_功能维护.Name = "grc_功能维护";
-            this.grc_功能维护.Size = new System.Drawing.Size(1250, 407);
+            this.grc_功能维护.Size = new System.Drawing.Size(1356, 407);
             this.grc_功能维护.TabIndex = 5;
             this.grc_功能维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_功能维护});
@@ -630,19 +660,43 @@
             this.grv_功能维护.OptionsView.ColumnAutoWidth = false;
             this.grv_功能维护.OptionsView.ShowGroupPanel = false;
             // 
-            // 系统id_角色
+            // page_业务
             // 
-            this.系统id_角色.Caption = "系统id";
-            this.系统id_角色.FieldName = "系统id";
-            this.系统id_角色.Name = "系统id_角色";
-            this.系统id_角色.Visible = true;
-            this.系统id_角色.VisibleIndex = 0;
+            this.page_业务.Controls.Add(this.grc_业务维护);
+            this.page_业务.Name = "page_业务";
+            this.page_业务.Size = new System.Drawing.Size(1356, 407);
+            this.page_业务.Text = "业务";
+            // 
+            // grc_业务维护
+            // 
+            this.grc_业务维护.Cursor = System.Windows.Forms.Cursors.Default;
+            this.grc_业务维护.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grc_业务维护.Location = new System.Drawing.Point(0, 0);
+            this.grc_业务维护.MainView = this.grv_业务维护;
+            this.grc_业务维护.Name = "grc_业务维护";
+            this.grc_业务维护.Size = new System.Drawing.Size(1356, 407);
+            this.grc_业务维护.TabIndex = 6;
+            this.grc_业务维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grv_业务维护});
+            // 
+            // grv_业务维护
+            // 
+            this.grv_业务维护.Appearance.HeaderPanel.Options.UseTextOptions = true;
+            this.grv_业务维护.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.grv_业务维护.GridControl = this.grc_业务维护;
+            this.grv_业务维护.Name = "grv_业务维护";
+            this.grv_业务维护.OptionsCustomization.AllowFilter = false;
+            this.grv_业务维护.OptionsCustomization.AllowGroup = false;
+            this.grv_业务维护.OptionsCustomization.AllowQuickHideColumns = false;
+            this.grv_业务维护.OptionsMenu.EnableColumnMenu = false;
+            this.grv_业务维护.OptionsView.ColumnAutoWidth = false;
+            this.grv_业务维护.OptionsView.ShowGroupPanel = false;
             // 
             // F_系统设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1256, 461);
+            this.ClientSize = new System.Drawing.Size(1362, 461);
             this.Controls.Add(this.xtra_系统设置);
             this.Controls.Add(this.toolStrip1);
             this.Name = "F_系统设置";
@@ -660,6 +714,7 @@
             this.page_用户.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grc_用户维护)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_用户维护)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.用户权限操作)).EndInit();
             this.page_角色.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grc_角色维护)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_角色维护)).EndInit();
@@ -670,6 +725,9 @@
             this.page_功能.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grc_功能维护)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grv_功能维护)).EndInit();
+            this.page_业务.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grc_业务维护)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grv_业务维护)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -729,5 +787,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn 角色权限分配;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit 角色权限操作;
         private DevExpress.XtraGrid.Columns.GridColumn 系统id_角色;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit 用户权限操作;
+        private DevExpress.XtraTab.XtraTabPage page_业务;
+        public DevExpress.XtraGrid.GridControl grc_业务维护;
+        public DevExpress.XtraGrid.Views.Grid.GridView grv_业务维护;
     }
 }

@@ -16,6 +16,7 @@ namespace Erp.Server.Helper
             public string P_页面名 { get; set; }
             public string P_方法名 { get; set; }
             public string P_功能名 { get; set; }
+            public string P_系统ID { get; set; }
             public DataTable P_数据集 { get; set; }
             public DataRow P_数据行 { get; set; }
 
@@ -33,6 +34,7 @@ namespace Erp.Server.Helper
                 P_页面名 = string.Empty;
                 P_方法名 = string.Empty;
                 P_功能名 = string.Empty;
+                P_系统ID = string.Empty;
                 P_数据集 = null;
                 P_数据行 = null;
 

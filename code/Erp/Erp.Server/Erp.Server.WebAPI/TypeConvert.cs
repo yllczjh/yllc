@@ -37,6 +37,14 @@ namespace Erp.Server.WebAPI
         {
             try
             {
+                if (!dt.Columns.Contains("indexnum"))
+                {
+                    dt.Columns.Add("indexnum", typeof(int));
+                }
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["indexnum"] = i;
+                }
                 string str = JsonConvert.SerializeObject(dt);
                 JArray Array = (JArray)JsonConvert.DeserializeObject(str);
                 return Array;
@@ -60,9 +68,10 @@ namespace Erp.Server.WebAPI
                 if (null == row["rowid"])
                 {
 
-                }else
+                }
+                else
                 {
-                    foreach(DataColumn column in dt.Columns)
+                    foreach (DataColumn column in dt.Columns)
                     {
 
                     }

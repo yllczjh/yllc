@@ -20,12 +20,14 @@ namespace Erp.Pro.Jcxx
         DataTable dt_菜单信息;
         DataTable dt_用户信息;
         DataTable dt_角色信息;
+        DataTable dt_业务信息;
         #region 
         enum E_系统信息
         {
             菜单信息,
             用户信息,
-            角色信息
+            角色信息,
+            业务信息
         }
         #endregion
 
@@ -62,13 +64,17 @@ namespace Erp.Pro.Jcxx
                     M_加载系统信息(E_系统信息.角色信息);
                     grc_角色维护.DataSource = dt_角色信息;
                     break;
+                case "page_业务":
+                    M_加载系统信息(E_系统信息.业务信息);
+                    grc_角色维护.DataSource = dt_角色信息;
+                    break;
             }
         }
         private void M_加载系统信息(E_系统信息 e_系统信息)
         {
             inParam.P_模块名 = E_模块名称.基础业务;
             inParam.P_功能名 = "加载系统信息_" + e_系统信息.ToString();
-            inParam.P1 = str_系统id;
+            inParam.P_系统ID = str_系统id;
             outParam = C_Server.Call(inParam);
             if (outParam.P_结果 == 1)
             {
@@ -128,6 +134,24 @@ namespace Erp.Pro.Jcxx
                             row["编辑状态"] = "0";
                         }
                         break;
+                    case E_系统信息.业务信息:
+                        if (null == outParam.P_数据集 || outParam.P_数据集.Rows.Count <= 0)
+                        {
+                            dt_业务信息 = C_实体信息.C_共享数据集.P_角色信息.Clone();
+                        }
+                        else
+                        {
+                            dt_业务信息 = outParam.P_数据集;
+                        }
+                        if (!dt_业务信息.Columns.Contains("编辑状态"))
+                        {
+                            dt_业务信息.Columns.Add("编辑状态", typeof(string));
+                        }
+                        foreach (DataRow row in dt_业务信息.Rows)
+                        {
+                            row["编辑状态"] = "0";
+                        }
+                        break;
                 }
             }
             else
@@ -175,6 +199,12 @@ namespace Erp.Pro.Jcxx
                     this.grv_角色维护.SetFocusedRowCellValue("系统id", str_系统id);
                     this.grv_角色维护.SetFocusedRowCellValue("角色id", C_通用方法.GuidTo16String());
                     break;
+                case "page_业务":
+                    grv_业务维护.AddNewRow();
+                    this.grv_业务维护.SetFocusedRowCellValue("序号", "0");
+                    this.grv_业务维护.SetFocusedRowCellValue("编辑状态", "1");
+                    this.grv_业务维护.SetFocusedRowCellValue("系统id", str_系统id);
+                    break;
             }
         }
         private void btn_删除_Click(object sender, EventArgs e)
@@ -185,6 +215,7 @@ namespace Erp.Pro.Jcxx
             }
 
             string str_功能名 = string.Empty;
+            string str_主键id = string.Empty;
             string id = string.Empty;
             DataRow dr_焦点行 = null;
             string page = xtra_系统设置.SelectedTabPage.Name;
@@ -192,23 +223,32 @@ namespace Erp.Pro.Jcxx
             {
                 case "page_菜单":
                     dr_焦点行 = grv_菜单维护.GetDataRow(grv_菜单维护.FocusedRowHandle);
+                    str_主键id = dr_焦点行["rowid"].ToString();
                     id = dr_焦点行["模块id"].ToString();
                     str_功能名 = "菜单信息_删除";
                     break;
                 case "page_用户":
                     dr_焦点行 = grv_用户维护.GetDataRow(grv_用户维护.FocusedRowHandle);
+                    str_主键id = dr_焦点行["rowid"].ToString();
                     id = dr_焦点行["用户id"].ToString();
                     str_功能名 = "用户信息_删除";
                     break;
                 case "page_角色":
                     dr_焦点行 = grv_角色维护.GetDataRow(grv_角色维护.FocusedRowHandle);
+                    str_主键id = dr_焦点行["rowid"].ToString();
                     id = dr_焦点行["角色id"].ToString();
                     str_功能名 = "角色信息_删除";
+                    break;
+                case "page_业务":
+                    dr_焦点行 = grv_角色维护.GetDataRow(grv_角色维护.FocusedRowHandle);
+                    str_主键id = dr_焦点行["序号"].ToString();
+                    id = null;
+                    str_功能名 = "业务信息_删除";
                     break;
             }
             inParam.P_模块名 = E_模块名称.基础业务;
             inParam.P_功能名 = str_功能名;
-            inParam.P1 = dr_焦点行["rowid"].ToString();
+            inParam.P1 = str_主键id;
             inParam.P2 = id;
             outParam = C_Server.Call(inParam);
             if (outParam.P_结果 == 1)
@@ -285,19 +325,39 @@ namespace Erp.Pro.Jcxx
                         }
                     }
                     break;
+                case "page_业务":
+                    grv_业务维护.CloseEditor();
+                    str_功能名 = "业务信息_保存";
+                    dt_数据源 = (grv_业务维护.DataSource as DataView).ToTable().Clone();
+                    foreach (DataRow row in (grv_业务维护.DataSource as DataView).ToTable().Rows)
+                    {
+                        if (row["编辑状态"].ToString() == "1")
+                        {
+                            DataRow dr = dt_数据源.NewRow();
+                            dr.ItemArray = row.ItemArray;
+                            dt_数据源.Rows.Add(dr);
+                        }
+                        if (string.IsNullOrEmpty(row["业务编号"].ToString()))
+                        {
+                            MessageBox.Show("请补全[业务编号]字段信息！");
+                            return;
+                        }
+                    }
+                    break;
             }
             if (string.IsNullOrEmpty(str_功能名)) return;
             inParam.P_模块名 = E_模块名称.基础业务;
             inParam.P_功能名 = str_功能名;
             inParam.P_数据集 = dt_数据源;
-            inParam.P1 = str_系统id;
+            inParam.P_系统ID = str_系统id;
             outParam = C_Server.Call(inParam);
             if (outParam.P_结果 == 1)
             {
                 if (page == "page_用户")
                 {
                     XtraMessageBox.Show("保存成功,新增用户密码为[123456]", "提示");
-                }else
+                }
+                else
                 {
                     XtraMessageBox.Show("保存成功", "提示");
                 }
@@ -353,7 +413,8 @@ namespace Erp.Pro.Jcxx
 
             DataRow dr_菜单维护 = grv_菜单维护.GetDataRow(grv_菜单维护.FocusedRowHandle);
             if (null == dr_菜单维护) return;
-            if(dr_菜单维护["rowid"].ToString() == "0"){
+            if (dr_菜单维护["rowid"].ToString() == "0")
+            {
                 MessageBox.Show("请先保存");
                 return;
             }
@@ -386,6 +447,25 @@ namespace Erp.Pro.Jcxx
         {
             DataRow dr_用户维护 = grv_用户维护.GetDataRow(grv_用户维护.FocusedRowHandle);
             dr_用户维护["编辑状态"] = "1";
+        }
+
+        private void 用户权限操作_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            DataRow dr_用户维护 = grv_用户维护.GetDataRow(grv_用户维护.FocusedRowHandle);
+            if (null == dr_用户维护) return;
+            if (dr_用户维护["rowid"].ToString() == "0")
+            {
+                MessageBox.Show("请先保存");
+                return;
+            }
+
+            if (e.Button.Caption == "菜单分配")
+            {
+                F_权限分配 f = new F_权限分配(str_系统id, E_权限类型.人员分配菜单, dr_用户维护["用户id"].ToString());
+                f.StartPosition = FormStartPosition.CenterParent;
+                f.ShowDialog();
+                f.Dispose();
+            }
         }
         #endregion
 
@@ -421,6 +501,5 @@ namespace Erp.Pro.Jcxx
             }
         }
         #endregion
-       
     }
 }

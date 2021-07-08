@@ -31,13 +31,16 @@ namespace Erp.Server.WebAPI.业务
                             inObject.Add("sql", $"select * from xt_mk where 系统ID='{C_实体信息.C_共享变量.系统ID}'");
                             break;
                         case "加载系统信息_菜单信息":
-                            inObject.Add("sql", $"select * from xt_mk where 系统ID='{inParam.P1}'");
+                            inObject.Add("sql", $"select * from xt_mk where 系统ID='{inParam.P_系统ID}'");
                             break;
                         case "加载系统信息_用户信息":
-                            inObject.Add("sql", $"select y.* from xt_xt_yh x, xt_yh y where x.用户id=y.用户id and x.系统id='{inParam.P1}'");
+                            inObject.Add("sql", $"select y.* from xt_xt_yh x, xt_yh y where x.用户id=y.用户id and x.系统id='{inParam.P_系统ID}'");
                             break;
                         case "加载系统信息_角色信息":
-                            inObject.Add("sql", $"select j.* from xt_js j where j.系统id='{inParam.P1}'");
+                            inObject.Add("sql", $"select j.* from xt_js j where j.系统id='{inParam.P_系统ID}'");
+                            break;
+                        case "加载系统信息_业务信息":
+                            inObject.Add("sql", $"select j.* from webapi_xttolist j where j.系统id='{inParam.P_系统ID}'");
                             break;
 
                         case "菜单信息_保存":
@@ -87,12 +90,26 @@ namespace Erp.Server.WebAPI.业务
                             inObject.Add("sql", $@"delete xt_js where rowid='{inParam.P1}';delete xt_yh_js where 角色id='{inParam.P2}';delete xt_js_mk where 角色id='{inParam.P2}';");
                             break;
 
+                        case "业务信息_保存":
+                            t = 1;
+                            inObject.Add("sql", $@"if ?序号=0
+                                                        insert into webapi_xttolist(系统id,业务编号, 有效状态)
+                                                        select ?系统id,?业务编号, ?有效状态
+                                                    else
+                                                        update webapi_xttolist set 业务编号 =?业务编号,有效状态 =?有效状态 where 序号 =?序号 ");
+                            inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
+                            break;
+                        case "业务信息_删除":
+                            t = 1;
+                            inObject.Add("sql", $@"delete webapi_xttolist where 序号='{inParam.P1}'");
+                            break;
+
                         case "菜单分配人员":
-                            inObject.Add("sql", $"select y.用户id,y.用户名,m.模块id from xt_xt_yh x inner join xt_yh y on x.用户id = y.用户id and x.系统id = '{inParam.P2}' left join xt_yh_mk m on y.用户id = m.用户id and m.模块id = '{inParam.P1}'");
+                            inObject.Add("sql", $"select y.用户id,y.用户名,m.模块id from xt_xt_yh x inner join xt_yh y on x.用户id = y.用户id and x.系统id = '{inParam.P_系统ID}' left join xt_yh_mk m on y.用户id = m.用户id and m.模块id = '{inParam.P1}'");
                             break;
                         case "菜单分配人员_修改":
                             t = 1;
-                            inObject.Add("sql", $"delete from xt_yh_mk where 模块id='{inParam.P1}' and 用户id=?用户id; insert into xt_yh_mk(用户id,模块id) select ?用户id,?模块id");
+                            inObject.Add("sql", $"if ?indexnum=0 begin delete from xt_yh_mk where 模块id='{inParam.P1}'end insert into xt_yh_mk(用户id,模块id) select ?用户id,?模块id");
                             inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
                             break;
                         case "菜单分配人员_删除":
@@ -101,29 +118,55 @@ namespace Erp.Server.WebAPI.业务
                             break;
 
                         case "菜单分配角色":
-                            inObject.Add("sql", $"select j.角色id,j.角色名,a.模块id from xt_js j left join (select jm.* from xt_js_mk jm inner join xt_mk m on jm.模块id=m.模块id where m.系统id='{inParam.P2}' and m.模块id='{inParam.P1}') a on j.角色id=a.角色id");
+                            inObject.Add("sql", $"select j.角色id,j.角色名,a.模块id from xt_js j left join (select jm.* from xt_js_mk jm inner join xt_mk m on jm.模块id=m.模块id where m.系统id='{inParam.P_系统ID}' and m.模块id='{inParam.P1}') a on j.角色id=a.角色id");
                             break;
                         case "菜单分配角色_修改":
                             t = 1;
-                            inObject.Add("sql", $"delete from xt_js_mk where 模块id='{inParam.P1}' and 角色id=?角色id; insert into xt_js_mk(角色id,模块id) select ?角色id,?模块id");
+                            inObject.Add("sql", $"if ?indexnum=0 begin delete from xt_js_mk where 模块id='{inParam.P1}' end insert into xt_js_mk(角色id,模块id) select ?角色id,?模块id");
                             inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
                             break;
                         case "菜单分配角色_删除":
                             t = 1;
                             inObject.Add("sql", $"delete from xt_js_mk where 模块id='{inParam.P1}'");
                             break;
-                       
+
                         case "角色分配人员":
-                            inObject.Add("sql", $"select y.用户id,y.用户名,j.角色id from xt_xt_yh x inner join xt_yh y on x.用户id = y.用户id and x.系统id = '{inParam.P2}' left join xt_yh_js j on y.用户id=j.用户id and j.角色id='{inParam.P1}'");
+                            inObject.Add("sql", $"select y.用户id,y.用户名,j.角色id from xt_xt_yh x inner join xt_yh y on x.用户id = y.用户id and x.系统id = '{inParam.P_系统ID}' left join xt_yh_js j on y.用户id=j.用户id and j.角色id='{inParam.P1}'");
                             break;
                         case "角色分配人员_修改":
                             t = 1;
-                            inObject.Add("sql", $"delete from xt_yh_js where 角色id='{inParam.P1}' and 用户id=?用户id; insert into xt_yh_js(用户id,角色id) select ?用户id,?角色id");
+                            inObject.Add("sql", $"if ?indexnum=0 begin delete from xt_yh_js where 角色id='{inParam.P1}' end insert into xt_yh_js(用户id,角色id) select ?用户id,?角色id");
                             inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
                             break;
                         case "角色分配人员_删除":
                             t = 1;
                             inObject.Add("sql", $"delete from xt_yh_js where 角色id='{inParam.P1}'");
+                            break;
+
+                        case "角色分配菜单":
+                            inObject.Add("sql", $"select m.模块id,m.模块名,m.上级id,y.角色id from xt_mk m left join xt_js_mk y on m.模块id=y.模块id and y.角色id='{inParam.P1}' where m.系统id='{inParam.P_系统ID}';");
+                            break;
+                        case "角色分配菜单_修改":
+                            t = 1;
+                            inObject.Add("sql", $"if ?indexnum=0 begin delete from xt_js_mk where 角色id='{inParam.P1}' end insert into xt_yh_mk(角色id,模块id) select ?角色id,?模块id");
+                            inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
+                            break;
+                        case "角色分配菜单_删除":
+                            t = 1;
+                            inObject.Add("sql", $"delete from xt_js_mk where 角色id='{inParam.P1}'");
+                            break;
+
+                        case "人员分配菜单":
+                            inObject.Add("sql", $"select m.模块id,m.模块名,m.上级id,y.用户id from xt_mk m left join xt_yh_mk y on m.模块id=y.模块id and y.用户id='{inParam.P1}' where m.系统id='{inParam.P_系统ID}';");
+                            break;
+                        case "人员分配菜单_修改":
+                            t = 1;
+                            inObject.Add("sql", $"if ?indexnum=0 begin delete from xt_yh_mk where 用户id='{inParam.P1}' end insert into xt_yh_mk(用户id,模块id) select ?用户id,?模块id");
+                            inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
+                            break;
+                        case "人员分配菜单_删除":
+                            t = 1;
+                            inObject.Add("sql", $"delete from xt_yh_mk where 用户id='{inParam.P1}'");
                             break;
                     }
                 }
