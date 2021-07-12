@@ -28,19 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_主界面));
             this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
+            this.styleManager1 = new DevComponents.DotNetBar.StyleManager();
             this.ribbon_菜单 = new DevExpress.XtraBars.Ribbon.RibbonControl();
-            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer(this.components);
+            this.popupControlContainer1 = new DevExpress.XtraBars.PopupControlContainer();
             this.sib_最小化 = new DevExpress.XtraEditors.SimpleButton();
             this.sib_退出 = new DevExpress.XtraEditors.SimpleButton();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            this.imageCollection1 = new DevExpress.Utils.ImageCollection(this.components);
+            this.imageCollection1 = new DevExpress.Utils.ImageCollection();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.bar2 = new DevExpress.XtraBars.Bar();
@@ -231,7 +230,7 @@
             // 
             // xttc_主界面
             // 
-            this.xttc_主界面.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InTabControlHeader;
+            this.xttc_主界面.ClosePageButtonShowMode = DevExpress.XtraTab.ClosePageButtonShowMode.InActiveTabPageHeader;
             this.xttc_主界面.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xttc_主界面.Location = new System.Drawing.Point(0, 152);
             this.xttc_主界面.Name = "xttc_主界面";

@@ -93,10 +93,10 @@ namespace Erp.Server.WebAPI.业务
                         case "业务信息_保存":
                             t = 1;
                             inObject.Add("sql", $@"if ?序号=0
-                                                        insert into webapi_xttolist(系统id,业务编号, 有效状态)
-                                                        select ?系统id,?业务编号, ?有效状态
+                                                        insert into webapi_xttolist(系统id,业务编号, 禁用)
+                                                        select ?系统id,?业务编号, ?禁用
                                                     else
-                                                        update webapi_xttolist set 业务编号 =?业务编号,有效状态 =?有效状态 where 序号 =?序号 ");
+                                                        update webapi_xttolist set 业务编号 =?业务编号,禁用 =?禁用 where 序号 =?序号 ");
                             inObject.Add("dataset", TypeConvert.DataTableToJArray(inParam.P_数据集));
                             break;
                         case "业务信息_删除":

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject64 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject65 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject66 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject67 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject68 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject69 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject70 = new DevExpress.Utils.SerializableAppearanceObject();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.com_系统id = new System.Windows.Forms.ToolStripComboBox();
             this.btn_刷新 = new System.Windows.Forms.ToolStripButton();
@@ -91,6 +91,10 @@
             this.page_业务 = new DevExpress.XtraTab.XtraTabPage();
             this.grc_业务维护 = new DevExpress.XtraGrid.GridControl();
             this.grv_业务维护 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.系统id_业务 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.业务编号 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.禁用_业务 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.编辑状态_业务 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtra_系统设置)).BeginInit();
             this.xtra_系统设置.SuspendLayout();
@@ -204,13 +208,13 @@
             // 
             this.grc_菜单维护.Cursor = System.Windows.Forms.Cursors.Default;
             this.grc_菜单维护.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grc_菜单维护.Location = new System.Drawing.Point(233, 0);
+            this.grc_菜单维护.Location = new System.Drawing.Point(198, 0);
             this.grc_菜单维护.MainView = this.grv_菜单维护;
             this.grc_菜单维护.Name = "grc_菜单维护";
             this.grc_菜单维护.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.菜单权限操作,
             this.repositoryItemHyperLinkEdit1});
-            this.grc_菜单维护.Size = new System.Drawing.Size(1123, 407);
+            this.grc_菜单维护.Size = new System.Drawing.Size(1158, 407);
             this.grc_菜单维护.TabIndex = 4;
             this.grc_菜单维护.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grv_菜单维护});
@@ -288,7 +292,7 @@
             this.命令.Name = "命令";
             this.命令.Visible = true;
             this.命令.VisibleIndex = 4;
-            this.命令.Width = 102;
+            this.命令.Width = 150;
             // 
             // 参数
             // 
@@ -297,6 +301,7 @@
             this.参数.Name = "参数";
             this.参数.Visible = true;
             this.参数.VisibleIndex = 5;
+            this.参数.Width = 100;
             // 
             // 图标
             // 
@@ -305,7 +310,7 @@
             this.图标.Name = "图标";
             this.图标.Visible = true;
             this.图标.VisibleIndex = 6;
-            this.图标.Width = 110;
+            this.图标.Width = 150;
             // 
             // 程序集名
             // 
@@ -314,7 +319,7 @@
             this.程序集名.Name = "程序集名";
             this.程序集名.Visible = true;
             this.程序集名.VisibleIndex = 7;
-            this.程序集名.Width = 117;
+            this.程序集名.Width = 140;
             // 
             // 窗口名
             // 
@@ -323,7 +328,7 @@
             this.窗口名.Name = "窗口名";
             this.窗口名.Visible = true;
             this.窗口名.VisibleIndex = 8;
-            this.窗口名.Width = 98;
+            this.窗口名.Width = 120;
             // 
             // 禁用_菜单
             // 
@@ -332,6 +337,7 @@
             this.禁用_菜单.Name = "禁用_菜单";
             this.禁用_菜单.Visible = true;
             this.禁用_菜单.VisibleIndex = 9;
+            this.禁用_菜单.Width = 60;
             // 
             // 菜单权限分配
             // 
@@ -346,8 +352,8 @@
             // 
             this.菜单权限操作.AutoHeight = false;
             this.菜单权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "角色分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject64, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "角色分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject65, "", null, null, true)});
             this.菜单权限操作.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.菜单权限操作.Name = "菜单权限操作";
             this.菜单权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -369,8 +375,8 @@
             // 
             this.repositoryItemHyperLinkEdit1.AutoHeight = false;
             this.repositoryItemHyperLinkEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "111", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "222", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "111", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject66, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "222", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject67, "", null, null, true)});
             this.repositoryItemHyperLinkEdit1.Caption = "33";
             this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
             // 
@@ -379,7 +385,7 @@
             this.tree_菜单.Dock = System.Windows.Forms.DockStyle.Left;
             this.tree_菜单.Location = new System.Drawing.Point(0, 0);
             this.tree_菜单.Name = "tree_菜单";
-            this.tree_菜单.Size = new System.Drawing.Size(233, 407);
+            this.tree_菜单.Size = new System.Drawing.Size(198, 407);
             this.tree_菜单.TabIndex = 3;
             this.tree_菜单.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_菜单_AfterSelect);
             // 
@@ -499,7 +505,7 @@
             // 
             this.用户权限操作.AutoHeight = false;
             this.用户权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject68, "", null, null, true)});
             this.用户权限操作.Name = "用户权限操作";
             this.用户权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             this.用户权限操作.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.用户权限操作_ButtonClick);
@@ -589,8 +595,8 @@
             // 
             this.角色权限操作.AutoHeight = false;
             this.角色权限操作.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject6, "", null, null, true),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject7, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "人员分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject69, "", null, null, true),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "菜单分配", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject70, "", null, null, true)});
             this.角色权限操作.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Office2003;
             this.角色权限操作.Name = "角色权限操作";
             this.角色权限操作.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -683,6 +689,11 @@
             // 
             this.grv_业务维护.Appearance.HeaderPanel.Options.UseTextOptions = true;
             this.grv_业务维护.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.grv_业务维护.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.系统id_业务,
+            this.业务编号,
+            this.禁用_业务,
+            this.编辑状态_业务});
             this.grv_业务维护.GridControl = this.grc_业务维护;
             this.grv_业务维护.Name = "grv_业务维护";
             this.grv_业务维护.OptionsCustomization.AllowFilter = false;
@@ -691,6 +702,38 @@
             this.grv_业务维护.OptionsMenu.EnableColumnMenu = false;
             this.grv_业务维护.OptionsView.ColumnAutoWidth = false;
             this.grv_业务维护.OptionsView.ShowGroupPanel = false;
+            // 
+            // 系统id_业务
+            // 
+            this.系统id_业务.Caption = "系统id";
+            this.系统id_业务.FieldName = "系统ID";
+            this.系统id_业务.Name = "系统id_业务";
+            this.系统id_业务.OptionsColumn.AllowEdit = false;
+            this.系统id_业务.Visible = true;
+            this.系统id_业务.VisibleIndex = 0;
+            // 
+            // 业务编号
+            // 
+            this.业务编号.Caption = "业务编号";
+            this.业务编号.FieldName = "业务编号";
+            this.业务编号.Name = "业务编号";
+            this.业务编号.Visible = true;
+            this.业务编号.VisibleIndex = 1;
+            this.业务编号.Width = 150;
+            // 
+            // 禁用_业务
+            // 
+            this.禁用_业务.Caption = "禁用";
+            this.禁用_业务.FieldName = "禁用";
+            this.禁用_业务.Name = "禁用_业务";
+            this.禁用_业务.Visible = true;
+            this.禁用_业务.VisibleIndex = 2;
+            // 
+            // 编辑状态_业务
+            // 
+            this.编辑状态_业务.Caption = "编辑状态";
+            this.编辑状态_业务.FieldName = "编辑状态";
+            this.编辑状态_业务.Name = "编辑状态_业务";
             // 
             // F_系统设置
             // 
@@ -791,5 +834,9 @@
         private DevExpress.XtraTab.XtraTabPage page_业务;
         public DevExpress.XtraGrid.GridControl grc_业务维护;
         public DevExpress.XtraGrid.Views.Grid.GridView grv_业务维护;
+        private DevExpress.XtraGrid.Columns.GridColumn 系统id_业务;
+        private DevExpress.XtraGrid.Columns.GridColumn 业务编号;
+        private DevExpress.XtraGrid.Columns.GridColumn 禁用_业务;
+        private DevExpress.XtraGrid.Columns.GridColumn 编辑状态_业务;
     }
 }

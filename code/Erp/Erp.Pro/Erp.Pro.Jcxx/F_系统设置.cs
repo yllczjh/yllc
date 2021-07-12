@@ -66,7 +66,7 @@ namespace Erp.Pro.Jcxx
                     break;
                 case "page_业务":
                     M_加载系统信息(E_系统信息.业务信息);
-                    grc_角色维护.DataSource = dt_角色信息;
+                    grc_业务维护.DataSource = dt_业务信息;
                     break;
             }
         }
@@ -203,7 +203,7 @@ namespace Erp.Pro.Jcxx
                     grv_业务维护.AddNewRow();
                     this.grv_业务维护.SetFocusedRowCellValue("序号", "0");
                     this.grv_业务维护.SetFocusedRowCellValue("编辑状态", "1");
-                    this.grv_业务维护.SetFocusedRowCellValue("系统id", str_系统id);
+                    this.grv_业务维护.SetFocusedRowCellValue("系统ID", str_系统id);
                     break;
             }
         }
@@ -240,7 +240,7 @@ namespace Erp.Pro.Jcxx
                     str_功能名 = "角色信息_删除";
                     break;
                 case "page_业务":
-                    dr_焦点行 = grv_角色维护.GetDataRow(grv_角色维护.FocusedRowHandle);
+                    dr_焦点行 = grv_业务维护.GetDataRow(grv_业务维护.FocusedRowHandle);
                     str_主键id = dr_焦点行["序号"].ToString();
                     id = null;
                     str_功能名 = "业务信息_删除";
@@ -377,7 +377,7 @@ namespace Erp.Pro.Jcxx
                 tree_菜单.Nodes.Clear();
                 C_通用方法.M_树形助手(dt_菜单信息, tree_菜单, "菜单", "0", "模块名", "模块id", "上级id");
                 tree_菜单.ExpandAll();
-                tree_菜单.SelectedNode = tree_菜单.Nodes[0].Nodes[0];
+                tree_菜单.SelectedNode = tree_菜单.Nodes[0];
             }
             catch
             {

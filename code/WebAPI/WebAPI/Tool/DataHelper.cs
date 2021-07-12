@@ -26,7 +26,7 @@ namespace WebAPI.Tool
                 Dictionary<string, object> dic_返回 = new Dictionary<string, object>();
                 //string sql = $@"SELECT t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型 from webapi_xttolist t1 left join webapi_list t2 on t1.业务编号=t2.业务编号 left join webapi_link t3 on t2.连接标识=t3.连接标识 where t1.系统ID='{msg.appid}' and t1.业务编号='{msg.method}' and t1.有效状态='True' and t2.有效状态='True'";
 
-                string sql = $@"SELECT top 1 t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型,isnull(t1.有效状态,0) as 权限,t2.有效状态  
+                string sql = $@"SELECT top 1 t2.序号, t2.业务编号,t2.主查询语言,t2.明细查询语言,t2.主插入语言,t2.主更新语言,t2.明细插入语言,t2.明细更新语言,t2.完成语言,t3.数据库连接串,t3.数据库类型,isnull(t1.禁用,0) as 禁用,t2.有效状态  
                                 from  webapi_list t2 left join webapi_xttolist t1 on t1.业务编号=t2.业务编号 and t1.系统id='{msg.appid}' left join webapi_link t3 on t2.连接标识=t3.连接标识
                                  where t2.业务编号='{msg.method}'";
                 DataTable dt = DbHelper.Db().GetDataTable(sql);
@@ -41,7 +41,7 @@ namespace WebAPI.Tool
                     Code.Result(ref msg, 编码.消息头错误, "业务编号[" + msg.method + "]已停止使用");
                     return null;
                 }
-                if (null != dt && dt.Rows.Count == 1 && dt.Rows[0]["权限"].ToString() == "False")
+                if (null != dt && dt.Rows.Count == 1 && dt.Rows[0]["禁用"].ToString() == "True")
                 {
                     Code.Result(ref msg, 编码.消息头错误, "appid[" + msg.appid + "]没有访问业务编号[" + msg.method + "]的权限");
                     return null;
